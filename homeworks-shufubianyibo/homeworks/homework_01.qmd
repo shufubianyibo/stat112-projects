@@ -1,0 +1,113 @@
+---
+title: "Homework 1"
+number-sections: false
+---
+
+## Exercise 1: Warming up
+I like **pasta** and *pizza*
+![pasta](https://www.mediterraneanliving.com/wp-content/uploads/2022/10/1-2.png)
+
+
+## Exercise 2: Import tidy data
+```{r}
+# Import the data
+survey <- read.csv("https://mac-stat.github.io/data/112_fall_2024_survey.csv")
+```
+
+
+## Exercise 3: Tidy data properties
+
+Each row represent how students in mac eat a type of food, how long will it take them, the temperature they like, and the place they like
+cafe_mac is a categorical variable, fave_temp is a quantitative variable.
+
+
+## Exercise 4: Get to know the data
+
+```{r}
+# It shows the number of row and column in the dataset.
+dim(survey)
+
+# It shows the number of row of this dataset.
+nrow(survey)
+
+# It shows the first 6 rows of this dataset.
+head(survey)
+
+# It shows the first 3 rows of this dataset.
+head(survey, 3)
+
+# It shows the last 6 rows of this dataset.
+tail(survey)
+
+# It shows the name of the columns.
+names(survey)
+```
+
+
+## Exercise 5: Data structure
+
+```{r}
+# Obtain the overall class of the survey object
+
+sur <- survey
+class(sur)
+
+
+
+# Examine the structure of each variable within survey (including class)
+
+cafe_mac <- "fried rice" 
+class(cafe_mac)
+
+minutes_to_campus <- 15
+class(minutes_to_campus)
+
+fave_temp <- 18.3
+class(fave_temp)
+
+hangout <- "a forest"
+class(hangout)
+
+## cafe_mac is character, minutes_to_campus is integer, fave_temp is numeric, hangout is character.
+
+# Just take note of what information we gain here (no need to write more)
+## We have the dimension of the dataset, the class of the variables, and first few columns of each variable.
+
+```
+
+
+
+
+## Exercise 6: Your turn
+
+```{r}
+# Import and name the dataset (you pick a name!)
+
+football <- read.csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-11-29/worldcups.csv")
+
+# Print the first 6 rows of the dataset
+
+head(football)
+
+# How many years of data do we have? And how many measurements do we have on each year?
+
+dim(football)
+
+## There are 21 years and 10 measurements.
+
+# Get a list of all variable names in the dataset
+
+names(football)
+
+# Display the class and other information for each variable in the dataset
+str(football)
+summary(football)
+
+```
+
+
+## Exercise 7: Brainstorm
+
+- Which team has the best score?
+- Which variable has the largest effect to who is the winner?
+- Which team has fewest winner?

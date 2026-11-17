@@ -1,0 +1,128 @@
+---
+title: "Overview"
+editor: visual
+---
+
+```{r}
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+olympics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-08-06/olympics.csv')
+
+# General summary of the dataset
+glimpse(olympics)
+
+# Summary statistics for numeric columns
+summary(select(olympics, where(is.numeric)))
+
+# Count of missing values per column
+missing_values <- olympics |>
+  summarise(across(everything(), ~ sum(is.na(.)))) |>
+  pivot_longer(everything(), names_to = "column", values_to = "missing_count")
+missing_values
+
+```
+
+```{r}
+# Count number of participants in each sport
+sport_distribution <- olympics |>
+  group_by(sport) |>
+  summarise(participants = n(), .groups = 'drop') |>
+  arrange(desc(participants))
+sport_distribution
+
+# Plot distribution of top 10 sports
+sport_distribution |>
+  slice_max(participants, n = 10) |>
+  ggplot(aes(x = reorder(sport, participants), y = participants)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Top 10 Sports by Number of Participants",
+    x = "Sport",
+    y = "Number of Participants"
+  ) +
+  theme_minimal()
+
+```
+
+```{r}
+# Summary of demographics
+demographics <- olympics |>
+  summarise(
+    avg_age = mean(age, na.rm = TRUE),
+    avg_height = mean(height, na.rm = TRUE),
+    avg_weight = mean(weight, na.rm = TRUE),
+    .groups = 'drop'
+  )
+demographics
+
+# Visualize demographic distributions
+olympics |>
+  select(age, height, weight) |>
+  pivot_longer(everything(), names_to = "attribute", values_to = "value") |>
+  ggplot(aes(x = value, fill = attribute)) +
+  geom_histogram(bins = 30, alpha = 0.7) +
+  facet_wrap(~attribute, scales = "free") +
+  labs(
+    title = "Distribution of Athlete Demographics",
+    x = "Value",
+    y = "Frequency",
+    fill = "Attribute"
+  ) +
+  theme_minimal()
+
+```
+
+```{r}
+# Count number of participants per year
+participation_trends <- olympics |>
+  group_by(year) |>
+  summarise(participants = n(), .groups = 'drop')
+participation_trends
+
+# Plot participation over time
+participation_trends |>
+  ggplot(aes(x = year, y = participants)) +
+  geom_line(color = "darkorange", size = 1) +
+  geom_point(color = "darkred") +
+  labs(
+    title = "Participation Trends Over Time",
+    x = "Year",
+    y = "Number of Participants"
+  ) +
+  theme_minimal()
+
+```
+
+```{r}
+# Filter top 10 countries by total participation
+top_10_countries <- olympics |>
+  group_by(noc) |>
+  summarise(total_participants = n(), .groups = 'drop') |>
+  arrange(desc(total_participants)) |>
+  slice_max(total_participants, n = 10)
+
+# Filter the main dataset for only the top 10 countries
+gender_country_top10 <- olympics |>
+  filter(noc %in% top_10_countries$noc) |>
+  group_by(noc, sex) |>
+  summarise(participants = n(), .groups = 'drop')
+
+# Plot gender distribution for the top 10 countries
+gender_country_top10 |>
+  ggplot(aes(x = reorder(noc, -participants), y = participants, fill = sex)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(
+    title = "Gender Distribution in Top 10 Participating Countries",
+    x = "Country (NOC)",
+    y = "Number of Participants",
+    fill = "Gender"
+  ) +
+  theme_minimal()
+
+
+
+```

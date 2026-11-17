@@ -1,0 +1,19 @@
+```{r}
+olympics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-08-06/olympics.csv')
+```
+
+```{r}
+library(tidyverse)
+olympics %>%
+  group_by(sport) %>%
+  summarize(n = n())%>%
+  arrange(desc(n))
+
+ggplot(olympics, aes(x = sport))+
+  geom_bar()
+```
+
+
+```{r}
+```
+

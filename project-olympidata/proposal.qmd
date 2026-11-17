@@ -1,0 +1,11 @@
+# Proposal {.unnumbered}
+
+title: Olympidata
+
+Team members: Avery Sheindlin, Jack Fang, Han Sun，Khaleesi Chen
+
+  We are examining different olympic sports, and investigating which traits excel in those specific sports. The olympics is one of the biggest global events in the world. We were interested in this topic because there is so much to examine when it comes to the participants within the olympics.
+  
+Responsibility plan:
+
+Each member will be in charge of examining data for 2 different sports. And then we will come together at the end to compare and contrast our factors.

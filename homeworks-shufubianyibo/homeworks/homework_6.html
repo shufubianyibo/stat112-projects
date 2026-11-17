@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Homework 6: Wrangling + More TidyTuesday</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="homework_6_files/libs/clipboard/clipboard.min.js"></script>
+<script src="homework_6_files/libs/quarto-html/quarto.js"></script>
+<script src="homework_6_files/libs/quarto-html/popper.min.js"></script>
+<script src="homework_6_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="homework_6_files/libs/quarto-html/anchor.min.js"></script>
+<link href="homework_6_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="homework_6_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="homework_6_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="homework_6_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="homework_6_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="homework_6_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="homework_6_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="homework_6_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="homework_6_files/libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="homework_6_files/libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="homework_6_files/libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="homework_6_files/libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="homework_6_files/libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="homework_6_files/libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="homework_6_files/libs/leaflet-binding-2.2.2/leaflet.js"></script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Homework 6: Wrangling + More TidyTuesday</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="callout callout-style-default callout-caution callout-titled" title="Learning Goals">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Goals
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Sharpen your data wrangling and data viz skills by practicing on a different dataset.</li>
+<li>Engage with the larger data science community by working on a recent TidyTuesday dataset.</li>
+</ul>
+</div>
+</div>
+<section id="kiva" class="level1">
+<h1>Kiva</h1>
+<p><a href="https://www.kiva.org/">Kiva</a> is a non-profit organization that allows people from around the world to lend small amounts to others to start or grow a business, go to school, access clean energy, etc. Since its founding in 2005, more than $1.2 billion in loans to over 3 million borrowers have been funded. In the following exercises, we’ll examine some Kiva data from 2005-2012.</p>
+<section id="exercise-1-kiva-partners" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1-kiva-partners">Exercise 1: Kiva partners</h2>
+<p>To begin, let’s explore data on Kiva’s <em>field partners</em>. These partners act as intermediaries between Kiva (the lenders) and borrowers. They evaluate borrower risk, post loan requests on Kiva, and process payments. Load data on the field partners below. A codebook with variable descriptions is <a href="https://mac-stat.github.io/data/kiva_partners2_codebook.xlsx">here</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the tidyverse</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>partners <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://mac-stat.github.io/data/kiva_partners2.csv"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(partners)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 19
+  partner_id partner_name      status rating due_diligence_type partner_image_id
+       &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;                         &lt;dbl&gt;
+1          1 East Africa Beta  closed 0      Full                          58088
+2          2 The Shurush Init… closed 0      Full                            309
+3          3 Regional Economi… closed 0      Full                            313
+4          4 Senegal Ecovilla… closed 0      Full                           1395
+5          5 Prisma Microfina… closed 0      Full                          45250
+6          6 Women`s Economic… closed 0      Full                            356
+# ℹ 13 more variables: countries.iso_code &lt;chr&gt;, countries.region &lt;chr&gt;,
+#   countries.name &lt;chr&gt;, countries.location.geo.level &lt;chr&gt;, lat &lt;dbl&gt;,
+#   lon &lt;dbl&gt;, delinquency_rate &lt;dbl&gt;, default_rate &lt;dbl&gt;,
+#   total_amount_raised &lt;dbl&gt;, loans_posted &lt;dbl&gt;, start_yr &lt;dbl&gt;,
+#   start_mo &lt;dbl&gt;, start_day &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<section id="part-a" class="level3">
+<h3 class="anchored" data-anchor-id="part-a">Part a</h3>
+<p>Let’s get to know the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the lowest, median, and highest total amount raised by any partner</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>partners_raise <span class="ot">&lt;-</span> partners <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">lowest =</span> <span class="fu">min</span>(total_amount_raised),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">median =</span> <span class="fu">median</span>(total_amount_raised),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">hightest =</span> <span class="fu">max</span>(total_amount_raised))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(partners_raise)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  lowest median hightest
+   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1      0 970100  9515800</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify the 6 partners that have raised the highest total amount</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Show just the partner names, countries, and total amount raised</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>partners <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(partner_name, countries.name, total_amount_raised)<span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_amount_raised))<span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  partner_name                          countries.name total_amount_raised
+  &lt;chr&gt;                                 &lt;chr&gt;                        &lt;dbl&gt;
+1 "Fundaci\x97n Paraguaya"              Paraguay                   9515800
+2 "Microfinanzas Prisma"                Peru                       8194725
+3 "Pearl Microfinance Limited"          Uganda                     8099525
+4 "AMK (Angkor Microfinance Kampuchea)" Cambodia                   7122575
+5 "IMON International"                  Tajikistan                 6887150
+6 "KREDIT Ltd."                         Cambodia                   6882500</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the names of the partners in Bolivia</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (Don't include any other variables, just the partner names)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>partners_bolivia <span class="ot">&lt;-</span> partners <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(countries.name <span class="sc">==</span> <span class="st">"Bolivia"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(partner_name)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>partners_bolivia</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 1
+  partner_name                                      
+  &lt;chr&gt;                                             
+1 "IMPRO"                                           
+2 "Pro Mujer Bolivia"                               
+3 "Fundaci\x97n AgroCapital, a partner of ACDI/VOCA"
+4 "Emprender"                                       
+5 "CIDRE"                                           </code></pre>
+</div>
+</div>
+</section>
+<section id="part-b" class="level3">
+<h3 class="anchored" data-anchor-id="part-b">Part b</h3>
+<p>Create a new table with only five columns:</p>
+<ul>
+<li><code>countries.region</code></li>
+<li><code>total_partners</code> = total number of partners per region</li>
+<li><code>total_loans</code> = total number of loans posted per region</li>
+<li><code>total_amount</code> = total amount raised per region</li>
+<li><code>average_loan</code> = average loan size per loan posted in each region (calculated as total amount raised per region / total number of loans posted per region)</li>
+</ul>
+<p>Print the entire table, sorted from high to low with respect to <code>total_amount</code> raised. Note that</p>
+<ul>
+<li>Your table should have 7 rows and 5 columns.</li>
+<li>Your first row should have <code>countries.region = Asia</code>, <code>total_partners = 40</code>, <code>total_loans = 133060</code>, <code>total_amount = 84816225</code>, <code>average_loan = 637</code>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>partners_sub <span class="ot">&lt;-</span> partners <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(countries.region)<span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_partners =</span> <span class="fu">n</span>(),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">total_loans =</span> <span class="fu">sum</span>(loans_posted),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">total_amount =</span> <span class="fu">sum</span>(total_amount_raised),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">average_loan =</span> total_amount<span class="sc">/</span>total_loans)<span class="sc">%&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(countries.region, total_partners, total_loans, total_amount, average_loan)<span class="sc">%&gt;%</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_amount))</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>partners_sub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 5
+  countries.region total_partners total_loans total_amount average_loan
+  &lt;chr&gt;                     &lt;int&gt;       &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+1 Asia                         40      133060     84816225         637.
+2 Africa                       70      118987     81530950         685.
+3 South America                22       78309     63932075         816.
+4 Central America              20       36766     22748000         619.
+5 North America                12       15258     17933175        1175.
+6 Middle East                  15       13851     17753250        1282.
+7 Eastern Europe                9        6243      8358975        1339.</code></pre>
+</div>
+</div>
+</section>
+<section id="part-c" class="level3">
+<h3 class="anchored" data-anchor-id="part-c">Part c</h3>
+<p>Identify two things that you learned from the table in Part b. Just pick whatever you found most interesting.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR ANSWER IN THIS CALLOUT BOX</p>
+<p>Sometimes we shouldn’t just use “mean()” to get the average, we have to read carefully what average we were supposed to get.</p>
+</div>
+</div>
+</section>
+<section id="part-d" class="level3">
+<h3 class="anchored" data-anchor-id="part-d">Part d</h3>
+<p>Draw a map that includes a dot for each of Kiva’s <code>partners</code>. Color the dot corresponding to the total amount raised by the partner. NOTE: It’s easier to do this on a static map, than with leaflet.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearth)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a background map of the entire world</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>world_boundaries <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>(<span class="at">returnclass =</span> <span class="st">"sf"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the partner locations on the background map</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(world_boundaries) <span class="sc">+</span> </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span> </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> partners,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> lon, <span class="at">y =</span> lat, <span class="at">color =</span> <span class="st">"red"</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">"partners"</span>)<span class="sc">+</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="homework_6_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="exercise-2-kiva-loans-part-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-2-kiva-loans-part-1">Exercise 2: Kiva loans (Part 1)</h2>
+<p>The <code>loans</code> data contains information on a sample of 10,000 individual loans to borrowers:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a random sample of 10,000 loans</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>loans <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://mac-stat.github.io/data/kiva_loans_small.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat &lt;- vroom(...)
+  problems(dat)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 10000 Columns: 76
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (14): borrower_name, status, activity, sector, use, location.country_cod...
+dbl (52): ...1, loan_id, borrower_image_id, funded_amount, paid_amount, lat,...
+lgl (10): delinquent, video.youtube_id, description.en, description.fr, desc...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<p>View the <code>loans</code> table, browse through some of the data, and check out the <a href="https://mac-stat.github.io/data/kiva_loans_codebook.xlsx">codebook</a>. Before working with this data, we have to do some pre-processing / wrangling. Take the following steps and store the results as <code>loans_2</code>.</p>
+<ol type="1">
+<li><p>Only keep the loans that have a positive <code>funded_amount</code>.</p></li>
+<li><p>The information about <em>when</em> a loan request was posted is separated out into different fields for year, month, day, hour, etc. Combine some of this information into a single variable that records the exact posting time. Do this in three steps. NOTE: You’ll get some warning messages, but these are not errors.</p>
+<ul>
+<li>Define a new variable which records the exact date a loan request was posted by <em>pasting</em> together the year, month, and date of the request, separated by hyphens: <code>post_dt = paste(posted_yr, posted_mo, posted_day, sep = '-')</code></li>
+<li>Define a new variable which records the exact time of day a loan request was posted by <em>pasting</em> together the hour and minute of the request, separated by a colon:<br>
+<code>post_time = paste(posted_hr, posted_min, posted_sec, sep = ':')</code>.</li>
+<li>Define a new variable which combines the exact date and time of day a loan request was posted:<br>
+<code>post_date = ymd_hms(paste(post_dt, post_time, sep = ' '))</code></li>
+</ul></li>
+<li><p>Similar to <code>post_date</code>, define a new variable called <code>fund_date</code> that reports the exact date and time at which each loan was <em>funded</em> (not <em>posted</em>).</p></li>
+<li><p>Define a new variable called <code>days_to_fund = difftime(fund_date, post_date, units = "days")</code> which records the number of days between the time a loan was posted and the time it was funded.</p></li>
+<li><p>Get information about the <code>countries.region</code> for the partner of each loan from the <code>partners</code> dataset. NOTE: <code>partners</code> and <code>loans</code> have many variable names in common. To avoid conflicts, simplify the <code>partners</code> dataset to just 2 columns before connecting it to <code>loans</code>.</p></li>
+<li><p>Keep only the following columns: <code>loan_id, status, funded_amount, paid_amount, sector, countries.region, location.country, lat, lon, partner_id, post_date, fund_date, days_to_fund</code></p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define loans_2</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>partners_simple <span class="ot">&lt;-</span> partners <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(partner_id, countries.region)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>loans_2 <span class="ot">&lt;-</span> loans<span class="sc">%&gt;%</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(funded_amount <span class="sc">&gt;</span> <span class="dv">0</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">post_dt =</span> <span class="fu">paste</span>(posted_yr, posted_mo, posted_day, <span class="at">sep =</span> <span class="st">'-'</span>),</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">post_time =</span> <span class="fu">paste</span>(posted_hr, posted_min, posted_sec, <span class="at">sep =</span> <span class="st">':'</span>),</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">post_date =</span> <span class="fu">ymd_hms</span>(<span class="fu">paste</span>(post_dt, post_time, <span class="at">sep =</span> <span class="st">' '</span>)),</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">fund_dt =</span> <span class="fu">paste</span>(funded_yr, funded_mo, funded_day, <span class="at">sep =</span> <span class="st">'-'</span>),</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">fund_time =</span> <span class="fu">paste</span>(funded_hr, funded_min, funded_sec, <span class="at">sep =</span> <span class="st">':'</span>),</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">fund_date =</span> <span class="fu">ymd_hms</span>(<span class="fu">paste</span>(fund_dt, fund_time, <span class="at">sep =</span> <span class="st">' '</span>)),</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">days_to_fund =</span> <span class="fu">difftime</span>(fund_date, post_date, <span class="at">units =</span> <span class="st">"days"</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(partners_simple, <span class="at">by =</span> <span class="st">"partner_id"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(loan_id, status, funded_amount, paid_amount, sector, countries.region, location.country, lat, lon, partner_id, post_date, fund_date, days_to_fund)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There were 2 warnings in `mutate()`.
+The first warning was:
+ℹ In argument: `post_date = ymd_hms(paste(post_dt, post_time, sep = " "))`.
+Caused by warning:
+!  2 failed to parse.
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirm that loans_2 has 9884 rows and 13 columns</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>loans_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9,884 × 13
+   loan_id status       funded_amount paid_amount sector      countries.region
+     &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;           
+ 1  146172 paid                   425        417. Housing     Africa          
+ 2  355180 in_repayment          1175        783. Housing     Asia            
+ 3  230839 paid                  3000       3000  Food        Asia            
+ 4  396949 in_repayment          2000          0  Food        Middle East     
+ 5   80656 paid                  1025       1025  Food        Central America 
+ 6  394927 in_repayment          2225          0  Agriculture South America   
+ 7  314607 paid                   200        200  Housing     South America   
+ 8  145112 paid                   475        475. Services    Africa          
+ 9  321793 paid                   175        175  Retail      Africa          
+10  159697 paid                   525        525  Food        South America   
+# ℹ 9,874 more rows
+# ℹ 7 more variables: location.country &lt;chr&gt;, lat &lt;dbl&gt;, lon &lt;dbl&gt;,
+#   partner_id &lt;dbl&gt;, post_date &lt;dttm&gt;, fund_date &lt;dttm&gt;, days_to_fund &lt;drtn&gt;</code></pre>
+</div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+<section id="exercise-3-kiva-loans-part-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-3-kiva-loans-part-2">Exercise 3: Kiva loans (Part 2)</h2>
+<section id="part-a-1" class="level3">
+<h3 class="anchored" data-anchor-id="part-a-1">Part a</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the top 5 countries by number of loans</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>loans <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location.country)<span class="sc">%&gt;%</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">num_loans =</span> <span class="fu">n</span>())<span class="sc">%&gt;%</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(num_loans))<span class="sc">%&gt;%</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  location.country num_loans
+  &lt;chr&gt;                &lt;int&gt;
+1 Peru                   975
+2 Cambodia               788
+3 Philippines            687
+4 Kenya                  506
+5 Nicaragua              439</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the top 5 countries by total funded loan amount</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>loans <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location.country)<span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">amount_loans_fund =</span> <span class="fu">sum</span>(funded_amount))<span class="sc">%&gt;%</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(amount_loans_fund))<span class="sc">%&gt;%</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  location.country amount_loans_fund
+  &lt;chr&gt;                        &lt;dbl&gt;
+1 Peru                        945825
+2 Cambodia                    813725
+3 Uganda                      811250
+4 Bolivia                     704800
+5 Paraguay                    565175</code></pre>
+</div>
+</div>
+</section>
+<section id="part-b-1" class="level3">
+<h3 class="anchored" data-anchor-id="part-b-1">Part b</h3>
+<p>Plot the mean loan size in each sector (y-axis) vs the number of loans in each sector (x-axis). Represent each sector by its name (text), not a point. HINT: You’ll have to calculate the mean loan size and number of loans in each sector before you can plot them.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>loans_new <span class="ot">&lt;-</span> loans<span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sector) <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_loan_size =</span> <span class="fu">mean</span>(funded_amount, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">num_loans =</span> <span class="fu">n</span>())</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(loans_new, <span class="fu">aes</span>(<span class="at">y =</span> mean_loan_size, <span class="at">x =</span> num_loans, <span class="at">label =</span> sector))<span class="sc">+</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="homework_6_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="408"></p>
+</div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="optional-exercise-funding-time" class="level2">
+<h2 class="anchored" data-anchor-id="optional-exercise-funding-time">Optional Exercise: funding time</h2>
+<p>NOTE: This exercise won’t be graded, but it is strongly recommended as additional practice for the quiz.</p>
+<p>How many days does it take borrowers to get a loan funded? Let’s explore the <code>days_to_fund</code> variable in the <code>loans_2</code>.</p>
+<section id="part-a-2" class="level3">
+<h3 class="anchored" data-anchor-id="part-a-2">Part a</h3>
+<p>Construct a univariate visualization of <code>days_to_fund</code>.</p>
+</section>
+<section id="part-b-2" class="level3">
+<h3 class="anchored" data-anchor-id="part-b-2">Part b</h3>
+<p>Construct a plot of <code>days_to_fund</code> (y-axis) vs <code>funded_amount</code> (x-axis) for each loan in <code>loans_2</code>.</p>
+</section>
+<section id="part-c-1" class="level3">
+<h3 class="anchored" data-anchor-id="part-c-1">Part c</h3>
+<p>Construct a plot of <code>days_to_fund</code> (y-axis) vs <code>funded_amount</code> (x-axis) in each <code>countries.region</code>. Don’t represent each loan on this plot. Rather, include curves to represent the trends in each region.</p>
+</section>
+<section id="part-d-1" class="level3">
+<h3 class="anchored" data-anchor-id="part-d-1">Part d</h3>
+<p>Summarize, in words, some takeaway messages from parts a-c about how long it takes to get a loan funded.</p>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="optional-exercise-loan-status" class="level2">
+<h2 class="anchored" data-anchor-id="optional-exercise-loan-status">Optional Exercise: loan status</h2>
+<p>NOTE: This exercise won’t be graded, but it is highly recommended as additional practice for the quiz.</p>
+<p>The <code>status</code> variable in <code>loans_2</code> indicates the status of a loan:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out a table summary after you've defined loans_2</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># loans_2 %&gt;% </span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   count(status)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s focus here on the patterns in loans that were paid back and those that were defaulted, i.e.&nbsp;not paid back.</p>
+<section id="part-a-3" class="level3">
+<h3 class="anchored" data-anchor-id="part-a-3">Part a</h3>
+<p>Define a new dataset, <code>defaults</code>, that only includes loans that were either defaulted or paid.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define defaults</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirm that defaults has 7010 rows and 13 columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="part-b-3" class="level3">
+<h3 class="anchored" data-anchor-id="part-b-3">Part b</h3>
+<p>Using <code>defaults</code>, construct a visualization of the relationship between the funded amount and status of a loan.</p>
+</section>
+<section id="part-c-2" class="level3">
+<h3 class="anchored" data-anchor-id="part-c-2">Part c</h3>
+<p>Define a new dataset with four columns:</p>
+<ul>
+<li><code>partner_id</code></li>
+<li>number of defaulted loans through that partner</li>
+<li>number of loans completely paid back through that partner</li>
+<li>percentage of loans defaulted</li>
+</ul>
+<p>Sort your table from highest default percentage to lowest, and print out only those with at least a 50% default percentage. HINT: You’ll have to reshape the data in this process.</p>
+</section>
+<section id="part-d-2" class="level3">
+<h3 class="anchored" data-anchor-id="part-d-2">Part d</h3>
+<p>Provide some take-away messages about loan defaults using your results in parts a-d.</p>
+</section>
+</section>
+</section>
+<section id="tidytuesday" class="level1">
+<h1>TidyTuesday</h1>
+<p>Tidy Tuesday is a weekly data project put on by some folks from the R Data Science community. Each week, a different data set is posted and people around the world wrangle and visualize that data. According to the organizers, “The intent of Tidy Tuesday is to provide a safe and supportive forum for individuals to practice their wrangling and data visualization skills independent of drawing conclusions.”</p>
+<p>The goals of this TidyTuesday are:</p>
+<ol type="1">
+<li>Practice generating questions. You have to decide what to ask and how to answer it with a graphic.</li>
+<li>Practice identifying what viz and (eventually) wrangling tools are useful for addressing your questions.</li>
+<li>Get a sense of the broader data science community. Check out what people share out on <a href="https://x.com/search?q=%23TidyTuesday">X/Twitter #TidyTuesday</a>. Maybe even share your own #TidyTuesday work on social media. Recent Mac alum <a href="https://x.com/efranke7282">Erin Franke (X/Twitter)</a> has an inspiring account! Scrolling through, you’ll notice the trajectory of her work, starting from COMP/STAT 112 to today. Very cool.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Tips">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tips
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>You should plan to spend 2-3 hours on the TidyTuesday part, <em>including</em> in-class work time.</p>
+<ul>
+<li>Don’t spend more than 30 minutes (at a very maximum) picking a dataset. Try to pick from just the past few weeks of TidyTuesday options, even if it’s less interesting to you than another dataset might be. You won’t be tied to this data all semester.</li>
+<li>Try to complete what you start and turn it in, rather than getting half way and deciding you want to use a different dataset.</li>
+</ul></li>
+<li><p>Think about a specific skill you’d like to work on, and let this influence what questions you ask of the data.</p></li>
+<li><p>This is an opportunity for practice and exploration, not perfection! <strong>IF</strong> you have some extra time and really want to dig in and do something really creative, go ahead. But again, the expectation is that you don’t spend more than 2-3 hours on this assignment.</p></li>
+<li><p>Work together! I encourage you to work with others on the same dataset, but <strong>your graphics should be distinct. Though all code and writing must be your own, it helps to bounce around ideas.</strong></p></li>
+</ul>
+</div>
+</div>
+<section id="part-a-4" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-4">Part a</h2>
+<p>Go to <a href="https://github.com/rfordatascience/tidytuesday">TidyTuesday</a>. Pick a dataset that was posted in the <strong>last 4 weeks</strong>. Here, include:</p>
+<ul>
+<li>A short (~2 sentence) written description of your data. This should include:
+<ul>
+<li>the original data source, ie, where did TidyTuesday get the data from?</li>
+<li>units of observation, ie, what are you analyzing?, and</li>
+<li>the data size, ie, how many data points do you have? how many variables are measured on each data point?.</li>
+</ul></li>
+<li>Code to import and examine the basic properties of your chosen dataset. This code must support the facts you cited in your short written description.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>tuesdata <span class="ot">&lt;-</span> tidytuesdayR<span class="sc">::</span><span class="fu">tt_load</span>(<span class="dv">2024</span>, <span class="at">week =</span> <span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>---- Compiling #TidyTuesday Information for 2024-10-15 ----
+--- There is 1 file available ---
+
+
+── Downloading files ───────────────────────────────────────────────────────────
+
+  1 of 1: "orcas.csv"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>orcas <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>orcas</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(orcas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 775  19</code></pre>
+</div>
+</div>
+<p>This data came from the Center for Whale Research (CWR), each rows of the dataset represents an encounter of a orca with basic information of time, duration, location, observer type and some summarize. There are totally 775 encounters in this dataset.</p>
+</section>
+<section id="part-b-4" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-4">Part b</h2>
+<p>In the 3 sections below (Viz 1, 2, 3), construct 3 separate graphs that tell a <em>connected</em> story about the data you chose.</p>
+<p><strong>Before each viz:</strong></p>
+<ul>
+<li>write a simple but specific research question you’re trying to address with the viz.</li>
+<li>write a 2-4 sentence summary of what you learn from the viz.&nbsp;This should connect back to your research question!</li>
+</ul>
+<p><strong>After each viz:</strong></p>
+<ul>
+<li>Comment on at least 2 effective aspects of the viz (consider the effective visualization principles).</li>
+<li>Comment on at least 2 aspects of the visualization that could be improved. Perhaps these are aspects that you don’t know how to implement yet but wish you could update it.</li>
+</ul>
+<p><strong>Make sure each viz:</strong></p>
+<ul>
+<li>has meaningful axis labels and legend titles</li>
+<li>has a figure caption (fig.cap)</li>
+<li>uses alt text (fig.alt)</li>
+<li>uses a more color-blind friendly color palette</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Start with some questions in mind of what you want to learn.</li>
+<li>Start with a simple viz (viz 1), and build this up into something multivariate (viz 3).</li>
+<li>Reflect on each viz – what new questions do you have after checking out the viz? Let these questions guide your next viz.&nbsp;(eg: recall how we worked through the <code>MacNaturalGas</code> data at the start of the Spatial Viz activity).</li>
+</ul>
+<p><strong>Expectations:</strong></p>
+<ul>
+<li>You should be wrangling data throughout your visual analysis. For example, perhaps you’ll need to wrangle the data before plotting it. Perhaps wrangling / summaries will help address some follow-up questions you have from your viz.&nbsp;</li>
+<li>At least some of this wrangling should demonstrate the combination of multiple verbs, i.e.&nbsp;span multiple lines.</li>
+</ul>
+<section id="viz-1" class="level3">
+<h3 class="anchored" data-anchor-id="viz-1">Viz 1</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Research Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Research Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR RESEARCH QUESTION IN THIS CALLOUT BOX</p>
+<p>How do the duration of the encounters distributed?</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>orcas_sec <span class="ot">&lt;-</span> orcas<span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(duration, <span class="fu">c</span>(<span class="st">"First"</span>, <span class="st">"Last"</span>), <span class="at">sep =</span> <span class="st">"s"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">duration_sec =</span> <span class="fu">as.numeric</span>(First))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Expected 2 pieces. Additional pieces discarded in 750 rows [1, 2, 3, 4, 5, 6,
+7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 21, ...].</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(orcas_sec, <span class="fu">aes</span>(<span class="at">x =</span> duration_sec))<span class="sc">+</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()<span class="sc">+</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Duration of Encounters with Orcas"</span>, <span class="at">x =</span> <span class="st">"Duration(in second)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 25 rows containing non-finite outside the scale range
+(`stat_density()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="homework_6_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="408"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Summary">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR SUMMARY IN THIS CALLOUT BOX</p>
+<p>Most encounters are within 10000 seconds, and around 4000 second is a most frequent duration of encounter. There are some data point below 0, which might caused by the start and end of the encounter are not in a same day.</p>
+</div>
+</div>
+</section>
+<section id="viz-2" class="level3">
+<h3 class="anchored" data-anchor-id="viz-2">Viz 2</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Research Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Research Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR RESEARCH QUESTION IN THIS CALLOUT BOX</p>
+<p>Fix the negative durations, and plot the durations for the top 5 location of encountering orcas.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>orcas_popular <span class="ot">&lt;-</span> orcas_sec<span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(location)<span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location)<span class="sc">%&gt;%</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">encounters_count =</span> <span class="fu">n</span>())<span class="sc">%&gt;%</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(encounters_count, <span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>orcas_popular</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  location               encounters_count
+  &lt;chr&gt;                             &lt;int&gt;
+1 Haro Strait                         180
+2 San Juan Channel                     21
+3 Rosario Strait                       14
+4 Boundary Pass                        13
+5 Race Rocks                           12
+6 Strait of Juan de Fuca               12</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>popular_locations <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Haro Strait"</span>, <span class="st">"San Juan Channel"</span>, <span class="st">"Rosario Strait"</span>, <span class="st">"Boundary Pass"</span>, <span class="st">"Race Rocks"</span>, <span class="st">"Strait of Juan de Fuca"</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>orcas_sec <span class="ot">&lt;-</span> orcas <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">begin_time =</span> <span class="fu">hms</span>(begin_time),</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">end_time =</span> <span class="fu">hms</span>(end_time),</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">duration_sec =</span> <span class="fu">as.numeric</span>(end_time <span class="sc">-</span> begin_time),</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">duration_sec =</span> <span class="fu">ifelse</span>(duration_sec <span class="sc">&lt;</span> <span class="dv">0</span>, duration_sec <span class="sc">+</span> <span class="dv">86400</span>, duration_sec))<span class="sc">%&gt;%</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(location <span class="sc">%in%</span> popular_locations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(orcas_sec, <span class="fu">aes</span>(<span class="at">x =</span> duration_sec, <span class="at">color =</span> location))<span class="sc">+</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">"location"</span>, <span class="at">title =</span> <span class="st">"Duration of Encounters of Orcas in Most Possible Locations"</span>, <span class="at">x =</span> <span class="st">"Duration(in second)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 6 rows containing non-finite outside the scale range
+(`stat_density()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="homework_6_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="408"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Summary">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR SUMMARY IN THIS CALLOUT BOX</p>
+<p>After fixing the negative durations, the longest duration became up to about 65000 seconds. The distribution of most locations are similar, while Strait of Juan de Fuca have no encounter more than 20000 seconds and the encounters in Race Rocks distributed very even.</p>
+</div>
+</div>
+</section>
+<section id="viz-3" class="level3">
+<h3 class="anchored" data-anchor-id="viz-3">Viz 3</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Research Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Research Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR RESEARCH QUESTION IN THIS CALLOUT BOX</p>
+<p>Plot the locations of encounters in a map with points, and add markers to the 5 most possible locations.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>orcas_longlat <span class="ot">&lt;-</span> orcas <span class="sc">%&gt;%</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(location, begin_longitude, end_longitude, begin_latitude, end_latitude)<span class="sc">%&gt;%</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location)<span class="sc">%&gt;%</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">lng =</span> <span class="fu">mean</span>((begin_longitude<span class="sc">+</span>end_longitude)<span class="sc">/</span><span class="dv">2</span>),</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">lat =</span> <span class="fu">mean</span>((begin_latitude<span class="sc">+</span>end_latitude)<span class="sc">/</span><span class="dv">2</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(location, lng, lat)</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>orcas_popular_longlat <span class="ot">&lt;-</span> orcas_longlat <span class="sc">%&gt;%</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(location <span class="sc">%in%</span> popular_locations)</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>orcas_popular_longlat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  location                 lng   lat
+  &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt;
+1 Boundary Pass          -123.  48.7
+2 Haro Strait            -123.  48.5
+3 Race Rocks             -124.  48.3
+4 Rosario Strait         -123.  48.6
+5 San Juan Channel       -123.  48.6
+6 Strait of Juan de Fuca -123.  48.3</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>(<span class="at">data =</span> orcas_longlat) <span class="sc">|&gt;</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCircles</span>(<span class="sc">~</span>lng, <span class="sc">~</span>lat, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">radius =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addMarkers</span>(<span class="at">data =</span> orcas_popular_longlat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Assuming "lng" and "lat" are longitude and latitude, respectively</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-e1882c3ef10bacb9810a" style="width:100%;height:393px;"></div>
+<script type="application/json" data-for="htmlwidget-e1882c3ef10bacb9810a">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addCircles","args":[[48.36916732788085,48.29817962646484,47.9096228281657,48.36108303070068,48.82620716094973,48.5557498931885,48.56649971008299,48.54849815368655,48.6845417022705,48.70650100708005,48.62349891662595,48.4518337249756,48.4206657409668,48.45425033569335,48.48025131225585,48.43904209136963,48.31152105331419,48.2816677093506,48.3008346557617,48.584358215332,48.30441665649415,48.31416702270505,48.8075008392334,48.7071967124939,48.63987445831299,48.6839160919189,48.6408348083496,48.71491622924805,48.72574996948239,48.7271919250488,48.441499710083,48.4091663360596,48.52308368682863,48.44225120544435,48.4189167022705,48.5733337402344,48.43458366394045,48.40908432006835,48.30362510681152,48.3466672897339,48.69899940490725,48.60333347320555,48.34761701311383,48.51687526702882,50.0516662597656,48.30652745564778,48.5650005340576,48.5784168243408,48.41871356964112,48.77016639709473,48.29681481255425,48.31183242797852,48.31983375549315,48.28625106811525,48.52833271026613,48.5716667175293,48.6457500457764,49.13991737365725,48.93634796142577,48.77586555480955,48.66555786132815,48.50458335876465,48.3641662597656,48.4962501525879,48.87299156188965,48.40583229064946,48.59041595458984,48.53648455467449,48.4879150390625,48.61211013793945,48.7076663970947,48.5397491455078,48.40745830535887,48.6125011444092,48.60900115966795,48.4613342285156,48.43863296508785,48.71290016174315,48.62150001525875,48.3727512359619,48.59950447082522,48.62441635131835,49.5435676574707,48.38083267211915,48.50633239746095,48.6091117858887,48.37222226460775,48.32223281860351,48.2691650390625,48.48575115203857,48.3234176635742,48.60747210184734,48.553861618042,48.5691680908203,48.62891578674315,48.3911666870117,48.3715000152588,48.51399993896484,48.633957862854,48.63629150390625,48.6841678619385,48.57929039001465,48.5858325958252,48.75083351135255,48.7026252746582,48.60583305358885,48.32250022888185,48.6551666259766,48.6920013427734,48.5391654968262,48.34174919128415,49.18933486938475,48.32333374023435,48.43621635437012,48.39948790413993,48.25749969482425,48.4767761230469,48.81458282470705,48.33165645599365,48.30325126647951,48.26500034332275,48.7224998474121,48.35900020599365,48.26015377044681,48.77913379669187,48.325249671936,48.78750038146975,48.95869255065915,48.33591651916505,48.5439167022705,48.13721656799321,48.51291608810422,48.52883338928225,48.3333320617676,48.67333073086209,48.0873317718506,48.32716687520343,48.30357646942138,48.65308380126955,48.55226898193359,48.53524971008299,48.45191764831545,48.63375091552734,48.2620830535889,48.3675003051758,48.57283612301475,48.4680004119873,48.6205825805664,48.64013862609865,48.47583198547365,48.61601638793945,48.50766563415525,48.40508365631105,48.78624534606935,48.727632522583,48.44330978393555,48.33705552419028,48.71166610717775,48.61300086975095,48.61691665649415,48.44562530517577,48.38083457946775,48.31150027683803,48.32250022888185,48.32666778564455,48.2541675567627,48.37575022379556,48.36541652679443,48.2786674499512,48.26397260030112,48.27866554260255,48.34202766418456,48.55691719055175,48.29524930318195,48.5100002288818,48.36555544535317,48.2316665649414,48.41163253784175,48.4423351287842,48.29975032806398,48.28458404541018,48.23749923706055,48.3166675567627,48.35000038146975,48.32441711425785,48.8728332519531,48.2591667175293,48.62676696777345,48.61250114440919,48.6125831604004,48.64416694641115,48.65097300211588,49.0140838623047,48.42935848236085,48.29631748199463,48.3891658782959,48.23999977111815,48.91000175476075,48.6535015106201,48.741042137146,48.7344169616699,48.51668319702148,48.5883331298828,48.646333694458,48.40591669082642,48.4610004425049,48.48091697692871,48.40204191207886,48.3985824584961,48.89918009440107,48.52916526794435,48.5626964569092,48.58625030517575,48.2390422821045,48.2533321380615,48.27999941507976,48.37033319473267,48.4111671447754,48.4258327484131,48.34958362579347,48.41650009155275,48.34736103481717,48.3236656188965,48.42191696166995,48.38145875930786,48.69360796610513,48.69683265686035,48.34925079345705,48.47675132751465,48.30783367156982,48.30549240112305,48.43562507629395,48.31583404541016,48.52691555023195,48.70750045776365,48.29038352966308,48.77933311462405,48.60124969482422,48.80441665649415,48.78633308410645,48.83066749572755,48.8221664428711,48.21333312988286,48.2361660003662,48.31583404541016,48.6340847015381,48.2608337402344,48.64933395385745,48.72924995422365,48.4399662017822,48.29500007629395,48.42924880981445,48.2997922897339,48.35833358764645,48.2704162597656,48.52454090118407,48.37049865722655,48.2910842895508,48.27824974060054,48.29924964904785,48.52666664123535,48.44491577148435,48.30816745758055,48.3367500305176,48.34833335876465,48.8245830535889,48.32441711425785,48.2608337402344,48.2837505340576,48.19583320617674,48.4990825653076,48.62891578674315,48.2749996185303],[-125.620002746582,-123.5664329528805,-122.5070304870605,-123.449499130249,-123.3660011291502,-123.1712493896485,-123.1945838928225,-123.1784172058105,-123.292293548584,-122.784999847412,-123.173831939697,-123.2491664886475,-123.1930809020995,-123.222999572754,-123.1936683654785,-123.1943740844727,-123.6034173965454,-123.6449966430665,-123.68416595459,-122.683525085449,-123.506999969482,-123.5466690063475,-123.0108337402345,-123.177196184794,-123.1758117675781,-123.119918823242,-123.123500823975,-123.169418334961,-123.1935844421385,-123.021942138672,-123.2308311462405,-123.4016647338865,-124.6026229858398,-123.2974166870115,-124.655750274658,-124.810832977295,-123.9689140319825,-123.287082672119,-123.576997756958,-124.2566661834718,-122.767997741699,-124.8508319854737,-123.2914537702287,-123.3130416870117,-124.9300003051755,-123.2463328043618,-124.6150016784665,-123.282585144043,-123.2140421867372,-123.0116233825685,-123.6854154798719,-123.6825828552245,-123.166416168213,-122.795169830322,-124.825834274292,-124.8866653442385,-123.116500854492,-123.3225021362305,-123.2222819328308,-123.247875213623,-123.2626609802245,-123.282917022705,-123.876667022705,-123.047416687012,-123.2982482910155,-123.324996948242,-122.9422492980955,-123.1689112736629,-123.065830230713,-123.1677780151367,-123.2593307495115,-123.2443351745605,-123.1674156188963,-123.256946563721,-123.1911659240725,-123.432502746582,-123.240882873535,-123.267116546631,-123.218250274658,-123.0238342285155,-123.1964302062988,-123.1612510681155,-123.328857421875,-122.965835571289,-123.2697486877445,-123.039249420166,-124.0666669209797,-123.3605674743652,-123.6983337402345,-123.2361660003663,-123.3896636962895,-123.2004178365072,-123.2486114501952,-123.232418060303,-123.1953353881835,-124.250499725342,-123.132083892822,-123.9505004882815,-123.0685844421385,-123.0639610290527,-123.0893325805665,-123.194786071777,-123.201663970947,-123.152500152588,-123.3062496185302,-123.1628303527835,-123.8899993896485,-124.864418029785,-122.824333190918,-124.8233337402345,-123.426250457764,-123.787082672119,-123.1608352661135,-123.2764328002929,-123.2649639674595,-123.699996948242,-123.122299194336,-123.333168029785,-123.8738641738892,-123.89058303833,-123.5491657257082,-122.9052505493165,-123.5044994354247,-122.8948307037352,-122.9813804626465,-123.5139198303225,-123.216667175293,-123.133785247803,-123.706081390381,-123.605083465576,-123.4274559021,-124.5341663360595,-124.5184173583985,-123.6991653442385,-123.0253482394749,-122.9374160766605,-123.4904454549155,-123.5269794464113,-123.1219978332515,-122.8082550593785,-122.78450012207,-122.921585083008,-123.1462516784665,-123.572082519531,-123.2550010681155,-123.0758556566741,-122.945999145508,-123.122501373291,-123.15283203125,-122.959419250488,-123.0929679870605,-122.974582672119,-124.1435432434085,-123.5595417022705,-123.389514923096,-123.1646270751955,-123.9266955057781,-123.382499694824,-123.316833496094,-123.3400840759275,-124.337498664856,-124.268333435059,-123.7568926130021,-123.2441673278805,-123.286666870117,-123.4283332824705,-123.1999448140462,-123.2524986267088,-123.811248779297,-123.5193875630697,-123.655002593994,-123.9872500101727,-123.3133316040035,-123.7665278116862,-124.8506660461425,-123.2704149881998,-123.369083404541,-122.883758544922,-123.063831329346,-123.5227909088138,-123.3758316040037,-123.598331451416,-124.1108322143555,-123.438331604004,-122.9622497558595,-123.0512504577635,-123.767498016357,-123.1541496276856,-123.1694984436035,-123.1327476501465,-123.1108322143555,-123.1621678670247,-123.365695953369,-123.9887580871583,-123.270177078247,-123.184085845947,-123.7999992370605,-123.6375007629395,-123.148166656494,-123.3093338012698,-123.2239990234375,-124.8522491455079,-123.3185005187985,-123.3566665649415,-125.0411462783815,-124.7367515563965,-123.2778333028157,-123.2585873603822,-123.2880859375,-123.4663747151692,-122.959831237793,-122.9528198242185,-122.9954986572265,-123.6767921447752,-123.529167175293,-123.4869448343912,-123.3765621185301,-123.403415679932,-123.4200019836425,-123.4520835876463,-123.3876686096195,-123.4300092061362,-123.483581542969,-123.3835830688475,-123.3554162979124,-123.0466206868487,-123.095333099365,-123.405830383301,-123.0890846252445,-123.4873332977297,-123.5674476623535,-123.4608745574951,-123.6066665649415,-123.2953338623047,-123.224166870117,-123.0214012145995,-123.070915222168,-123.259666442871,-123.041915893555,-123.0948333740235,-123.3522491455075,-123.0242500305175,-122.9591636657715,-123.2906646728515,-123.47416305542,-123.066501617432,-123.787498474121,-122.7527503967285,-122.9258308410645,-123.093246459961,-123.410247802734,-122.8588333129885,-123.329666137695,-123.2399978637695,-123.9829177856445,-123.2218322753907,-123.1631660461425,-123.8464164733885,-123.482997894287,-123.8895835876465,-124.85583114624,-123.245246887207,-123.414041519165,-123.4989166259765,-122.788417816162,-123.048583984375,-122.9622497558595,-123.676666259766,-123.6377754211425,-123.279998779297,-125.132999420166,-123.1953353881835,-123.6399993896485],100,null,null,{"interactive":true,"className":"","stroke":true,"color":"red","weight":5,"opacity":0.5,"fill":true,"fillColor":"red","fillOpacity":0.2},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]},{"method":"addMarkers","args":[[48.7071967124939,48.53648455467449,48.30357646942138,48.55226898193359,48.57283612301475,48.29631748199463],[-123.177196184794,-123.1689112736629,-123.5269794464113,-122.8082550593785,-123.0758556566741,-123.270177078247],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[47.9096228281657,50.0516662597656],"lng":[-125.620002746582,-122.5070304870605]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Summary">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR SUMMARY IN THIS CALLOUT BOX</p>
+<p>It seems that the data of this dataset is collected only in a very small range, but in this range, most possible locations are in the gulf structure.</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="finalize-work" class="level1">
+<h1>Finalize Work</h1>
+<p>Congratulation 🎉. You’re done with the homework. See the instruction at top of the Homework Assignments page for how to submit.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

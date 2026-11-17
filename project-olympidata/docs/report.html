@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Olympidata - Report</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./proposal.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./report.html">Report</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Olympidata</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./report.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Report</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./proposal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Proposal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sketch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Sketch</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Shooting-Rowing-HanSun.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Shooting &amp; Rowing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./skiing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Cross Country Skiing &amp; Alpine Skiing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Figure-Skating_Speed-Skating.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Figure Skating &amp; Speed Skating</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Football-Swimming-Jack Fang.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Football &amp; Swimming</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#chasing-medals" id="toc-chasing-medals" class="nav-link active" data-scroll-target="#chasing-medals"><strong>Chasing Medals</strong></a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><strong>1. Introduction</strong></a></li>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology"><strong>2. Methodology</strong></a>
+  <ul class="collapse">
+  <li><a href="#data-cleaning-and-preparation" id="toc-data-cleaning-and-preparation" class="nav-link" data-scroll-target="#data-cleaning-and-preparation"><strong>2.1 Data Cleaning and Preparation</strong></a></li>
+  <li><a href="#analysis-approach" id="toc-analysis-approach" class="nav-link" data-scroll-target="#analysis-approach"><strong>2.2 Analysis Approach</strong></a></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><strong>3. Results</strong></a>
+  <ul class="collapse">
+  <li><a href="#dataset-overview" id="toc-dataset-overview" class="nav-link" data-scroll-target="#dataset-overview"><strong>3.1 Dataset overview</strong></a></li>
+  <li><a href="#impact-of-sex" id="toc-impact-of-sex" class="nav-link" data-scroll-target="#impact-of-sex"><strong>3.2 Impact of Sex</strong></a></li>
+  </ul></li>
+  <li><a href="#winter" id="toc-winter" class="nav-link" data-scroll-target="#winter">Winter</a></li>
+  <li><a href="#summer" id="toc-summer" class="nav-link" data-scroll-target="#summer">Summer</a>
+  <ul class="collapse">
+  <li><a href="#participation-over-years" id="toc-participation-over-years" class="nav-link" data-scroll-target="#participation-over-years"><strong>3.3 Participation Over Years</strong></a></li>
+  <li><a href="#correlation-between-medal-wins-and-physical-attributes" id="toc-correlation-between-medal-wins-and-physical-attributes" class="nav-link" data-scroll-target="#correlation-between-medal-wins-and-physical-attributes"><strong>3.4 Correlation Between Medal Wins and Physical Attributes</strong></a></li>
+  <li><a href="#top-countries" id="toc-top-countries" class="nav-link" data-scroll-target="#top-countries"><strong>3.5 Top countries</strong></a></li>
+  <li><a href="#medals-vs-participant" id="toc-medals-vs-participant" class="nav-link" data-scroll-target="#medals-vs-participant"><strong>3.6 Medals vs Participant</strong></a></li>
+  </ul></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis"><strong>4. Analysis</strong></a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><strong>5. Conclusion</strong></a></li>
+  <li><a href="#recommendations" id="toc-recommendations" class="nav-link" data-scroll-target="#recommendations"><strong>6. Recommendations</strong></a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Report</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<hr>
+<section id="chasing-medals" class="level2">
+<h2 class="anchored" data-anchor-id="chasing-medals"><strong>Chasing Medals</strong></h2>
+<p><strong>Analysis of Olympic Data</strong></p>
+<hr>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction"><strong>1. Introduction</strong></h2>
+<p>The Olympics is one of the greatest global sporting events, celebrating athleticism and showcasing incredible human feats. However, at its core, the Olympics is truly a competition, with audiences worldwide closely following medal counts and rooting for gold. What variables, such as country or weight, influence success in the Olympics? In this report, we analyze the factors that correlate with earning medals in eight different sports: Football, Swimming, Shooting, Rowing, Alpine Skiing, Cross-Country Skiing, Speed Skating, and Figure Skating.</p>
+<p>Video Presentation:</p>
+<p><a href="Data Sci Presentation.pdf">Presentation Slides</a></p>
+<hr>
+</section>
+<section id="methodology" class="level2">
+<h2 class="anchored" data-anchor-id="methodology"><strong>2. Methodology</strong></h2>
+<section id="data-cleaning-and-preparation" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleaning-and-preparation"><strong>2.1 Data Cleaning and Preparation</strong></h3>
+<ul>
+<li>Removed missing values in key attributes such as age, height, weight, and medals.</li>
+<li>Filtered data</li>
+<li>Created new variables:
+<ul>
+<li><code>medal_won</code>: Indicates if an athlete won a medal (Yes/No).</li>
+<li><code>repeat_participation</code>: Captures repeated appearances by athletes.</li>
+</ul></li>
+</ul>
+</section>
+<section id="analysis-approach" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-approach"><strong>2.2 Analysis Approach</strong></h3>
+<ul>
+<li><strong>Physical Attributes</strong>: Compared average age, height, and weight of medalists vs non-medalists.</li>
+<li><strong>Experience</strong>: Evaluated the role of age and repeated participation in medal success.</li>
+<li><strong>Country Dominance</strong>: Analyzed which countries are top performers in each sport.</li>
+<li><strong>Sport Comparisons</strong>: Highlighted differences and similarities between sports</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results"><strong>3. Results</strong></h2>
+<section id="dataset-overview" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-overview"><strong>3.1 Dataset overview</strong></h3>
+<ul>
+<li><p><strong>Findings</strong>:Top 10 sports, more participants in summer than winter.</p></li>
+<li><p><strong>Visualization</strong>:</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 271116 Columns: 15
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (10): name, sex, team, noc, games, season, city, sport, event, medal
+dbl  (5): id, age, height, weight, year
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 66 × 2
+   sport                participants
+   &lt;chr&gt;                       &lt;int&gt;
+ 1 Athletics                   38624
+ 2 Gymnastics                  26707
+ 3 Swimming                    23195
+ 4 Shooting                    11448
+ 5 Cycling                     10859
+ 6 Fencing                     10735
+ 7 Rowing                      10595
+ 8 Cross Country Skiing         9133
+ 9 Alpine Skiing                8829
+10 Wrestling                    7154
+# ℹ 56 more rows</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 35 × 2
+    year participants
+   &lt;dbl&gt;        &lt;int&gt;
+ 1  1896          380
+ 2  1900         1936
+ 3  1904         1301
+ 4  1906         1733
+ 5  1908         3101
+ 6  1912         4040
+ 7  1920         4292
+ 8  1924         5693
+ 9  1928         5574
+10  1932         3321
+# ℹ 25 more rows</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="impact-of-sex" class="level3">
+<h3 class="anchored" data-anchor-id="impact-of-sex"><strong>3.2 Impact of Sex</strong></h3>
+<ul>
+<li><p><strong>Findings</strong>:Males participant are older, heigher,and heavier than female. A slight different trend detected in football and rowing.</p></li>
+<li><p><strong>Visualization</strong></p></li>
+</ul>
+</section>
+</section>
+<section id="winter" class="level2">
+<h2 class="anchored" data-anchor-id="winter">Winter</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="summer" class="level2">
+<h2 class="anchored" data-anchor-id="summer">Summer</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="participation-over-years" class="level3">
+<h3 class="anchored" data-anchor-id="participation-over-years"><strong>3.3 Participation Over Years</strong></h3>
+<ul>
+<li><p><strong>Findings</strong>:Males participant are older, heigher,and heavier than female. A slight different trend detected in footb</p></li>
+<li><p><strong>Visualization</strong>:</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 111 × 3
+   sport     year participation
+   &lt;chr&gt;    &lt;dbl&gt;         &lt;int&gt;
+ 1 Shooting  1896            65
+ 2 Swimming  1896            18
+ 3 Football  1900            35
+ 4 Rowing    1900           133
+ 5 Shooting  1900           221
+ 6 Swimming  1900           131
+ 7 Football  1904            36
+ 8 Rowing    1904            46
+ 9 Swimming  1904            64
+10 Football  1906            45
+# ℹ 101 more rows</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="correlation-between-medal-wins-and-physical-attributes" class="level3">
+<h3 class="anchored" data-anchor-id="correlation-between-medal-wins-and-physical-attributes"><strong>3.4 Correlation Between Medal Wins and Physical Attributes</strong></h3>
+<ul>
+<li><p><strong>Findings</strong>:</p></li>
+<li><p><strong>Visualization</strong>:</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 11829 rows containing non-finite outside the scale range
+(`stat_ydensity()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 11829 rows containing non-finite outside the scale range
+(`stat_boxplot()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 28256 rows containing non-finite outside the scale range
+(`stat_ydensity()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 28256 rows containing non-finite outside the scale range
+(`stat_boxplot()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="top-countries" class="level3">
+<h3 class="anchored" data-anchor-id="top-countries"><strong>3.5 Top countries</strong></h3>
+<ul>
+<li><p><strong>Findings</strong>:</p></li>
+<li><p><strong>Visualization</strong>:</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="medals-vs-participant" class="level3">
+<h3 class="anchored" data-anchor-id="medals-vs-participant"><strong>3.6 Medals vs Participant</strong></h3>
+<ul>
+<li><p><strong>Findings</strong>:</p></li>
+<li><p><strong>Visualization</strong>:</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="report_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analysis"><strong>4. Analysis</strong></h2>
+<ul>
+<li><p><strong>Findings</strong>: The more participants a country has the more medals they will likely win. Different sports require different characteristics for success. The average height of football players who won medals was around 173 cm, the average weight was around 76 kg, and they were on average 23 years old. The average height of rowers who won medals was around 180 cm, the average weight was around 78 kg, and they were on average around 25 years old. The average height of shooting athletes who won medals was around 175 cm, the average weight was around 76 kg, and on average around 36 years old. The average height of swimmers who won medals was around 179 cm, the average weight was around 72 kg, and on average around 22 years old. The average height of alpine skiers who won medals was around 170 cm, the average weight was around 68 kg, and on average around 24 years old. The average height of cross country skiers who won medals was around 175 cm, the average weight was around 63 kg, and on average around 28 years old. The average height of figure skaters who won medals was around 167 cm, the average weight was around 59 kg, and on average around 23 years old. The average height of speed skaters who won medals was around 178 cm, the average weight was around 72 kg, and on average around 25 years old.</p></li>
+<li><p><strong>Limitations</strong>:Due to time, the summer sport and winter sport is not a strong representation since we only have four each.</p></li>
+</ul>
+<hr>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion"><strong>5. Conclusion</strong></h2>
+<p>Summer: The analysis of summer sports highlights swimming as the sport with the highest number of participants and a consistent upward trend in participation over time. Countries like the USA dominate summer sports both in terms of athlete participation and medals won. While sports like rowing and shooting show steady but moderate growth, football participation is more regionally concentrated, reflecting its varied popularity worldwide.</p>
+<p>Winter: Winter sports participation demonstrates a more diverse pattern, with Alpine Skiing and Cross-Country Skiing being prominent. Nations like Norway, Canada, and the USA excel, can be caused by their geographic advantages. Medal success in winter sports shows a loose correlation with participation. While the participation trends indicate a steady increase in global representation, although the growth remains slower compared to summer sports.</p>
+<p>Overall: Both summer and winter sports reflect a growing trend in global participation. While summer sports demonstrate higher participation overall, winter sports exhibit technical specialization and geographic concentration. Medal success is partially tied to participation rates, as factors like investment, infrastructure, and athlete development programs significantly influence outcomes.</p>
+<hr>
+</section>
+<section id="recommendations" class="level2">
+<h2 class="anchored" data-anchor-id="recommendations"><strong>6. Recommendations</strong></h2>
+<ol type="1">
+<li><strong>For Athletes</strong>: Tailor training regimens based on the physical and experiential needs of each sport.</li>
+<li><strong>For Countries</strong>: Invest in infrastructure and coaching programs to support elite-level performance.</li>
+<li><strong>For Further Analysis</strong>: Integrate data on training, funding, and external conditions to refine predictive models for success.</li>
+</ol>
+<hr>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Preface">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./proposal.html" class="pagination-link" aria-label="Proposal">
+        <span class="nav-page-text">Proposal</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu"># Report {.unnumbered}</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a>------------------------------------------------------------------------</span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="fu">## **Chasing Medals**</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a></span>
+<span id="cb12-7"><a href="#cb12-7"></a>**Analysis of Olympic Data**</span>
+<span id="cb12-8"><a href="#cb12-8"></a></span>
+<span id="cb12-9"><a href="#cb12-9"></a>------------------------------------------------------------------------</span>
+<span id="cb12-10"><a href="#cb12-10"></a></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="fu">## **1. Introduction**</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a></span>
+<span id="cb12-13"><a href="#cb12-13"></a>The Olympics is one of the greatest global sporting events, celebrating athleticism and showcasing incredible human feats. However, at its core, the Olympics is truly a competition, with audiences worldwide closely following medal counts and rooting for gold. What variables, such as country or weight, influence success in the Olympics? In this report, we analyze the factors that correlate with earning medals in eight different sports: Football, Swimming, Shooting, Rowing, Alpine Skiing, Cross-Country Skiing, Speed Skating, and Figure Skating.</span>
+<span id="cb12-14"><a href="#cb12-14"></a></span>
+<span id="cb12-15"><a href="#cb12-15"></a>Video Presentation:</span>
+<span id="cb12-16"><a href="#cb12-16"></a></span>
+<span id="cb12-17"><a href="#cb12-17"></a></span>
+<span id="cb12-18"><a href="#cb12-18"></a><span class="co">[</span><span class="ot">Presentation Slides</span><span class="co">](Data%20Sci%20Presentation.pdf)</span></span>
+<span id="cb12-19"><a href="#cb12-19"></a></span>
+<span id="cb12-20"><a href="#cb12-20"></a></span>
+<span id="cb12-21"><a href="#cb12-21"></a></span>
+<span id="cb12-22"><a href="#cb12-22"></a>------------------------------------------------------------------------</span>
+<span id="cb12-23"><a href="#cb12-23"></a></span>
+<span id="cb12-24"><a href="#cb12-24"></a><span class="fu">## **2. Methodology**</span></span>
+<span id="cb12-25"><a href="#cb12-25"></a></span>
+<span id="cb12-26"><a href="#cb12-26"></a><span class="fu">### **2.1 Data Cleaning and Preparation**</span></span>
+<span id="cb12-27"><a href="#cb12-27"></a></span>
+<span id="cb12-28"><a href="#cb12-28"></a><span class="ss">-   </span>Removed missing values in key attributes such as age, height, weight, and medals.</span>
+<span id="cb12-29"><a href="#cb12-29"></a><span class="ss">-   </span>Filtered data</span>
+<span id="cb12-30"><a href="#cb12-30"></a><span class="ss">-   </span>Created new variables:</span>
+<span id="cb12-31"><a href="#cb12-31"></a><span class="ss">    -   </span><span class="in">`medal_won`</span>: Indicates if an athlete won a medal (Yes/No).</span>
+<span id="cb12-32"><a href="#cb12-32"></a><span class="ss">    -   </span><span class="in">`repeat_participation`</span>: Captures repeated appearances by athletes.</span>
+<span id="cb12-33"><a href="#cb12-33"></a></span>
+<span id="cb12-34"><a href="#cb12-34"></a><span class="fu">### **2.2 Analysis Approach**</span></span>
+<span id="cb12-35"><a href="#cb12-35"></a></span>
+<span id="cb12-36"><a href="#cb12-36"></a><span class="ss">-   </span>**Physical Attributes**: Compared average age, height, and weight of medalists vs non-medalists.</span>
+<span id="cb12-37"><a href="#cb12-37"></a><span class="ss">-   </span>**Experience**: Evaluated the role of age and repeated participation in medal success.</span>
+<span id="cb12-38"><a href="#cb12-38"></a><span class="ss">-   </span>**Country Dominance**: Analyzed which countries are top performers in each sport.</span>
+<span id="cb12-39"><a href="#cb12-39"></a><span class="ss">-   </span>**Sport Comparisons**: Highlighted differences and similarities between sports</span>
+<span id="cb12-40"><a href="#cb12-40"></a></span>
+<span id="cb12-41"><a href="#cb12-41"></a>------------------------------------------------------------------------</span>
+<span id="cb12-42"><a href="#cb12-42"></a></span>
+<span id="cb12-43"><a href="#cb12-43"></a><span class="fu">## **3. Results**</span></span>
+<span id="cb12-44"><a href="#cb12-44"></a></span>
+<span id="cb12-45"><a href="#cb12-45"></a><span class="fu">### **3.1 Dataset overview**</span></span>
+<span id="cb12-46"><a href="#cb12-46"></a></span>
+<span id="cb12-47"><a href="#cb12-47"></a><span class="ss">-   </span>**Findings**:Top 10 sports, more participants in summer than winter.</span>
+<span id="cb12-48"><a href="#cb12-48"></a></span>
+<span id="cb12-49"><a href="#cb12-49"></a><span class="ss">-   </span>**Visualization**:</span>
+<span id="cb12-50"><a href="#cb12-50"></a></span>
+<span id="cb12-51"><a href="#cb12-51"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb12-52"><a href="#cb12-52"></a><span class="in">olympics &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-08-06/olympics.csv')</span></span>
+<span id="cb12-53"><a href="#cb12-53"></a></span>
+<span id="cb12-54"><a href="#cb12-54"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb12-55"><a href="#cb12-55"></a><span class="in">library(ggplot2)</span></span>
+<span id="cb12-56"><a href="#cb12-56"></a><span class="in">library(dplyr)</span></span>
+<span id="cb12-57"><a href="#cb12-57"></a><span class="in">library(tidyr)</span></span>
+<span id="cb12-58"><a href="#cb12-58"></a></span>
+<span id="cb12-59"><a href="#cb12-59"></a><span class="in"># Count number of participants in each sport</span></span>
+<span id="cb12-60"><a href="#cb12-60"></a><span class="in">sport_distribution &lt;- olympics |&gt;</span></span>
+<span id="cb12-61"><a href="#cb12-61"></a><span class="in">  group_by(sport) |&gt;</span></span>
+<span id="cb12-62"><a href="#cb12-62"></a><span class="in">  summarise(participants = n(), .groups = 'drop') |&gt;</span></span>
+<span id="cb12-63"><a href="#cb12-63"></a><span class="in">  arrange(desc(participants))</span></span>
+<span id="cb12-64"><a href="#cb12-64"></a><span class="in">sport_distribution</span></span>
+<span id="cb12-65"><a href="#cb12-65"></a></span>
+<span id="cb12-66"><a href="#cb12-66"></a><span class="in"># Plot distribution of top 10 sports</span></span>
+<span id="cb12-67"><a href="#cb12-67"></a><span class="in">sport_distribution |&gt;</span></span>
+<span id="cb12-68"><a href="#cb12-68"></a><span class="in">  slice_max(participants, n = 10) |&gt;</span></span>
+<span id="cb12-69"><a href="#cb12-69"></a><span class="in">  ggplot(aes(x = reorder(sport, participants), y = participants)) +</span></span>
+<span id="cb12-70"><a href="#cb12-70"></a><span class="in">  geom_bar(stat = "identity", fill = "steelblue") +</span></span>
+<span id="cb12-71"><a href="#cb12-71"></a><span class="in">  coord_flip() +</span></span>
+<span id="cb12-72"><a href="#cb12-72"></a><span class="in">  labs(</span></span>
+<span id="cb12-73"><a href="#cb12-73"></a><span class="in">    title = "Top 10 Sports by Number of Participants",</span></span>
+<span id="cb12-74"><a href="#cb12-74"></a><span class="in">    x = "Sport",</span></span>
+<span id="cb12-75"><a href="#cb12-75"></a><span class="in">    y = "Number of Participants"</span></span>
+<span id="cb12-76"><a href="#cb12-76"></a><span class="in">  ) +</span></span>
+<span id="cb12-77"><a href="#cb12-77"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb12-78"><a href="#cb12-78"></a><span class="in">```</span></span>
+<span id="cb12-79"><a href="#cb12-79"></a></span>
+<span id="cb12-80"><a href="#cb12-80"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb12-81"><a href="#cb12-81"></a><span class="in"># Count number of participants per year</span></span>
+<span id="cb12-82"><a href="#cb12-82"></a><span class="in">participation_trends &lt;- olympics |&gt;</span></span>
+<span id="cb12-83"><a href="#cb12-83"></a><span class="in">  group_by(year) |&gt;</span></span>
+<span id="cb12-84"><a href="#cb12-84"></a><span class="in">  summarise(participants = n(), .groups = 'drop')</span></span>
+<span id="cb12-85"><a href="#cb12-85"></a><span class="in">participation_trends</span></span>
+<span id="cb12-86"><a href="#cb12-86"></a></span>
+<span id="cb12-87"><a href="#cb12-87"></a><span class="in"># Plot participation over time</span></span>
+<span id="cb12-88"><a href="#cb12-88"></a><span class="in">participation_trends |&gt;</span></span>
+<span id="cb12-89"><a href="#cb12-89"></a><span class="in">  ggplot(aes(x = year, y = participants)) +</span></span>
+<span id="cb12-90"><a href="#cb12-90"></a><span class="in">  geom_line(color = "darkorange", size = 1) +</span></span>
+<span id="cb12-91"><a href="#cb12-91"></a><span class="in">  geom_point(color = "darkred") +</span></span>
+<span id="cb12-92"><a href="#cb12-92"></a><span class="in">  labs(</span></span>
+<span id="cb12-93"><a href="#cb12-93"></a><span class="in">    title = "Participation Trends Over Time",</span></span>
+<span id="cb12-94"><a href="#cb12-94"></a><span class="in">    x = "Year",</span></span>
+<span id="cb12-95"><a href="#cb12-95"></a><span class="in">    y = "Number of Participants"</span></span>
+<span id="cb12-96"><a href="#cb12-96"></a><span class="in">  ) +</span></span>
+<span id="cb12-97"><a href="#cb12-97"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb12-98"><a href="#cb12-98"></a></span>
+<span id="cb12-99"><a href="#cb12-99"></a><span class="in">```</span></span>
+<span id="cb12-100"><a href="#cb12-100"></a></span>
+<span id="cb12-101"><a href="#cb12-101"></a><span class="fu">### **3.2 Impact of Sex**</span></span>
+<span id="cb12-102"><a href="#cb12-102"></a></span>
+<span id="cb12-103"><a href="#cb12-103"></a><span class="ss">-   </span>**Findings**:Males participant are older, heigher,and heavier than female. A slight different trend detected in football and rowing.</span>
+<span id="cb12-104"><a href="#cb12-104"></a></span>
+<span id="cb12-105"><a href="#cb12-105"></a><span class="ss">-   </span>**Visualization**</span>
+<span id="cb12-106"><a href="#cb12-106"></a></span>
+<span id="cb12-107"><a href="#cb12-107"></a><span class="fu">## Winter</span></span>
+<span id="cb12-108"><a href="#cb12-108"></a></span>
+<span id="cb12-109"><a href="#cb12-109"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb12-110"><a href="#cb12-110"></a><span class="in">athlete_trends &lt;- olympics |&gt;</span></span>
+<span id="cb12-111"><a href="#cb12-111"></a><span class="in">  filter(sport %in% c("Cross Country Skiing", "Alpine Skiing","Figure Skating","Speed Skating")) |&gt;</span></span>
+<span id="cb12-112"><a href="#cb12-112"></a><span class="in">  group_by(sport, sex) |&gt;</span></span>
+<span id="cb12-113"><a href="#cb12-113"></a><span class="in">  summarize(</span></span>
+<span id="cb12-114"><a href="#cb12-114"></a><span class="in">    avg_age = mean(age, na.rm = TRUE),</span></span>
+<span id="cb12-115"><a href="#cb12-115"></a><span class="in">    avg_height = mean(height, na.rm = TRUE),</span></span>
+<span id="cb12-116"><a href="#cb12-116"></a><span class="in">    avg_weight = mean(weight, na.rm = TRUE),</span></span>
+<span id="cb12-117"><a href="#cb12-117"></a><span class="in">    .groups = 'drop'</span></span>
+<span id="cb12-118"><a href="#cb12-118"></a><span class="in">  )</span></span>
+<span id="cb12-119"><a href="#cb12-119"></a></span>
+<span id="cb12-120"><a href="#cb12-120"></a><span class="in">athlete_trends |&gt;</span></span>
+<span id="cb12-121"><a href="#cb12-121"></a><span class="in">  pivot_longer(cols = c(avg_age, avg_height, avg_weight), names_to = "attribute", values_to = "value") |&gt;</span></span>
+<span id="cb12-122"><a href="#cb12-122"></a><span class="in">  ggplot(aes(x = sport, y = value, fill = sex)) +</span></span>
+<span id="cb12-123"><a href="#cb12-123"></a><span class="in">  geom_bar(stat = "identity", position = "dodge") +</span></span>
+<span id="cb12-124"><a href="#cb12-124"></a><span class="in">  facet_wrap(~attribute, scales = "free_y") +</span></span>
+<span id="cb12-125"><a href="#cb12-125"></a><span class="in">  labs(</span></span>
+<span id="cb12-126"><a href="#cb12-126"></a><span class="in">    title = "Trends in Athlete Characteristics by Winter Sport and Sex",</span></span>
+<span id="cb12-127"><a href="#cb12-127"></a><span class="in">    x = "Sport",</span></span>
+<span id="cb12-128"><a href="#cb12-128"></a><span class="in">    y = "Average Value",</span></span>
+<span id="cb12-129"><a href="#cb12-129"></a><span class="in">    fill = "Sex"</span></span>
+<span id="cb12-130"><a href="#cb12-130"></a><span class="in">  ) +</span></span>
+<span id="cb12-131"><a href="#cb12-131"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb12-132"><a href="#cb12-132"></a><span class="in">```</span></span>
+<span id="cb12-133"><a href="#cb12-133"></a></span>
+<span id="cb12-134"><a href="#cb12-134"></a><span class="fu">## Summer</span></span>
+<span id="cb12-135"><a href="#cb12-135"></a></span>
+<span id="cb12-136"><a href="#cb12-136"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb12-137"><a href="#cb12-137"></a><span class="in">athlete_trends &lt;- olympics |&gt;</span></span>
+<span id="cb12-138"><a href="#cb12-138"></a><span class="in">  filter(sport %in% c("Shooting", "Rowing","Swimming","Football")) |&gt;</span></span>
+<span id="cb12-139"><a href="#cb12-139"></a><span class="in">  group_by(sport, sex) |&gt;</span></span>
+<span id="cb12-140"><a href="#cb12-140"></a><span class="in">  summarize(</span></span>
+<span id="cb12-141"><a href="#cb12-141"></a><span class="in">    avg_age = mean(age, na.rm = TRUE),</span></span>
+<span id="cb12-142"><a href="#cb12-142"></a><span class="in">    avg_height = mean(height, na.rm = TRUE),</span></span>
+<span id="cb12-143"><a href="#cb12-143"></a><span class="in">    avg_weight = mean(weight, na.rm = TRUE),</span></span>
+<span id="cb12-144"><a href="#cb12-144"></a><span class="in">    .groups = 'drop'</span></span>
+<span id="cb12-145"><a href="#cb12-145"></a><span class="in">  )</span></span>
+<span id="cb12-146"><a href="#cb12-146"></a></span>
+<span id="cb12-147"><a href="#cb12-147"></a></span>
+<span id="cb12-148"><a href="#cb12-148"></a><span class="in">athlete_trends |&gt;</span></span>
+<span id="cb12-149"><a href="#cb12-149"></a><span class="in">  pivot_longer(cols = c(avg_age, avg_height, avg_weight), names_to = "attribute", values_to = "value") |&gt;</span></span>
+<span id="cb12-150"><a href="#cb12-150"></a><span class="in">  ggplot(aes(x = sport, y = value, fill = sex)) +</span></span>
+<span id="cb12-151"><a href="#cb12-151"></a><span class="in">  geom_bar(stat = "identity", position = "dodge") +</span></span>
+<span id="cb12-152"><a href="#cb12-152"></a><span class="in">  facet_wrap(~attribute, scales = "free_y") +</span></span>
+<span id="cb12-153"><a href="#cb12-153"></a><span class="in">  labs(</span></span>
+<span id="cb12-154"><a href="#cb12-154"></a><span class="in">    title = "Trends in Athlete Characteristics by Winter Sport and Sex",</span></span>
+<span id="cb12-155"><a href="#cb12-155"></a><span class="in">    x = "Sport",</span></span>
+<span id="cb12-156"><a href="#cb12-156"></a><span class="in">    y = "Average Value",</span></span>
+<span id="cb12-157"><a href="#cb12-157"></a><span class="in">    fill = "Sex"</span></span>
+<span id="cb12-158"><a href="#cb12-158"></a><span class="in">  ) +</span></span>
+<span id="cb12-159"><a href="#cb12-159"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb12-160"><a href="#cb12-160"></a><span class="in">```</span></span>
+<span id="cb12-161"><a href="#cb12-161"></a></span>
+<span id="cb12-162"><a href="#cb12-162"></a><span class="fu">### **3.3 Participation Over Years**</span></span>
+<span id="cb12-163"><a href="#cb12-163"></a></span>
+<span id="cb12-164"><a href="#cb12-164"></a><span class="ss">-   </span>**Findings**:Males participant are older, heigher,and heavier than female. A slight different trend detected in footb</span>
+<span id="cb12-165"><a href="#cb12-165"></a></span>
+<span id="cb12-166"><a href="#cb12-166"></a><span class="ss">-   </span>**Visualization**:</span>
+<span id="cb12-167"><a href="#cb12-167"></a></span>
+<span id="cb12-168"><a href="#cb12-168"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb12-169"><a href="#cb12-169"></a><span class="in">yearly_trends &lt;- olympics |&gt;</span></span>
+<span id="cb12-170"><a href="#cb12-170"></a><span class="in">  filter(sport %in% c("Cross Country Skiing", "Alpine Skiing","Figure Skating","Speed Skating")) |&gt;</span></span>
+<span id="cb12-171"><a href="#cb12-171"></a><span class="in">  group_by(sport, year) |&gt;</span></span>
+<span id="cb12-172"><a href="#cb12-172"></a><span class="in">  summarize(participation = n(), .groups = 'drop') |&gt;</span></span>
+<span id="cb12-173"><a href="#cb12-173"></a><span class="in">  arrange(year)</span></span>
+<span id="cb12-174"><a href="#cb12-174"></a></span>
+<span id="cb12-175"><a href="#cb12-175"></a><span class="in">yearly_trends |&gt;</span></span>
+<span id="cb12-176"><a href="#cb12-176"></a><span class="in">  ggplot(aes(x = year, y = participation, color = sport, group = sport)) +</span></span>
+<span id="cb12-177"><a href="#cb12-177"></a><span class="in">  geom_line(size = 1) +</span></span>
+<span id="cb12-178"><a href="#cb12-178"></a><span class="in">  geom_point() +</span></span>
+<span id="cb12-179"><a href="#cb12-179"></a><span class="in">  labs(</span></span>
+<span id="cb12-180"><a href="#cb12-180"></a><span class="in">    title = "Participation Over the Years in Winter Sports",</span></span>
+<span id="cb12-181"><a href="#cb12-181"></a><span class="in">    x = "Year",</span></span>
+<span id="cb12-182"><a href="#cb12-182"></a><span class="in">    y = "Number of Athletes",</span></span>
+<span id="cb12-183"><a href="#cb12-183"></a><span class="in">    color = "Sport"</span></span>
+<span id="cb12-184"><a href="#cb12-184"></a><span class="in">  ) +</span></span>
+<span id="cb12-185"><a href="#cb12-185"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb12-186"><a href="#cb12-186"></a><span class="in">```</span></span>
+<span id="cb12-187"><a href="#cb12-187"></a></span>
+<span id="cb12-188"><a href="#cb12-188"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb12-189"><a href="#cb12-189"></a><span class="in">yearly_trends &lt;- olympics |&gt;</span></span>
+<span id="cb12-190"><a href="#cb12-190"></a><span class="in">  filter(sport %in% c("Shooting", "Rowing","Swimming","Football")) |&gt;</span></span>
+<span id="cb12-191"><a href="#cb12-191"></a><span class="in">  group_by(sport, year) |&gt;</span></span>
+<span id="cb12-192"><a href="#cb12-192"></a><span class="in">  summarize(participation = n(), .groups = 'drop') |&gt;</span></span>
+<span id="cb12-193"><a href="#cb12-193"></a><span class="in">  arrange(year)</span></span>
+<span id="cb12-194"><a href="#cb12-194"></a><span class="in">yearly_trends</span></span>
+<span id="cb12-195"><a href="#cb12-195"></a></span>
+<span id="cb12-196"><a href="#cb12-196"></a><span class="in">yearly_trends |&gt;</span></span>
+<span id="cb12-197"><a href="#cb12-197"></a><span class="in">  ggplot(aes(x = year, y = participation, color = sport, group = sport)) +</span></span>
+<span id="cb12-198"><a href="#cb12-198"></a><span class="in">  geom_line(size = 1) +</span></span>
+<span id="cb12-199"><a href="#cb12-199"></a><span class="in">  geom_point() +</span></span>
+<span id="cb12-200"><a href="#cb12-200"></a><span class="in">  labs(</span></span>
+<span id="cb12-201"><a href="#cb12-201"></a><span class="in">    title = "Participation Over the Years in Summer Sports",</span></span>
+<span id="cb12-202"><a href="#cb12-202"></a><span class="in">    x = "Year",</span></span>
+<span id="cb12-203"><a href="#cb12-203"></a><span class="in">    y = "Number of Athletes",</span></span>
+<span id="cb12-204"><a href="#cb12-204"></a><span class="in">    color = "Sport"</span></span>
+<span id="cb12-205"><a href="#cb12-205"></a><span class="in">  ) +</span></span>
+<span id="cb12-206"><a href="#cb12-206"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb12-207"><a href="#cb12-207"></a><span class="in">```</span></span>
+<span id="cb12-208"><a href="#cb12-208"></a></span>
+<span id="cb12-209"><a href="#cb12-209"></a><span class="fu">### **3.4 Correlation Between Medal Wins and Physical Attributes**</span></span>
+<span id="cb12-210"><a href="#cb12-210"></a></span>
+<span id="cb12-211"><a href="#cb12-211"></a><span class="ss">-   </span>**Findings**:</span>
+<span id="cb12-212"><a href="#cb12-212"></a></span>
+<span id="cb12-213"><a href="#cb12-213"></a><span class="ss">-   </span>**Visualization**:</span>
+<span id="cb12-214"><a href="#cb12-214"></a></span>
+<span id="cb12-215"><a href="#cb12-215"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb12-216"><a href="#cb12-216"></a><span class="in"># Pivot the data for visualization</span></span>
+<span id="cb12-217"><a href="#cb12-217"></a><span class="in">medal_data_long &lt;- olympics |&gt;</span></span>
+<span id="cb12-218"><a href="#cb12-218"></a><span class="in">  filter(sport %in% c("Cross Country Skiing", "Alpine Skiing","Figure Skating","Speed Skating")) |&gt;</span></span>
+<span id="cb12-219"><a href="#cb12-219"></a><span class="in">  mutate(medal_won = ifelse(is.na(medal), "No", "Yes")) |&gt;</span></span>
+<span id="cb12-220"><a href="#cb12-220"></a><span class="in">  select(sport, medal_won, age, height, weight) |&gt;</span></span>
+<span id="cb12-221"><a href="#cb12-221"></a><span class="in">  pivot_longer(cols = c(age, height, weight), names_to = "attribute", values_to = "value")</span></span>
+<span id="cb12-222"><a href="#cb12-222"></a></span>
+<span id="cb12-223"><a href="#cb12-223"></a><span class="in"># Combined violin and box plot</span></span>
+<span id="cb12-224"><a href="#cb12-224"></a><span class="in">medal_data_long |&gt;</span></span>
+<span id="cb12-225"><a href="#cb12-225"></a><span class="in">  ggplot(aes(x = medal_won, y = value, fill = medal_won)) +</span></span>
+<span id="cb12-226"><a href="#cb12-226"></a><span class="in">  geom_violin(alpha = 0.7, trim = FALSE) +  # Violin plot for distribution</span></span>
+<span id="cb12-227"><a href="#cb12-227"></a><span class="in">  geom_boxplot(width = 0.2, alpha = 0.9, outlier.shape = NA) +  </span></span>
+<span id="cb12-228"><a href="#cb12-228"></a><span class="in">  facet_wrap(~sport + attribute, scales = "free_y") +  </span></span>
+<span id="cb12-229"><a href="#cb12-229"></a><span class="in">  labs(</span></span>
+<span id="cb12-230"><a href="#cb12-230"></a><span class="in">    title = "Comparison of Physical Attributes by Medal Status on Winter Sport",</span></span>
+<span id="cb12-231"><a href="#cb12-231"></a><span class="in">    x = "Medal Won",</span></span>
+<span id="cb12-232"><a href="#cb12-232"></a><span class="in">    y = "Value",</span></span>
+<span id="cb12-233"><a href="#cb12-233"></a><span class="in">    fill = "Medal Won"</span></span>
+<span id="cb12-234"><a href="#cb12-234"></a><span class="in">  ) +</span></span>
+<span id="cb12-235"><a href="#cb12-235"></a><span class="in">  theme_minimal() +</span></span>
+<span id="cb12-236"><a href="#cb12-236"></a><span class="in">  theme(legend.position = "top")  </span></span>
+<span id="cb12-237"><a href="#cb12-237"></a></span>
+<span id="cb12-238"><a href="#cb12-238"></a></span>
+<span id="cb12-239"><a href="#cb12-239"></a><span class="in">```</span></span>
+<span id="cb12-240"><a href="#cb12-240"></a></span>
+<span id="cb12-241"><a href="#cb12-241"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb12-242"><a href="#cb12-242"></a><span class="in"># Pivot the data for visualization</span></span>
+<span id="cb12-243"><a href="#cb12-243"></a><span class="in">medal_data_long &lt;- olympics |&gt;</span></span>
+<span id="cb12-244"><a href="#cb12-244"></a><span class="in">  filter(sport %in% c("Shooting", "Rowing","Swimming","Football")) |&gt;</span></span>
+<span id="cb12-245"><a href="#cb12-245"></a><span class="in">  mutate(medal_won = ifelse(is.na(medal), "No", "Yes")) |&gt;</span></span>
+<span id="cb12-246"><a href="#cb12-246"></a><span class="in">  select(sport, medal_won, age, height, weight) |&gt;</span></span>
+<span id="cb12-247"><a href="#cb12-247"></a><span class="in">  pivot_longer(cols = c(age, height, weight), names_to = "attribute", values_to = "value")</span></span>
+<span id="cb12-248"><a href="#cb12-248"></a></span>
+<span id="cb12-249"><a href="#cb12-249"></a><span class="in"># Combined violin and box plot</span></span>
+<span id="cb12-250"><a href="#cb12-250"></a><span class="in">medal_data_long |&gt;</span></span>
+<span id="cb12-251"><a href="#cb12-251"></a><span class="in">  ggplot(aes(x = medal_won, y = value, fill = medal_won)) +</span></span>
+<span id="cb12-252"><a href="#cb12-252"></a><span class="in">  geom_violin(alpha = 0.7, trim = FALSE) +  # Violin plot for distribution</span></span>
+<span id="cb12-253"><a href="#cb12-253"></a><span class="in">  geom_boxplot(width = 0.2, alpha = 0.9, outlier.shape = NA) +  </span></span>
+<span id="cb12-254"><a href="#cb12-254"></a><span class="in">  facet_wrap(~sport + attribute, scales = "free_y") + </span></span>
+<span id="cb12-255"><a href="#cb12-255"></a><span class="in">  labs(</span></span>
+<span id="cb12-256"><a href="#cb12-256"></a><span class="in">    title = "Comparison of Physical Attributes by Medal Status on Summer Sport",</span></span>
+<span id="cb12-257"><a href="#cb12-257"></a><span class="in">    x = "Medal Won",</span></span>
+<span id="cb12-258"><a href="#cb12-258"></a><span class="in">    y = "Value",</span></span>
+<span id="cb12-259"><a href="#cb12-259"></a><span class="in">    fill = "Medal Won"</span></span>
+<span id="cb12-260"><a href="#cb12-260"></a><span class="in">  ) +</span></span>
+<span id="cb12-261"><a href="#cb12-261"></a><span class="in">  theme_minimal() +</span></span>
+<span id="cb12-262"><a href="#cb12-262"></a><span class="in">  theme(legend.position = "top")</span></span>
+<span id="cb12-263"><a href="#cb12-263"></a></span>
+<span id="cb12-264"><a href="#cb12-264"></a></span>
+<span id="cb12-265"><a href="#cb12-265"></a><span class="in">```</span></span>
+<span id="cb12-266"><a href="#cb12-266"></a></span>
+<span id="cb12-267"><a href="#cb12-267"></a><span class="fu">### **3.5 Top countries**</span></span>
+<span id="cb12-268"><a href="#cb12-268"></a></span>
+<span id="cb12-269"><a href="#cb12-269"></a><span class="ss">-   </span>**Findings**:</span>
+<span id="cb12-270"><a href="#cb12-270"></a></span>
+<span id="cb12-271"><a href="#cb12-271"></a><span class="ss">-   </span>**Visualization**:</span>
+<span id="cb12-272"><a href="#cb12-272"></a></span>
+<span id="cb12-273"><a href="#cb12-273"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb12-274"><a href="#cb12-274"></a><span class="in"># Calculate total participation for top 10 countries</span></span>
+<span id="cb12-275"><a href="#cb12-275"></a><span class="in">top_10_countries &lt;- olympics |&gt;</span></span>
+<span id="cb12-276"><a href="#cb12-276"></a><span class="in">  filter(sport %in% c("Cross Country Skiing", "Alpine Skiing", "Figure Skating", "Speed Skating")) |&gt;</span></span>
+<span id="cb12-277"><a href="#cb12-277"></a><span class="in">  group_by(noc) |&gt;</span></span>
+<span id="cb12-278"><a href="#cb12-278"></a><span class="in">  summarize(total_participation = n(), .groups = 'drop') |&gt;</span></span>
+<span id="cb12-279"><a href="#cb12-279"></a><span class="in">  arrange(desc(total_participation)) |&gt;</span></span>
+<span id="cb12-280"><a href="#cb12-280"></a><span class="in">  slice_max(total_participation, n = 10)</span></span>
+<span id="cb12-281"><a href="#cb12-281"></a></span>
+<span id="cb12-282"><a href="#cb12-282"></a><span class="in"># Filter data for the top 10 countries</span></span>
+<span id="cb12-283"><a href="#cb12-283"></a><span class="in">top_countries_all_sports &lt;- olympics |&gt;</span></span>
+<span id="cb12-284"><a href="#cb12-284"></a><span class="in">  filter(</span></span>
+<span id="cb12-285"><a href="#cb12-285"></a><span class="in">    sport %in% c("Cross Country Skiing", "Alpine Skiing", "Figure Skating", "Speed Skating"),</span></span>
+<span id="cb12-286"><a href="#cb12-286"></a><span class="in">    noc %in% top_10_countries$noc</span></span>
+<span id="cb12-287"><a href="#cb12-287"></a><span class="in">  ) |&gt;</span></span>
+<span id="cb12-288"><a href="#cb12-288"></a><span class="in">  group_by(noc, sport) |&gt;</span></span>
+<span id="cb12-289"><a href="#cb12-289"></a><span class="in">  summarize(participation = n(), .groups = 'drop')</span></span>
+<span id="cb12-290"><a href="#cb12-290"></a></span>
+<span id="cb12-291"><a href="#cb12-291"></a><span class="in"># Plot participation across all four sports for the top 10 countries</span></span>
+<span id="cb12-292"><a href="#cb12-292"></a><span class="in">top_countries_all_sports |&gt;</span></span>
+<span id="cb12-293"><a href="#cb12-293"></a><span class="in">  ggplot(aes(x = reorder(noc, -participation), y = participation, fill = sport)) +</span></span>
+<span id="cb12-294"><a href="#cb12-294"></a><span class="in">  geom_bar(stat = "identity", position = "stack") +</span></span>
+<span id="cb12-295"><a href="#cb12-295"></a><span class="in">  coord_flip() +</span></span>
+<span id="cb12-296"><a href="#cb12-296"></a><span class="in">  labs(</span></span>
+<span id="cb12-297"><a href="#cb12-297"></a><span class="in">    title = "Top 10 Countries by Participation in Winter Sports",</span></span>
+<span id="cb12-298"><a href="#cb12-298"></a><span class="in">    x = "Country (NOC)",</span></span>
+<span id="cb12-299"><a href="#cb12-299"></a><span class="in">    y = "Number of Athletes",</span></span>
+<span id="cb12-300"><a href="#cb12-300"></a><span class="in">    fill = "Sport"</span></span>
+<span id="cb12-301"><a href="#cb12-301"></a><span class="in">  ) +</span></span>
+<span id="cb12-302"><a href="#cb12-302"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb12-303"><a href="#cb12-303"></a></span>
+<span id="cb12-304"><a href="#cb12-304"></a><span class="in">```</span></span>
+<span id="cb12-305"><a href="#cb12-305"></a></span>
+<span id="cb12-306"><a href="#cb12-306"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb12-307"><a href="#cb12-307"></a><span class="in"># Calculate total participation for top 10 countries</span></span>
+<span id="cb12-308"><a href="#cb12-308"></a><span class="in">top_10_countries &lt;- olympics |&gt;</span></span>
+<span id="cb12-309"><a href="#cb12-309"></a><span class="in">  filter(sport %in% c("Shooting", "Rowing","Swimming","Football")) |&gt;</span></span>
+<span id="cb12-310"><a href="#cb12-310"></a><span class="in">  group_by(noc) |&gt;</span></span>
+<span id="cb12-311"><a href="#cb12-311"></a><span class="in">  summarize(total_participation = n(), .groups = 'drop') |&gt;</span></span>
+<span id="cb12-312"><a href="#cb12-312"></a><span class="in">  arrange(desc(total_participation)) |&gt;</span></span>
+<span id="cb12-313"><a href="#cb12-313"></a><span class="in">  slice_max(total_participation, n = 10)</span></span>
+<span id="cb12-314"><a href="#cb12-314"></a></span>
+<span id="cb12-315"><a href="#cb12-315"></a><span class="in"># Filter data for the top 10 countries</span></span>
+<span id="cb12-316"><a href="#cb12-316"></a><span class="in">top_countries_all_sports &lt;- olympics |&gt;</span></span>
+<span id="cb12-317"><a href="#cb12-317"></a><span class="in">  filter(</span></span>
+<span id="cb12-318"><a href="#cb12-318"></a><span class="in">    sport %in% c("Shooting", "Rowing","Swimming","Football"),</span></span>
+<span id="cb12-319"><a href="#cb12-319"></a><span class="in">    noc %in% top_10_countries$noc</span></span>
+<span id="cb12-320"><a href="#cb12-320"></a><span class="in">  ) |&gt;</span></span>
+<span id="cb12-321"><a href="#cb12-321"></a><span class="in">  group_by(noc, sport) |&gt;</span></span>
+<span id="cb12-322"><a href="#cb12-322"></a><span class="in">  summarize(participation = n(), .groups = 'drop')</span></span>
+<span id="cb12-323"><a href="#cb12-323"></a></span>
+<span id="cb12-324"><a href="#cb12-324"></a><span class="in"># Plot participation across all four sports for the top 10 countries</span></span>
+<span id="cb12-325"><a href="#cb12-325"></a><span class="in">top_countries_all_sports |&gt;</span></span>
+<span id="cb12-326"><a href="#cb12-326"></a><span class="in">  ggplot(aes(x = reorder(noc, -participation), y = participation, fill = sport)) +</span></span>
+<span id="cb12-327"><a href="#cb12-327"></a><span class="in">  geom_bar(stat = "identity", position = "stack") +</span></span>
+<span id="cb12-328"><a href="#cb12-328"></a><span class="in">  coord_flip() +</span></span>
+<span id="cb12-329"><a href="#cb12-329"></a><span class="in">  labs(</span></span>
+<span id="cb12-330"><a href="#cb12-330"></a><span class="in">    title = "Top 10 Countries by Participation in Summer Sports",</span></span>
+<span id="cb12-331"><a href="#cb12-331"></a><span class="in">    x = "Country (NOC)",</span></span>
+<span id="cb12-332"><a href="#cb12-332"></a><span class="in">    y = "Number of Athletes",</span></span>
+<span id="cb12-333"><a href="#cb12-333"></a><span class="in">    fill = "Sport"</span></span>
+<span id="cb12-334"><a href="#cb12-334"></a><span class="in">  ) +</span></span>
+<span id="cb12-335"><a href="#cb12-335"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb12-336"><a href="#cb12-336"></a></span>
+<span id="cb12-337"><a href="#cb12-337"></a><span class="in">```</span></span>
+<span id="cb12-338"><a href="#cb12-338"></a></span>
+<span id="cb12-339"><a href="#cb12-339"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb12-340"><a href="#cb12-340"></a><span class="in"># Filter data for medal-winning athletes</span></span>
+<span id="cb12-341"><a href="#cb12-341"></a><span class="in">medal_data &lt;- olympics |&gt;</span></span>
+<span id="cb12-342"><a href="#cb12-342"></a><span class="in">  filter(!is.na(medal)) |&gt;</span></span>
+<span id="cb12-343"><a href="#cb12-343"></a><span class="in">  group_by(noc, medal) |&gt;</span></span>
+<span id="cb12-344"><a href="#cb12-344"></a><span class="in">  summarize(medals = n(), .groups = 'drop')</span></span>
+<span id="cb12-345"><a href="#cb12-345"></a></span>
+<span id="cb12-346"><a href="#cb12-346"></a><span class="in"># Identify the top 10 countries by total medals</span></span>
+<span id="cb12-347"><a href="#cb12-347"></a><span class="in">top_10_medal_countries &lt;- medal_data |&gt;</span></span>
+<span id="cb12-348"><a href="#cb12-348"></a><span class="in">  group_by(noc) |&gt;</span></span>
+<span id="cb12-349"><a href="#cb12-349"></a><span class="in">  summarize(total_medals = sum(medals), .groups = 'drop') |&gt;</span></span>
+<span id="cb12-350"><a href="#cb12-350"></a><span class="in">  arrange(desc(total_medals)) |&gt;</span></span>
+<span id="cb12-351"><a href="#cb12-351"></a><span class="in">  slice_max(total_medals, n = 10)</span></span>
+<span id="cb12-352"><a href="#cb12-352"></a></span>
+<span id="cb12-353"><a href="#cb12-353"></a><span class="in"># Filter medal data for the top 10 countries</span></span>
+<span id="cb12-354"><a href="#cb12-354"></a><span class="in">medal_data_top10 &lt;- medal_data |&gt;</span></span>
+<span id="cb12-355"><a href="#cb12-355"></a><span class="in">  filter(noc %in% top_10_medal_countries$noc)</span></span>
+<span id="cb12-356"><a href="#cb12-356"></a></span>
+<span id="cb12-357"><a href="#cb12-357"></a><span class="in"># Add total medals for sorting</span></span>
+<span id="cb12-358"><a href="#cb12-358"></a><span class="in">medal_data_top10 &lt;- medal_data_top10 |&gt;</span></span>
+<span id="cb12-359"><a href="#cb12-359"></a><span class="in">  group_by(noc) |&gt;</span></span>
+<span id="cb12-360"><a href="#cb12-360"></a><span class="in">  mutate(total_medals = sum(medals)) |&gt;</span></span>
+<span id="cb12-361"><a href="#cb12-361"></a><span class="in">  ungroup()</span></span>
+<span id="cb12-362"><a href="#cb12-362"></a></span>
+<span id="cb12-363"><a href="#cb12-363"></a><span class="in"># Create a stacked bar chart for medal distribution</span></span>
+<span id="cb12-364"><a href="#cb12-364"></a><span class="in">medal_data_top10 |&gt;</span></span>
+<span id="cb12-365"><a href="#cb12-365"></a><span class="in">  ggplot(aes(x = reorder(noc, -total_medals), y = medals, fill = medal)) +</span></span>
+<span id="cb12-366"><a href="#cb12-366"></a><span class="in">  geom_bar(stat = "identity", position = "stack") +</span></span>
+<span id="cb12-367"><a href="#cb12-367"></a><span class="in">  coord_flip() +</span></span>
+<span id="cb12-368"><a href="#cb12-368"></a><span class="in">  labs(</span></span>
+<span id="cb12-369"><a href="#cb12-369"></a><span class="in">    title = "Top 10 Countries by Medals Won",</span></span>
+<span id="cb12-370"><a href="#cb12-370"></a><span class="in">    x = "Country (NOC)",</span></span>
+<span id="cb12-371"><a href="#cb12-371"></a><span class="in">    y = "Number of Medals",</span></span>
+<span id="cb12-372"><a href="#cb12-372"></a><span class="in">    fill = "Medal Type"</span></span>
+<span id="cb12-373"><a href="#cb12-373"></a><span class="in">  ) +</span></span>
+<span id="cb12-374"><a href="#cb12-374"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb12-375"><a href="#cb12-375"></a></span>
+<span id="cb12-376"><a href="#cb12-376"></a><span class="in">```</span></span>
+<span id="cb12-377"><a href="#cb12-377"></a></span>
+<span id="cb12-378"><a href="#cb12-378"></a><span class="fu">### **3.6 Medals vs Participant**</span></span>
+<span id="cb12-379"><a href="#cb12-379"></a></span>
+<span id="cb12-380"><a href="#cb12-380"></a><span class="ss">-   </span>**Findings**:</span>
+<span id="cb12-381"><a href="#cb12-381"></a></span>
+<span id="cb12-382"><a href="#cb12-382"></a><span class="ss">-   </span>**Visualization**:</span>
+<span id="cb12-383"><a href="#cb12-383"></a></span>
+<span id="cb12-384"><a href="#cb12-384"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb12-385"><a href="#cb12-385"></a><span class="in"># Summarize data for participants and medals per country</span></span>
+<span id="cb12-386"><a href="#cb12-386"></a><span class="in">participants_vs_medals &lt;- olympics |&gt;</span></span>
+<span id="cb12-387"><a href="#cb12-387"></a><span class="in">  filter(sport %in% c("Shooting", "Rowing","Swimming","Football")) |&gt;</span></span>
+<span id="cb12-388"><a href="#cb12-388"></a><span class="in">  group_by(noc, sport) |&gt;</span></span>
+<span id="cb12-389"><a href="#cb12-389"></a><span class="in">  summarize(</span></span>
+<span id="cb12-390"><a href="#cb12-390"></a><span class="in">    total_participants = n(),</span></span>
+<span id="cb12-391"><a href="#cb12-391"></a><span class="in">    total_medals = sum(!is.na(medal)),  # Count non-NA medals</span></span>
+<span id="cb12-392"><a href="#cb12-392"></a><span class="in">    .groups = 'drop'</span></span>
+<span id="cb12-393"><a href="#cb12-393"></a><span class="in">  )</span></span>
+<span id="cb12-394"><a href="#cb12-394"></a></span>
+<span id="cb12-395"><a href="#cb12-395"></a></span>
+<span id="cb12-396"><a href="#cb12-396"></a><span class="in">participants_vs_medals |&gt;</span></span>
+<span id="cb12-397"><a href="#cb12-397"></a><span class="in">  ggplot(aes(x = total_participants, y = total_medals, color = sport)) +</span></span>
+<span id="cb12-398"><a href="#cb12-398"></a><span class="in">  geom_point(size = 3, alpha = 0.7) +</span></span>
+<span id="cb12-399"><a href="#cb12-399"></a><span class="in">  geom_smooth(method = "lm", se = FALSE, linetype = "dashed") +  # Add trend lines</span></span>
+<span id="cb12-400"><a href="#cb12-400"></a><span class="in">  labs(</span></span>
+<span id="cb12-401"><a href="#cb12-401"></a><span class="in">    title = "Do More Participants Per Country Equal More Medals?",</span></span>
+<span id="cb12-402"><a href="#cb12-402"></a><span class="in">    subtitle = "Analysis Summer Sport",</span></span>
+<span id="cb12-403"><a href="#cb12-403"></a><span class="in">    x = "Total Participants",</span></span>
+<span id="cb12-404"><a href="#cb12-404"></a><span class="in">    y = "Total Medals",</span></span>
+<span id="cb12-405"><a href="#cb12-405"></a><span class="in">    color = "Sport"</span></span>
+<span id="cb12-406"><a href="#cb12-406"></a><span class="in">  ) +</span></span>
+<span id="cb12-407"><a href="#cb12-407"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb12-408"><a href="#cb12-408"></a></span>
+<span id="cb12-409"><a href="#cb12-409"></a><span class="in">```</span></span>
+<span id="cb12-410"><a href="#cb12-410"></a></span>
+<span id="cb12-411"><a href="#cb12-411"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb12-412"><a href="#cb12-412"></a><span class="in">participants_vs_medals &lt;- olympics |&gt;</span></span>
+<span id="cb12-413"><a href="#cb12-413"></a><span class="in">  filter(sport %in% c("Cross Country Skiing", "Alpine Skiing", "Figure Skating", "Speed Skating")) |&gt;</span></span>
+<span id="cb12-414"><a href="#cb12-414"></a><span class="in">  group_by(noc, sport) |&gt;</span></span>
+<span id="cb12-415"><a href="#cb12-415"></a><span class="in">  summarize(</span></span>
+<span id="cb12-416"><a href="#cb12-416"></a><span class="in">    total_participants = n(),</span></span>
+<span id="cb12-417"><a href="#cb12-417"></a><span class="in">    total_medals = sum(!is.na(medal)),  # Count non-NA medals</span></span>
+<span id="cb12-418"><a href="#cb12-418"></a><span class="in">    .groups = 'drop'</span></span>
+<span id="cb12-419"><a href="#cb12-419"></a><span class="in">  )</span></span>
+<span id="cb12-420"><a href="#cb12-420"></a></span>
+<span id="cb12-421"><a href="#cb12-421"></a></span>
+<span id="cb12-422"><a href="#cb12-422"></a><span class="in">participants_vs_medals |&gt;</span></span>
+<span id="cb12-423"><a href="#cb12-423"></a><span class="in">  ggplot(aes(x = total_participants, y = total_medals, color = sport)) +</span></span>
+<span id="cb12-424"><a href="#cb12-424"></a><span class="in">  geom_point(size = 3, alpha = 0.7) +</span></span>
+<span id="cb12-425"><a href="#cb12-425"></a><span class="in">  geom_smooth(method = "lm", se = FALSE, linetype = "dashed") +  # Add trend lines</span></span>
+<span id="cb12-426"><a href="#cb12-426"></a><span class="in">  labs(</span></span>
+<span id="cb12-427"><a href="#cb12-427"></a><span class="in">    title = "Do More Participants Per Country Equal More Medals?",</span></span>
+<span id="cb12-428"><a href="#cb12-428"></a><span class="in">    subtitle = "Winter Sport",</span></span>
+<span id="cb12-429"><a href="#cb12-429"></a><span class="in">    x = "Total Participants",</span></span>
+<span id="cb12-430"><a href="#cb12-430"></a><span class="in">    y = "Total Medals",</span></span>
+<span id="cb12-431"><a href="#cb12-431"></a><span class="in">    color = "Sport"</span></span>
+<span id="cb12-432"><a href="#cb12-432"></a><span class="in">  ) +</span></span>
+<span id="cb12-433"><a href="#cb12-433"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb12-434"><a href="#cb12-434"></a></span>
+<span id="cb12-435"><a href="#cb12-435"></a><span class="in">```</span></span>
+<span id="cb12-436"><a href="#cb12-436"></a></span>
+<span id="cb12-437"><a href="#cb12-437"></a>------------------------------------------------------------------------</span>
+<span id="cb12-438"><a href="#cb12-438"></a></span>
+<span id="cb12-439"><a href="#cb12-439"></a><span class="fu">## **4. Analysis**</span></span>
+<span id="cb12-440"><a href="#cb12-440"></a></span>
+<span id="cb12-441"><a href="#cb12-441"></a><span class="ss">-   </span>**Findings**: The more participants a country has the more medals they will likely win. Different sports require different characteristics for success. The average height of football players who won medals was around 173 cm, the average weight was around 76 kg, and they were on average 23 years old. The average height of rowers who won medals was around 180 cm, the average weight was around 78 kg, and they were on average around 25 years old. The average height of shooting athletes who won medals was around 175 cm, the average weight was around 76 kg, and on average around 36 years old. The average height of swimmers who won medals was around 179 cm, the average weight was around 72 kg, and on average around 22 years old. The average height of alpine skiers who won medals was around 170 cm, the average weight was around 68 kg, and on average around 24 years old. The average height of cross country skiers who won medals was around 175 cm, the average weight was around 63 kg, and on average around 28 years old. The average height of figure skaters who won medals was around 167 cm, the average weight was around 59 kg, and on average around 23 years old. The average height of speed skaters who won medals was around 178 cm, the average weight was around 72 kg, and on average around 25 years old.</span>
+<span id="cb12-442"><a href="#cb12-442"></a></span>
+<span id="cb12-443"><a href="#cb12-443"></a><span class="ss">-   </span>**Limitations**:Due to time, the summer sport and winter sport is not a strong representation since we only have four each.</span>
+<span id="cb12-444"><a href="#cb12-444"></a></span>
+<span id="cb12-445"><a href="#cb12-445"></a>------------------------------------------------------------------------</span>
+<span id="cb12-446"><a href="#cb12-446"></a></span>
+<span id="cb12-447"><a href="#cb12-447"></a><span class="fu">## **5. Conclusion**</span></span>
+<span id="cb12-448"><a href="#cb12-448"></a></span>
+<span id="cb12-449"><a href="#cb12-449"></a>Summer: The analysis of summer sports highlights swimming as the sport with the highest number of participants and a consistent upward trend in participation over time. Countries like the USA dominate summer sports both in terms of athlete participation and medals won. While sports like rowing and shooting show steady but moderate growth, football participation is more regionally concentrated, reflecting its varied popularity worldwide.</span>
+<span id="cb12-450"><a href="#cb12-450"></a></span>
+<span id="cb12-451"><a href="#cb12-451"></a>Winter: Winter sports participation demonstrates a more diverse pattern, with Alpine Skiing and Cross-Country Skiing being prominent. Nations like Norway, Canada, and the USA excel, can be caused by their geographic advantages. Medal success in winter sports shows a loose correlation with participation. While the participation trends indicate a steady increase in global representation, although the growth remains slower compared to summer sports.</span>
+<span id="cb12-452"><a href="#cb12-452"></a></span>
+<span id="cb12-453"><a href="#cb12-453"></a>Overall: Both summer and winter sports reflect a growing trend in global participation. While summer sports demonstrate higher participation overall, winter sports exhibit technical specialization and geographic concentration. Medal success is partially tied to participation rates, as factors like investment, infrastructure, and athlete development programs significantly influence outcomes.</span>
+<span id="cb12-454"><a href="#cb12-454"></a></span>
+<span id="cb12-455"><a href="#cb12-455"></a>------------------------------------------------------------------------</span>
+<span id="cb12-456"><a href="#cb12-456"></a></span>
+<span id="cb12-457"><a href="#cb12-457"></a><span class="fu">## **6. Recommendations**</span></span>
+<span id="cb12-458"><a href="#cb12-458"></a></span>
+<span id="cb12-459"><a href="#cb12-459"></a><span class="ss">1.  </span>**For Athletes**: Tailor training regimens based on the physical and experiential needs of each sport.</span>
+<span id="cb12-460"><a href="#cb12-460"></a><span class="ss">2.  </span>**For Countries**: Invest in infrastructure and coaching programs to support elite-level performance.</span>
+<span id="cb12-461"><a href="#cb12-461"></a><span class="ss">3.  </span>**For Further Analysis**: Integrate data on training, funding, and external conditions to refine predictive models for success.</span>
+<span id="cb12-462"><a href="#cb12-462"></a></span>
+<span id="cb12-463"><a href="#cb12-463"></a>------------------------------------------------------------------------</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

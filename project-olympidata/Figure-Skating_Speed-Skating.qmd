@@ -1,0 +1,252 @@
+---
+title: "Figure Skating & Speed Skating"
+subtitle: "project olympidata"
+author: "Avery Sheindlin"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r include = FALSE}
+# OPTIONAL: Set a more color blind friendly palette 
+palette("Okabe-Ito")
+scale_colour_discrete <- function(...) scale_colour_manual(values = palette())
+scale_fill_discrete   <- function(...) scale_fill_manual(values = palette())
+
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  warning = FALSE,
+  message = FALSE,
+  fig.height = 2.75, 
+  fig.width = 4.25,
+  fig.env='figure',
+  fig.pos = 'h',
+  fig.align = 'center')
+```
+
+# Data & Library
+
+```{r}
+olympics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-08-06/olympics.csv')
+
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(gt)
+```
+
+# EDA/Wrangling Data
+
+## Filter by Sport
+
+```{r}
+figure <- olympics %>%
+  filter(sport == "Figure Skating")%>%
+  drop_na()
+figure
+
+speed <- olympics %>%
+  filter(sport == "Speed Skating")%>%
+  drop_na()
+speed
+```
+
+## Seperate by Sex
+
+```{r}
+figure_M <- figure %>%
+  filter(sex == "M")
+figure_F <- figure %>%
+  filter(sex == "F")
+
+speed_M <- speed %>%
+  filter(sex == "M")
+speed_F <- speed %>%
+  filter(sex == "F")
+```
+
+## Characteristic by Medal
+```{r}
+skate_medal <- olympics |>
+  filter(sport %in% c("Figure Skating", "Speed Skating")) |>
+  mutate(medal_won = ifelse(is.na(medal), "No", "Yes")) |>
+  group_by(sport, medal_won) |>
+  summarize(
+    avg_age = mean(age, na.rm = TRUE),
+    avg_height = mean(height, na.rm = TRUE),
+    avg_weight = mean(weight, na.rm = TRUE),
+    .groups = 'drop'
+  )
+skate_medal
+
+```
+
+## Seperating by Country Participation
+
+```{r}
+speed_participatory <- olympics |>
+  filter(sport %in% c("Speed Skating")) |>
+  group_by(noc, sport) |>
+  summarize(participation = n(), .groups = 'drop') |>
+  arrange(desc(participation))
+speed_participatory
+```
+
+```{r}
+figure_participatory <- olympics |>
+  filter(sport %in% c("Figure Skating")) |>
+  group_by(noc, sport) |>
+  summarize(participation = n(), .groups = 'drop') |>
+  arrange(desc(participation))
+figure_participatory
+```
+
+
+
+
+# Examining Characteristics by Event
+
+```{r}
+figure_eventM <- figure_M %>%
+  group_by(event)%>%
+  summarize(avg_h = mean(height),
+            avg_w = mean(weight),
+            avg_a = mean(age),
+            count = n())
+ggplot(figure_M, aes(x = event))+
+  geom_bar()
+ggplot(figure_eventM, aes(x = event, y = avg_h))+
+  geom_point()
+ggplot(figure_eventM, aes(x = event, y = avg_w))+
+  geom_point()
+ggplot(figure_eventM, aes(x = event, y = avg_a))+
+  geom_point()
+```
+
+```{r}
+figure_eventF <- figure_F %>%
+  group_by(event)%>%
+  summarize(avg_h = mean(height),
+            avg_w = mean(weight),
+            avg_a = mean(age),
+            count = n())
+ggplot(figure_F, aes(x = event))+
+  geom_bar()
+ggplot(figure_eventF, aes(x = event, y = avg_h))+
+  geom_point()
+ggplot(figure_eventF, aes(x = event, y = avg_w))+
+  geom_point()
+ggplot(figure_eventF, aes(x = event, y = avg_a))+
+  geom_point()
+```
+
+```{r}
+speed_eventM <- speed_M %>%
+  group_by(event)%>%
+  summarize(avg_h = mean(height),
+            avg_w = mean(weight),
+            avg_a = mean(age),
+            count = n())
+ggplot(speed_M, aes(x = event))+
+  geom_bar()
+ggplot(speed_eventM, aes(x = event, y = avg_h))+
+  geom_point()
+ggplot(speed_eventM, aes(x = event, y = avg_w))+
+  geom_point()
+ggplot(speed_eventM, aes(x = event, y = avg_a))+
+  geom_point()
+```
+
+```{r}
+speed_eventF <- speed_F %>%
+  group_by(event)%>%
+  summarize(avg_h = mean(height),
+            avg_w = mean(weight),
+            avg_a = mean(age),
+            count = n())
+ggplot(speed_F, aes(x = event))+
+  geom_bar()
+ggplot(speed_eventF, aes(x = event, y = avg_h))+
+  geom_point()
+ggplot(speed_eventF, aes(x = event, y = avg_w))+
+  geom_point()
+ggplot(speed_eventF, aes(x = event, y = avg_a))+
+  geom_point()
+```
+
+# Examining Chracteristics by Medal Win
+
+```{r}
+skate_medal |>
+  pivot_longer(cols = c(avg_age, avg_height, avg_weight), names_to = "attribute", values_to = "value") |>
+  group_by(sport, medal_won, attribute) |>
+  summarise(total_value = sum(value), .groups = "drop") |>
+  arrange(attribute, sport, medal_won) |>
+  gt() |>
+  tab_header(
+    title = "Summary of Characteristics by Sport and Medal Status",
+    subtitle = "Total values of attributes grouped by sport and medal won"
+  ) |>
+  cols_label(
+    sport = "Sport",
+    medal_won = "Medal Won",
+    attribute = "Attribute",
+    total_value = "Total Value"
+  ) |>
+  fmt_number(
+    columns = total_value,
+    decimals = 2
+  ) |>
+  tab_options(
+    table.font.size = "small"
+  )
+
+skate_medal |>
+  pivot_longer(cols = c(avg_age, avg_height, avg_weight), names_to = "attribute", values_to = "value") |>
+  ggplot(aes(y = sport, x = value, fill = medal_won)) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.5) +
+  facet_wrap(~attribute, scales = "free_x") +
+  labs(
+    title = "Characteristics of Medal Winners vs Non-Medalists",
+    x = "Average Value",
+    y = "Sport",
+    fill = "Medal Won"
+  ) +
+  theme_minimal()
+
+
+```
+
+
+# Top Participating Skating Countries
+```{r}
+speed_participatory |>
+  slice_max(participation, n = 10) |>
+  ggplot(aes(x = reorder(noc, participation), y = participation, fill = sport)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  coord_flip() +
+  labs(
+    title = "Top 10 Countries by Participation in Skating",
+    x = "Country",
+    y = "Number of Athletes",
+    fill = "Sport"
+  ) +
+  theme_minimal()
+```
+```{r}
+figure_participatory |>
+  slice_max(participation, n = 10) |>
+  ggplot(aes(x = reorder(noc, participation), y = participation, fill = sport)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  coord_flip() +
+  labs(
+    title = "Top 10 Countries by Participation in Skating",
+    x = "Country",
+    y = "Number of Athletes",
+    fill = "Sport"
+  ) +
+  theme_minimal()
+```
+
+

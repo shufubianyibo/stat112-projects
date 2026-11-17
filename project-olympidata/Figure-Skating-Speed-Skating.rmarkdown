@@ -1,0 +1,41 @@
+---
+title: "Figure-Skating & Speed-Skating"
+subtitle: "project olympidata"
+author: "Avery Sheindlin"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r include = FALSE}
+# OPTIONAL: Set a more color blind friendly palette 
+palette("Okabe-Ito")
+scale_colour_discrete <- function(...) scale_colour_manual(values = palette())
+scale_fill_discrete   <- function(...) scale_fill_manual(values = palette())
+
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  warning = FALSE,
+  message = FALSE,
+  fig.height = 2.75, 
+  fig.width = 4.25,
+  fig.env='figure',
+  fig.pos = 'h',
+  fig.align = 'center')
+```
+
+
+# Data & Library
+
+```{r}
+olympics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-08-06/olympics.csv')
+
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+```
+
+# EDA/Wrangling Data
+## Filter by Sport
+

@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Homework 5: MORE Data Wrangling</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="homework_5_files/libs/clipboard/clipboard.min.js"></script>
+<script src="homework_5_files/libs/quarto-html/quarto.js"></script>
+<script src="homework_5_files/libs/quarto-html/popper.min.js"></script>
+<script src="homework_5_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="homework_5_files/libs/quarto-html/anchor.min.js"></script>
+<link href="homework_5_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="homework_5_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="homework_5_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="homework_5_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="homework_5_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="homework_5_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="homework_5_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="homework_5_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="homework_5_files/libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="homework_5_files/libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="homework_5_files/libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="homework_5_files/libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="homework_5_files/libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="homework_5_files/libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="homework_5_files/libs/leaflet-binding-2.2.2/leaflet.js"></script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Homework 5: MORE Data Wrangling</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="callout callout-style-default callout-caution callout-titled" title="Learning Goals">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Goals
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Practice some data wrangling and data viz in guided settings. The content of the exercises is not necessarily in the order that we learned it, so you’ll need to practice identifying appropriate tools for a given task.</p>
+</div>
+</div>
+<section id="exercise-1-bikes" class="level1">
+<h1>Exercise 1: Bikes</h1>
+<p>In the first 5 exercises, you’ll explore two datasets related to Capital Bikeshare, a bike share company, in Washington, DC. To begin, the <code>trips</code> data includes information about 10,000 bike rentals during the last quarter of 2014:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the tidyverse </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the data</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Only keep certain variables of interest</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>trips <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">gzcon</span>(<span class="fu">url</span>(<span class="st">"https://mac-stat.github.io/data/2014-Q4-Trips-History-Data-Small.rds"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(client, sstation, sdate, duration) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">duration =</span> <span class="fu">as.numeric</span>(<span class="fu">hms</span>(duration))<span class="sc">/</span><span class="dv">60</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Check it out</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trips)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           client                            sstation               sdate
+344758 Registered                      15th &amp; L St NW 2014-11-06 16:26:00
+113251 Registered                       3rd &amp; D St SE 2014-10-12 11:30:00
+633756     Casual                      10th &amp; E St NW 2014-12-27 14:24:00
+466862     Casual                       4th &amp; M St SW 2014-11-23 16:42:00
+474332 Registered 1st &amp; Washington Hospital Center NW 2014-11-24 17:29:00
+581597 Registered                 11th &amp; Kenyon St NW 2014-12-15 13:11:00
+       duration
+344758   9.2500
+113251  47.3500
+633756 166.3667
+466862  15.2500
+474332  18.5500
+581597   2.6000</code></pre>
+</div>
+</div>
+<p>For each rental, <code>trips</code> has information on:</p>
+<ul>
+<li><p><code>client</code> = whether the renter is a <code>Registered</code> member of the bike share service or a <code>Casual</code> renter</p></li>
+<li><p><code>sstation</code> = the name of the station where the rental <em>started</em></p></li>
+<li><p><code>sdate</code> = the date and time that a rental <em>started</em></p></li>
+<li><p><code>duration</code> = the duration of the rental in minutes</p></li>
+</ul>
+<section id="part-a" class="level2">
+<h2 class="anchored" data-anchor-id="part-a">Part a</h2>
+<p>The <code>sdate</code> variable contains a lot of information! Use it to define (and store) 5 new variables in the <code>trips</code> data:</p>
+<ul>
+<li><code>s_date = as_date(sdate)</code>: the date (not including time) that the rental started</li>
+<li><code>s_day_of_week</code> = day of week that the rental started, labeled <code>Sun</code>, <code>Mon</code>, etc</li>
+<li><code>s_hour</code> = hour of day that the rentals started (0-23)</li>
+<li><code>s_minute</code> = minute within the hour that the rentals started (0-59)</li>
+<li><code>s_time_of_day</code> = time of day that the rentals started in decimal notation (e.g.&nbsp;3:30 should be 3.5)</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Working with Dates">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Working with Dates
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Recall that the <code>lubridate</code> package (part of the <code>tidyverse</code>) has some handy functions, including <code>hour()</code>, <code>minute()</code>, <code>wday(label = TRUE)</code>.</li>
+<li>The time of day can be calculated by hour + minute/60.</li>
+</ul>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the new variables</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Once you're confident, store them under trips</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>trips <span class="ot">&lt;-</span> trips <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">s_date =</span> <span class="fu">as_date</span>(sdate),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">s_day_of_week =</span> <span class="fu">wday</span>(s_date, <span class="at">label =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">s_hour =</span> <span class="fu">as.numeric</span>(<span class="fu">hour</span>(sdate)),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">s_minute =</span> <span class="fu">as.numeric</span>(<span class="fu">minute</span>(sdate)),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">s_time_of_day =</span> <span class="fu">hour</span>(sdate) <span class="sc">+</span> <span class="fu">minute</span>(sdate)<span class="sc">/</span><span class="dv">60</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirm that your new dataset has 10000 rows and 9 columns</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(trips)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10000     9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convince yourself that the first entry has</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># s_date = 2014-11-06, s_day_of_week = Thu, s_hour = 16, s_minute = 26, s_time_of_day = 16.43333</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trips,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           client       sstation               sdate duration     s_date
+344758 Registered 15th &amp; L St NW 2014-11-06 16:26:00     9.25 2014-11-06
+       s_day_of_week s_hour s_minute s_time_of_day
+344758           Thu     16       26      16.43333</code></pre>
+</div>
+</div>
+</section>
+<section id="part-b" class="level2">
+<h2 class="anchored" data-anchor-id="part-b">Part b</h2>
+<p>Let’s warm up by exploring some basic patterns in the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the shortest, average, and longest rental duration </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(trips<span class="sc">$</span>duration)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1746.8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(trips<span class="sc">$</span>duration)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 14.79292</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(trips<span class="sc">$</span>duration)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.03333333</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the rentals that left from Lincoln Memorial on a Monday and lasted under 10 minutes</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># HINT: You should get two data points!</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>trips <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sstation <span class="sc">==</span> <span class="st">"Lincoln Memorial"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>         s_day_of_week <span class="sc">==</span> <span class="st">"Mon"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>         duration <span class="sc">&lt;=</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      client         sstation               sdate duration     s_date
+1     Casual Lincoln Memorial 2014-12-29 14:30:00 7.116667 2014-12-29
+2 Registered Lincoln Memorial 2014-10-20 17:46:00 0.450000 2014-10-20
+  s_day_of_week s_hour s_minute s_time_of_day
+1           Mon     14       30      14.50000
+2           Mon     17       46      17.76667</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the total number of rides taken on each day of the week</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort from highest to lowest</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>trips <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(s_day_of_week)<span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total_rides =</span> <span class="fu">n</span>())<span class="sc">%&gt;%</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(s_day_of_week,total_rides) <span class="sc">%&gt;%</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_rides))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 2
+# Groups:   s_day_of_week [7]
+  s_day_of_week total_rides
+  &lt;ord&gt;               &lt;int&gt;
+1 Fri                  1518
+2 Thu                  1489
+3 Mon                  1488
+4 Wed                  1449
+5 Tue                  1442
+6 Sat                  1346
+7 Sun                  1268</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify the 2 dates (s_date) on which there were the fewest rentals</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (Think about the significance of these dates)</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>trips <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(s_date)<span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total_rides =</span> <span class="fu">n</span>())<span class="sc">%&gt;%</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(s_date,total_rides) <span class="sc">%&gt;%</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(total_rides)<span class="sc">%&gt;%</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+# Groups:   s_date [2]
+  s_date     total_rides
+  &lt;date&gt;           &lt;int&gt;
+1 2014-12-24          21
+2 2014-11-26          21</code></pre>
+</div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="exercise-2-when-do-people-ride" class="level1">
+<h1>Exercise 2: When do people ride?</h1>
+<p>Let’s explore temporal patterns in bike rentals using data viz.&nbsp;You will make a series of plots and summarize them in the last part of the exercise.</p>
+<section id="part-a-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-1">Part a</h2>
+<p>How did the volume of bike trips vary throughout the study period? Construct a univariate plot of <code>s_date</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(trips, <span class="fu">aes</span>(<span class="at">x =</span> s_date))<span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="homework_5_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="480"></p>
+</div>
+</div>
+</section>
+<section id="part-b-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-1">Part b</h2>
+<p>How did the volume of bike trips vary at different times of the day? Construct a univariate plot of <code>s_time_of_day</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(trips, <span class="fu">aes</span>(<span class="at">x =</span> s_time_of_day))<span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="homework_5_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="480"></p>
+</div>
+</div>
+</section>
+<section id="part-c" class="level2">
+<h2 class="anchored" data-anchor-id="part-c">Part c</h2>
+<p>How do ridership patterns vary by both time of day and day of week? <em>Facet</em> your plot from Part b by <code>s_day_of_week</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(trips, <span class="fu">aes</span>(<span class="at">x =</span> s_time_of_day))<span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()<span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>s_day_of_week)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="homework_5_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="480"></p>
+</div>
+</div>
+</section>
+<section id="part-d" class="level2">
+<h2 class="anchored" data-anchor-id="part-d">Part d</h2>
+<p>Summarize, in words, the temporal patterns you observed in Parts a, b, and c.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR ANSWER IN THIS CALLOUT BOX There are some periodic changes for day of month, the rides decrease quickly then increase; for only the time of day, most rides happened from 6am to 8pm, the rides are especially high at about 9am and 7pm; for the plot facet with the day of week, the week days has more obvious trend that the rides are especially high around 9am and 7pm, and the rides smoothly increase from 6am and smoothly decrease from 7pm on weekends.</p>
+</div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="exercise-3-registered-vs-casual-riders" class="level1">
+<h1>Exercise 3: Registered vs casual riders</h1>
+<p>Let’s explore how ridership patterns might differ among registered and casual riders. You will make a series of plots and calculations, and summarize them in the last part of the problem.</p>
+<section id="part-a-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-2">Part a</h2>
+<p>How do trip durations compare among registered and casual riders? Calculate the shortest, average, and longest rental duration among registered and casual riders.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ride_register <span class="ot">&lt;-</span> trips <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(client <span class="sc">==</span> <span class="st">"Registered"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Client =</span> <span class="st">"Registered"</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Max_Duration =</span> <span class="fu">max</span>(duration),</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean_Duration =</span> <span class="fu">mean</span>(duration),</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Min_Duration =</span> <span class="fu">min</span>(duration)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>ride_casual <span class="ot">&lt;-</span> trips <span class="sc">%&gt;%</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(client <span class="sc">==</span> <span class="st">"Casual"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">Client =</span> <span class="st">"Casual"</span>,</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">Max_Duration =</span> <span class="fu">max</span>(duration),</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean_Duration =</span> <span class="fu">mean</span>(duration),</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">Min_Duration =</span> <span class="fu">min</span>(duration)</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(ride_register, ride_casual)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Client Max_Duration Mean_Duration Min_Duration
+1 Registered     785.3833      10.95258   0.03333333
+2     Casual    1746.8000      37.47427   1.63333333</code></pre>
+</div>
+</div>
+</section>
+<section id="part-b-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-2">Part b</h2>
+<p>On what days of the week do registered and casual riders tend to ride more? Construct a plot of <code>s_day_of_week</code>, faceted by <code>client</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(trips, <span class="fu">aes</span>(<span class="at">x =</span> s_day_of_week))<span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()<span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>client)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="homework_5_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="480"></p>
+</div>
+</div>
+</section>
+<section id="part-c-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-c-1">Part c</h2>
+<p>At what times of day <em>and</em> days of the week do registered and casual riders tend to ride more? Construct density plots of <code>s_time_of_day</code> faceted by <code>s_day_of_week</code> and colored by <code>client</code> status.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(trips, <span class="fu">aes</span>(<span class="at">x =</span> s_time_of_day, <span class="at">color =</span> client))<span class="sc">+</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()<span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>s_day_of_week)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="homework_5_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="480"></p>
+</div>
+</div>
+</section>
+<section id="part-d-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-d-1">Part d</h2>
+<p>Summarize some key takeaways from Parts a, b, and c.&nbsp;What do they tell us about registered vs casual riders? What is your explanation for why these observations make sense?</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR ANSWER IN THIS CALLOUT BOX Registered riders takes more trips than casual riders, and they are likely to take shorter trips. By the time of day, most registered riders has more obvious trend of the high frequency around 9am and 7pm on weekdays, it might because they commute by rides.</p>
+</div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="exercise-4-where-do-people-ride" class="level1">
+<h1>Exercise 4: Where do people ride?</h1>
+<p>Beyond information about <em>when</em> the bike trips started, the <code>trips</code> data includes information about <code>sstation</code>, the stations <em>where</em> each bike trip started. Let’s explore.</p>
+<section id="part-a-3" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-3">Part a</h2>
+<p>Make a table with the <em>ten</em> stations with the <em>highest</em> number of departures (<code>head(10)</code>). Define this as <code>popular_stations</code> and print / show the data table. HINT: Your first row should have 2 entries: <code>Columbus Circle / Union Station</code>, <code>241</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define popular_stations</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>popular_stations <span class="ot">&lt;-</span> trips <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sstation)<span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">station_count =</span> <span class="fu">n</span>())<span class="sc">%&gt;%</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(station_count))<span class="sc">%&gt;%</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(sstation,station_count)<span class="sc">%&gt;%</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out popular_stations (just type popular_stations)</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>popular_stations</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 2
+# Groups:   sstation [10]
+   sstation                                            station_count
+   &lt;chr&gt;                                                       &lt;int&gt;
+ 1 Columbus Circle / Union Station                               241
+ 2 Massachusetts Ave &amp; Dupont Circle NW                          193
+ 3 Thomas Circle                                                 154
+ 4 Lincoln Memorial                                              151
+ 5 New Hampshire Ave &amp; T St NW                                   143
+ 6 15th &amp; P St NW                                                140
+ 7 17th &amp; Corcoran St NW                                         136
+ 8 14th &amp; V St NW                                                131
+ 9 Jefferson Dr &amp; 14th St SW                                     128
+10 Eastern Market Metro / Pennsylvania Ave &amp; 7th St SE           108</code></pre>
+</div>
+</div>
+</section>
+<section id="part-b-3" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-3">Part b</h2>
+<p>Get a dataset of only the <code>trips</code> that departed from the ten most <code>popular_stations</code>. Store this as <code>popular_trips</code>. HINT: Use a join operation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define popular_trips</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>popular_trips <span class="ot">&lt;-</span> trips <span class="sc">%&gt;%</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">semi_join</span>(popular_stations, <span class="at">by =</span> <span class="fu">join_by</span>(sstation))</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirm that popular_trips has 1525 rows and 9 columns</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(popular_trips)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1525    9</code></pre>
+</div>
+</div>
+</section>
+<section id="part-c-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-c-2">Part c</h2>
+<p>Get a dataset of the <code>trips</code> that did <em>not</em> depart from the most <code>popular_stations</code>. Store this as <code>unpopular_trips</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define unpopular_trips</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>unpopular_trips <span class="ot">&lt;-</span> trips <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(popular_stations, <span class="at">by =</span> <span class="fu">join_by</span>(sstation))</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirm that unpopular_trips has 8475 rows and 9 columns</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(unpopular_trips)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8475    9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(unpopular_trips)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      client                            sstation               sdate duration
+1 Registered                      15th &amp; L St NW 2014-11-06 16:26:00   9.2500
+2 Registered                       3rd &amp; D St SE 2014-10-12 11:30:00  47.3500
+3     Casual                      10th &amp; E St NW 2014-12-27 14:24:00 166.3667
+4     Casual                       4th &amp; M St SW 2014-11-23 16:42:00  15.2500
+5 Registered 1st &amp; Washington Hospital Center NW 2014-11-24 17:29:00  18.5500
+6 Registered                 11th &amp; Kenyon St NW 2014-12-15 13:11:00   2.6000
+      s_date s_day_of_week s_hour s_minute s_time_of_day
+1 2014-11-06           Thu     16       26      16.43333
+2 2014-10-12           Sun     11       30      11.50000
+3 2014-12-27           Sat     14       24      14.40000
+4 2014-11-23           Sun     16       42      16.70000
+5 2014-11-24           Mon     17       29      17.48333
+6 2014-12-15           Mon     13       11      13.18333</code></pre>
+</div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="exercise-5-spatial-trends" class="level1">
+<h1>Exercise 5: Spatial trends</h1>
+<p>Let’s bring in <em>spatial</em> information about the bike stations! The <code>stations</code> dataset includes the latitude / longitude coordinates and other details for the bike rental stations:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import data on the bike stations</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Only keep certain variables of interest</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>stations <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://mac-stat.github.io/data/DC-Stations.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, lat, long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 347 Columns: 5
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): name
+dbl (4): lat, long, nbBikes, nbEmptyDocks
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check it out</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  name                                         lat  long
+  &lt;chr&gt;                                      &lt;dbl&gt; &lt;dbl&gt;
+1 20th &amp; Bell St                              38.9 -77.1
+2 18th &amp; Eads St.                             38.9 -77.1
+3 20th &amp; Crystal Dr                           38.9 -77.0
+4 15th &amp; Crystal Dr                           38.9 -77.0
+5 Aurora Hills Community Ctr/18th &amp; Hayes St  38.9 -77.1
+6 Pentagon City Metro / 12th &amp; S Hayes St     38.9 -77.1</code></pre>
+</div>
+</div>
+<section id="part-a-4" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-4">Part a</h2>
+<p>To the <code>popular_stations</code> data, tack on new information about the latitude and longitude of the 10 most popular stations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define popular_stations with the additional lat / long variables</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: Don't store the data until you know it's what you want!</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>popular_stations <span class="ot">&lt;-</span> popular_stations <span class="sc">%&gt;%</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stations, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sstation"</span> <span class="ot">=</span> <span class="st">"name"</span>))</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirm that popular_stations has 10 rows and 4 columns</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(popular_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10  4</code></pre>
+</div>
+</div>
+</section>
+<section id="part-b-4" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-4">Part b</h2>
+<p>Construct a leaflet map of the <code>stations</code> data:</p>
+<ul>
+<li>include <em>circles</em> representing each station in the Capital Bikeshare system</li>
+<li>add <em>markers</em> (the upside-down teardrop / flag symbols) that indicate the locations of the 10 most popular stations. NOTE: Since these 10 locations are in the <code>popular_stations</code> not <code>stations</code> data, you’ll need to add a <code>data = popular_stations</code> argument to this layer.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>(<span class="at">data =</span> stations) <span class="sc">|&gt;</span> </span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCircles</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addMarkers</span>(<span class="at">data =</span> popular_stations, <span class="at">lng =</span> <span class="sc">~</span>long, <span class="at">lat =</span> <span class="sc">~</span>lat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Assuming "long" and "lat" are longitude and latitude, respectively</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-cf8460e25d650fbf6bad" style="width:100%;height:390px;"></div>
+<script type="application/json" data-for="htmlwidget-cf8460e25d650fbf6bad">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addCircles","args":[[38.8561,38.85725,38.8564,38.86017,38.857866,38.862303,38.8637,38.8573,38.8629,38.848441,38.8426,38.8533,38.850688,38.9003,38.9176,38.929464,38.926088,38.922925,38.9268,38.923203,38.9319,38.8767,38.90985,38.912682,38.9086,38.8963,38.9008,38.936043,38.9375,38.9346,38.90304,38.8896,38.9308,38.8601,38.934267,38.878,38.897063,38.901385,38.862669,38.867373,38.8952,38.919077,38.9172,38.9249,38.8743,38.9154,38.9155,38.853531,38.8763,38.9101,38.9057,38.90534,38.90276,38.899408,38.8851,38.8803,38.884,38.9121,38.944551,38.9126,38.8792,38.938736,38.934751,38.947774,38.865784,38.873057,38.886952,38.899632,38.894,38.887237,38.9022212,38.933668,38.894919,38.886266,38.893028,38.895184,38.884,38.904742,38.947607,38.9003,38.897222,38.8991,38.90572,38.927872,38.903407,38.90375,38.87675,38.894758,38.916442,38.900283,38.8997,38.932514,38.910972,38.899972,38.900412,38.900413,38.889955,38.890461,38.8692,38.894832,38.91554,38.898364,38.894514,38.897324,38.902061,38.908905,38.895344,38.8923,38.90774,38.899983,38.903827,38.89696,38.897446,38.905607,38.922581,38.898069,38.844015,38.88412,38.897857,38.896104,38.897315,38.8946,38.893648,38.891696,38.892164,38.86559,38.892459,38.889,38.920669,38.906602,38.9059,38.8904,38.8881,38.88786,38.89968,38.887299,38.88412,38.881185,38.912719,38.9418,38.915417,38.928156,38.917761,38.889935,38.930282,38.896544,38.905126,38.88732,38.844711,38.876393,38.8815,38.896923,38.90268,38.885801,38.896015,38.87861,38.922649,38.928743,38.882788,38.88397,38.884734,38.888553,38.888767,38.87887,38.894573,38.893241,38.89593,38.89054,38.880834,38.881044,38.882629,38.879819,38.866611,38.883921,38.880151,38.884616,38.90509,38.903584,38.903819,38.901539,38.902204,38.803124,38.804718,38.810743,38.805317,38.902,38.805648,38.811456,38.814577,38.805767,38.9066,38.895914,38.90088,38.883669,38.884961,38.889365,38.888251,38.894722,38.90093,38.943837,38.954812,38.905707,38.863833,38.857803,38.846222,38.918809,38.956595,38.949662,38.942016,38.956432,38.847977,38.8444,38.860789,38.835213,38.84232,38.848454,38.987,38.90849,38.854691,38.955016,38.908142,38.92333,38.889988,38.912659,38.889908,38.897274,38.927095,38.897195,38.928644,38.884085,38.843222,38.863897,38.903732,38.916787,38.852248,38.834108,38.880705,38.867262,38.887378,38.894851,38.917622,38.918155,38.892275,38.88731,38.887312,38.927497,38.862478,38.856319,38.871822,38.985404,38.981103,38.983838,39.096312,39.093783,38.988562,39.084125,38.98954,39.094772,38.98128,38.983627,38.99521,38.983525,38.961763,38.921074,38.87501,38.920387,38.876737,39.120045,39.099376,39.083705,39.123513,38.990249,39.107709,38.982456,39.000578,39.095661,38.989724,38.975,38.977933,38.992375,38.990639,38.977093,39.102099,39.094103,39.076331,39.102212,38.992679,38.999388,38.997033,39.114688,39.110314,38.923583,38.90706,38.898536,38.908473,38.878433,38.873755,38.86646,38.999634,38.96115,38.899703,38.837666,38.873219,38.869418,38.941154,39.103091,39.097636,38.997445,39.085394,38.900358,38.952369,38.975219,38.920682,38.866471,38.839912,39.119765,38.964992,39.084379,38.984691,38.88992,38.903582,38.804378,38.894941,38.869442,38.898404,38.897612,38.901755,38.801111,38.82175,38.802677,38.820064,38.82595,38.820932,38.833077,38.890612,38.986743,38.864702,38.96497,38.90381,38.89841,38.997653,38.912648,38.859254,38.908008,38.895929,38.898984,38.895377],[-77.05119999999999,-77.05332,-77.0492,-77.049593,-77.05949,-77.05993599999999,-77.0633,-77.05110000000001,-77.0528,-77.05151600000001,-77.0502,-77.0498,-77.05152,-77.0429,-77.0321,-77.027822,-77.036536,-77.042581,-77.0322,-77.04763699999999,-77.03879999999999,-77.01779999999999,-77.03443799999999,-77.03168100000001,-77.03230000000001,-77.045,-77.047,-77.024649,-77.03279999999999,-76.99550000000001,-77.01902699999999,-76.9769,-77.03149999999999,-76.96720000000001,-77.057979,-76.9607,-76.947446,-76.94187700000001,-76.994637,-76.988039,-77.0436,-77.000648,-77.02589999999999,-77.0222,-77.0057,-77.0446,-77.0222,-77.05350900000001,-77.00369999999999,-77.0444,-77.0056,-77.046774,-77.03863,-77.015289,-77.00230000000001,-76.9862,-76.98609999999999,-77.03870000000001,-77.063896,-77.01349999999999,-76.9953,-77.087171,-77.074647,-77.03281800000001,-76.97839999999999,-76.97101499999999,-76.99680600000001,-77.03168599999999,-76.947974,-77.028226,-77.059219,-76.991016,-77.046587,-77.02224099999999,-77.02601300000001,-77.054845,-76.995397,-77.041606,-77.079382,-76.98820000000001,-77.019347,-77.0337,-77.02226400000001,-77.043358,-77.043648,-77.06269,-77.02127,-76.997114,-77.0682,-77.029822,-77.02308600000001,-76.99288900000001,-77.00494999999999,-76.998347,-77.001949,-76.982872,-77.000349,-76.988355,-76.9599,-76.987633,-77.03818,-77.027869,-77.031617,-77.022322,-77.03832199999999,-77.04478,-77.01610599999999,-77.0436,-77.071652,-76.991383,-77.05348499999999,-77.00493,-77.009888,-77.027137,-77.070334,-77.031823,-77.05053700000001,-77.04657,-77.02697499999999,-77.049882,-77.070993,-77.072305,-77.076701,-77.08459999999999,-77.079375,-76.95210299999999,-77.046567,-77.0925,-77.04367999999999,-77.038785,-77.0325,-77.0889,-77.09308,-77.094875,-77.041539,-77.018939,-77.017445,-77.001828,-77.022155,-77.02509999999999,-77.012289,-77.02343999999999,-77.04062,-76.93723,-77.055599,-76.96012,-77.056887,-76.983569,-76.98782300000001,-77.10773500000001,-77.10396,-77.086502,-77.02674,-77.097745,-77.078107,-77.006004,-77.077271,-77.012457,-77.103148,-77.10783000000001,-77.093485,-77.03242899999999,-77.02858000000001,-77.1207,-77.01994000000001,-77.086045,-77.089006,-77.08095,-77.091129,-77.111768,-77.10936599999999,-77.037413,-76.985238,-77.116817,-77.10767300000001,-77.10108,-76.9941,-77.04478899999999,-77.0284,-77.046564,-77.04337,-77.040363,-77.043363,-77.044664,-77.04988299999999,-77.03353,-77.05293,-77.050276,-77.052808,-77.06072,-77.05152,-77.02606400000001,-77.048911,-77.113905,-77.08777000000001,-77.07729399999999,-77.049426,-77.04512800000001,-77.018677,-77.077078,-77.082426,-77.003041,-77.080319,-77.086733,-77.069275,-77.041571,-77.01981499999999,-77.027333,-77.032652,-77.03294699999999,-77.075104,-77.085931,-77.09586,-77.094295,-77.089555,-77.084918,-77.029417,-77.063586,-77.100555,-77.069956,-77.038359,-77.0352,-76.995193,-77.017669,-76.98332600000001,-76.994749,-76.97892400000001,-76.983575,-76.990955,-76.957461,-76.999388,-76.990037,-76.987211,-77.028139,-77.10502200000001,-77.087323,-77.08596,-77.072315,-77.001955,-77.02324,-77.01597,-77.004746,-77.01391700000001,-77.01397,-77.025762,-76.99719399999999,-77.08659900000001,-77.11153,-77.107906,-77.023082,-77.097426,-77.09220999999999,-77.192672,-77.202501,-77.09653900000001,-77.151291,-77.098029,-77.145213,-77.011336,-77.006311,-77.02918,-77.095367,-77.085998,-77.031887,-77.00239999999999,-77.025672,-76.994468,-77.15698500000001,-77.188014,-77.14944300000001,-77.15741,-77.02934999999999,-77.152072,-77.09199099999999,-77.00149,-77.159048,-77.023854,-77.01121000000001,-77.006472,-77.100104,-77.100239,-77.094589,-77.200322,-77.132954,-77.141378,-77.177091,-77.02945699999999,-77.031555,-77.02560800000001,-77.171487,-77.182669,-77.05004599999999,-77.015231,-76.931862,-76.933099,-77.03023,-77.08923299999999,-77.04826,-77.109647,-77.08865900000001,-77.008911,-77.09482,-77.082104,-77.095596,-77.06203600000001,-77.196442,-77.196636,-77.023894,-77.145803,-77.012108,-77.00272099999999,-77.01685500000001,-76.995876,-77.076131,-77.08708300000001,-77.166093,-77.103381,-77.146866,-77.094537,-77.07130100000001,-77.067786,-77.060866,-77.09169,-77.10450299999999,-77.024281,-77.080851,-77.051084,-77.068952,-77.047494,-77.063562,-77.057619,-77.05854100000001,-77.053096,-77.059821,-77.084801,-77.000035,-77.048672,-77.075946,-77.034931,-77.039624,-77.034499,-77.04183399999999,-77.063275,-76.996985,-77.10524599999999,-77.078317,-77.09713000000001],10,null,null,{"interactive":true,"className":"","stroke":true,"color":"red","weight":5,"opacity":0.5,"fill":true,"fillColor":"red","fillOpacity":0.2},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]},{"method":"addMarkers","args":[[38.89696,38.9101,38.9059,38.888251,38.91554,38.90985,38.9121,38.9176,38.888553,38.884],[-77.00493,-77.0444,-77.0325,-77.049426,-77.03818,-77.03443799999999,-77.03870000000001,-77.0321,-77.03242899999999,-76.995397],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[38.801111,39.123513],"lng":[-77.202501,-76.931862]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="part-c-3" class="level2">
+<h2 class="anchored" data-anchor-id="part-c-3">Part c</h2>
+<p>Write a 1-sentence summary of what you learned from this map.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR ANSWER IN THIS CALLOUT BOX 6 of the 10 popular stations distributed relatively dense around Dupont Circle, 2 of them around Capitol Hill, and 2 of them around National Mall.</p>
+</div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="finalize-work" class="level1">
+<h1>Finalize Work</h1>
+<p>Congratulation 🎉. You’re done with the homework. See the instruction at top of the Homework Assignments page for how to submit.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

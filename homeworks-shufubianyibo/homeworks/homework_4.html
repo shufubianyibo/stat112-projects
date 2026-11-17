@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Homework 4: Data Wrangling</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="homework_4_files/libs/clipboard/clipboard.min.js"></script>
+<script src="homework_4_files/libs/quarto-html/quarto.js"></script>
+<script src="homework_4_files/libs/quarto-html/popper.min.js"></script>
+<script src="homework_4_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="homework_4_files/libs/quarto-html/anchor.min.js"></script>
+<link href="homework_4_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="homework_4_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="homework_4_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="homework_4_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="homework_4_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Homework 4: Data Wrangling</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-caution callout-titled" title="Learning Goals">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Goals
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Practice some data wrangling and data viz in guided settings. The content of the exercises is not necessarily in the order that we learned it, so you’ll need to practice identifying appropriate tools for a given task.</p>
+</div>
+</div>
+<section id="exercise-1-birthdays" class="level1">
+<h1>Exercise 1: Birthdays</h1>
+<p>In Exercises 1-4 we’ll return to the daily <code>Birthdays</code> dataset in the <code>mosaic</code> package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'mosaic':
+  method                           from   
+  fortify.SpatialPolygonsDataFrame ggplot2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+The 'mosaic' package masks several functions from core packages in order to add 
+additional features.  The original behavior of these functions should not be affected by this.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'mosaic'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:dplyr':
+
+    count, do, tally</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:Matrix':
+
+    mean</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:ggplot2':
+
+    stat</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    binom.test, cor, cor.test, cov, fivenum, IQR, median, prop.test,
+    quantile, sd, t.test, var</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    max, mean, min, prod, range, sample, sum</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ lubridate 1.9.4     ✔ tibble    3.2.1
+✔ purrr     1.0.2     ✔ tidyr     1.3.1
+✔ readr     2.1.5     </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ mosaic::count() masks dplyr::count()
+✖ purrr::cross()  masks mosaic::cross()
+✖ mosaic::do()    masks dplyr::do()
+✖ tidyr::expand() masks Matrix::expand()
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+✖ tidyr::pack()   masks Matrix::pack()
+✖ mosaic::stat()  masks ggplot2::stat()
+✖ mosaic::tally() masks dplyr::tally()
+✖ tidyr::unpack() masks Matrix::unpack()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Birthdays"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Birthdays)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  state year month day       date wday births
+1    AK 1969     1   1 1969-01-01  Wed     14
+2    AL 1969     1   1 1969-01-01  Wed    174
+3    AR 1969     1   1 1969-01-01  Wed     78
+4    AZ 1969     1   1 1969-01-01  Wed     84
+5    CA 1969     1   1 1969-01-01  Wed    824
+6    CO 1969     1   1 1969-01-01  Wed    100</code></pre>
+</div>
+</div>
+<p>Address each prompt below using our wrangling tools.</p>
+<section id="part-a" class="level2">
+<h2 class="anchored" data-anchor-id="part-a">Part a</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How many total births were there in the U.S. during this time period?</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(Birthdays<span class="sc">$</span>births)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 70486538</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the 6 data points with the fewest number of births</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (What do these have in common?!)</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Birthdays)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  state year month day       date wday births
+1    AK 1969     1   1 1969-01-01  Wed     14
+2    AL 1969     1   1 1969-01-01  Wed    174
+3    AR 1969     1   1 1969-01-01  Wed     78
+4    AZ 1969     1   1 1969-01-01  Wed     84
+5    CA 1969     1   1 1969-01-01  Wed    824
+6    CO 1969     1   1 1969-01-01  Wed    100</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># February 29, "leap day", occurs once every 4 years</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Report data on leap day births in Alaska (AK) during this time period</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Your dataset should have 5 rows!</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>Birth_leap <span class="ot">&lt;-</span> Birthdays <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"AK"</span>, month <span class="sc">==</span> <span class="dv">2</span>, day <span class="sc">==</span> <span class="dv">29</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Birth_leap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  state year month day       date wday births
+1    AK 1972     2  29 1972-02-29 Tues     22
+2    AK 1976     2  29 1976-02-29  Sun     22
+3    AK 1980     2  29 1980-02-29  Fri     29
+4    AK 1984     2  29 1984-02-29  Wed     32
+5    AK 1988     2  29 1988-02-29  Mon     30</code></pre>
+</div>
+</div>
+</section>
+<section id="part-b" class="level2">
+<h2 class="anchored" data-anchor-id="part-b">Part b</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the 6 states with the most total births during this time period</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (your answer should indicate both the state and its number of births)</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>Birth_high <span class="ot">&lt;-</span> Birthdays <span class="sc">%&gt;%</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_births =</span> <span class="fu">sum</span>(births)) <span class="sc">%&gt;%</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(state, total_births) <span class="sc">%&gt;%</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(state, total_births) <span class="sc">%&gt;%</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_births)) </span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Birth_high)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  state total_births
+  &lt;chr&gt;        &lt;int&gt;
+1 CA         7822785
+2 TX         5263473
+3 NY         5153299
+4 IL         3569524
+5 OH         3336326
+6 PA         3257112</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the 6 states with the fewest total births in 1988</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (your answer should indicate both the state and its number of births)</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>Birth_low <span class="ot">&lt;-</span> Birthdays <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1988</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_births =</span> <span class="fu">sum</span>(births)) <span class="sc">%&gt;%</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(state, total_births) <span class="sc">%&gt;%</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(state, total_births) <span class="sc">%&gt;%</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(total_births) </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Birth_low)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  state total_births
+  &lt;chr&gt;        &lt;int&gt;
+1 WY            6768
+2 VT            7871
+3 DE           10959
+4 AK           11105
+5 SD           11253
+6 MT           11393</code></pre>
+</div>
+</div>
+</section>
+<section id="part-c" class="level2">
+<h2 class="anchored" data-anchor-id="part-c">Part c</h2>
+<p>Open https://chatgpt.com/. You should have access to a free version of this tool.</p>
+<p>Give it the prompt “Show the 6 states with the fewest total births in 1988” and see what it generates. Record any <em>additional information</em> you give it to help it understand the prompt. Evaluate the <em>quality of the response</em> and how it compares to your response to the question above. Lastly, reflect on the <em>strengths and weaknesses</em> of this tool to help you understand the data science tools.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Additional Information Provided</strong> Use the data set Birthdays in mosaic. <strong>Evaluate of Quality of Response</strong> High, included detailed processes and explains. <strong>Strengths and weaknesses of Tool</strong> It gives clear and correct answers, but it uses some codes not very effeciently, like for showing the outcome, it will have head(state_births_1988, 6) rather than head(state_births_1988).</p>
+</div>
+</div>
+</section>
+</section>
+<section id="exercise-2-temporal-geographical-trends" class="level1">
+<h1>Exercise 2: Temporal &amp; Geographical Trends</h1>
+<p>Let’s examine some temporal trends in birth. For each part, you will need to wrangle and plot some data. You can decide whether you want to: (1) wrangle and store data, then plot; or (2) wrangle data and pipe directly into ggplot. For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>Birthdays <span class="sc">|&gt;</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"MN"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> births, <span class="at">x =</span> date)) <span class="sc">+</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="homework_4_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="part-a-monthly-trends" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-monthly-trends">Part a: Monthly Trends</h2>
+<p>Calculate the total number of births in each month and year, eg, Jan 1969, Feb 1969, …, combining all states. Label month by names not numbers, eg, Jan not 1. Then, plot the relationship of births with month and <strong>summarize</strong> (in words) what you learn. NOTE: You should have / use multiple data points for each month!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>Birth_month <span class="ot">&lt;-</span> Birthdays<span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, month)<span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total_births =</span> <span class="fu">sum</span>(births),</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">month_name =</span> month.name[month],</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">year_month =</span> <span class="fu">paste</span>(month_name, year, <span class="at">sep =</span> <span class="st">" "</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(month, year_month, total_births)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Birth_month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  month year_month    total_births
+  &lt;int&gt; &lt;chr&gt;                &lt;int&gt;
+1     1 January 1969        293876
+2     2 February 1969       270696
+3     3 March 1969          296436
+4     4 April 1969          282522
+5     5 May 1969            289018
+6     6 June 1969           291508</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Birth_month, <span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> total_births))<span class="sc">+</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="homework_4_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR SUMMARY IN THIS CALLOUT BOX It looks like the births by month increases from Feb to Aut, then decrease from Aut to Nov, then increase from Nov to Dec, then decrease from Dec to Feb.</p>
+</div>
+</div>
+</section>
+<section id="part-b-weekly-trends" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-weekly-trends">Part b: weekly Trends</h2>
+<p>Construct a line plot of the total number of births per week in <em>1988</em> for each state. It should have 51 lines (for the 50 states + DC) and eliminate week “53” (which isn’t a complete week). Then <strong>summarize</strong> (in words) what you learn. For example, do you notice any seasonal trends? Are these the same in every state? Any outliers? NOTE: It’s tough to identify individual states, so focusing on bigger trends is fine.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>Birth_week <span class="ot">&lt;-</span> Birthdays<span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1988</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">week</span>(date))<span class="sc">%&gt;%</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(state, week) <span class="sc">%&gt;%</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total_births =</span> <span class="fu">sum</span>(births))<span class="sc">%&gt;%</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(week <span class="sc">!=</span> <span class="dv">53</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Birth_week)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 9
+# Groups:   state, week [6]
+  state  year month   day date                wday  births  week total_births
+  &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dttm&gt;              &lt;ord&gt;  &lt;int&gt; &lt;dbl&gt;        &lt;int&gt;
+1 AK     1988     1     1 1988-01-01 00:00:00 Fri       28     1          193
+2 AL     1988     1     1 1988-01-01 00:00:00 Fri      125     1         1039
+3 AR     1988     1     1 1988-01-01 00:00:00 Fri       77     1          599
+4 AZ     1988     1     1 1988-01-01 00:00:00 Fri      138     1         1142
+5 CA     1988     1     1 1988-01-01 00:00:00 Fri     1182     1         9201
+6 CO     1988     1     1 1988-01-01 00:00:00 Fri      123     1          921</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Birth_week, <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y=</span> total_births, <span class="at">color =</span> state))<span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="homework_4_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR SUMMARY IN THIS CALLOUT BOX There seems to be a seasonal trend that increased in fall, and the trends aren’t same for all states, CA’s trend seems to be especially strong, but other states that have lower brith seems to be more smooth.</p>
+</div>
+</div>
+</section>
+<section id="part-c-geography" class="level2">
+<h2 class="anchored" data-anchor-id="part-c-geography">Part c: Geography</h2>
+<p>Repeat Part b for just Minnesota (MN) and Louisiana (LA). MN has one of the coldest climates, and LA has one of the warmest. Discuss how their seasonal trends compare.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Birth_weeksub<span class="ot">&lt;-</span> Birth_week <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="fu">c</span>(<span class="st">"MN"</span>,<span class="st">"LA"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There were 2652 warnings in `filter()`.
+The first warning was:
+ℹ In argument: `state == c("MN", "LA")`.
+ℹ In group 1: `state = "AK"` and `week = 1`.
+Caused by warning in `state == c("MN", "LA")`:
+! longer object length is not a multiple of shorter object length
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 2651 remaining warnings.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Birth_weeksub, <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y=</span> total_births, <span class="at">color =</span> state))<span class="sc">+</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="homework_4_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR DISCUSSION IN THIS CALLOUT BOX LA has lowest briths in the summer and highest in the fall, while MN has highest births in the summer, it seems that births are likely to happened on weathers that are not too hot or too cold.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="optional-exercise" class="level1">
+<h1>OPTIONAL Exercise</h1>
+<p>Dig deeper into the geography of birth patterns. Are the trends you observed in MN vs LA similar in other colder and warmer states? Which states have the largest increases or decreases in their proportion of US births over time? Is the weekend effect less strong for states with a higher percentage of their populations living in rural areas?</p>
+</section>
+<section id="exercise-3-daily-trends-and-anomalies-part-1" class="level1">
+<h1>Exercise 3: Daily Trends and Anomalies (Part 1)</h1>
+<section id="part-a-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-1">Part a</h2>
+<p>Define a new dataset, <code>daily_births</code>, which has the following variables for each <em>date</em> in the study period:</p>
+<ul>
+<li><code>date</code></li>
+<li><code>total</code> = total number of births on that date</li>
+<li><code>year</code> = the corresponding year</li>
+<li><code>week_day</code> = day of week, labeled “Mon”, “Tue”, etc</li>
+<li><code>month_day</code> = day of the month (e.g.&nbsp;1–31)</li>
+</ul>
+<p>Use code to show the first 6 rows and confirm that your dataset has 7305 rows (one per date in the dataset) and 5 columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wrangle and store your data</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>daily_births <span class="ot">&lt;-</span> Birthdays <span class="sc">%&gt;%</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(date)<span class="sc">%&gt;%</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total =</span> <span class="fu">sum</span>(births),</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">week_day =</span> wday,</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">month_day =</span> <span class="fu">mday</span>(date))<span class="sc">%&gt;%</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(date, total, year, week_day, month_day)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Show first 6 rows</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(daily_births)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+# Groups:   date [6]
+  date                total  year week_day month_day
+  &lt;dttm&gt;              &lt;int&gt; &lt;int&gt; &lt;ord&gt;        &lt;int&gt;
+1 1969-01-01 00:00:00  8486  1969 Wed              1
+2 1969-01-02 00:00:00  9002  1969 Thurs            2
+3 1969-01-03 00:00:00  9542  1969 Fri              3
+4 1969-01-04 00:00:00  8960  1969 Sat              4
+5 1969-01-05 00:00:00  8390  1969 Sun              5
+6 1969-01-06 00:00:00  9560  1969 Mon              6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirm there are 7305 rows and 5 columns</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(daily_births)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7305    5</code></pre>
+</div>
+</div>
+</section>
+<section id="part-b-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-1">Part b</h2>
+<p>The <a href="https://fivethirtyeight.com/features/some-people-are-too-superstitious-to-have-a-baby-on-friday-the-13th/">538 article (html)</a> demonstrates that fewer babies are born on the 13th of each month, and the effect is even stronger when the 13th falls on a Friday. Let’s see if that theory holds up in our data. There are lots of ways to do this. Consider just one.</p>
+<p>Start from the <code>daily_births</code> dataset you made in Part a, not <code>Birthdays</code>. From there, calculate and plot the <em>average</em> number of births (y-axis) per day of month (x-axis) in the U.S. Your plot should include 31 points. Discuss your observations. Does your plot support the theory that fewer babies tend to be born on the 13th day of the month? Any other data points that stand out.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>daily_births_m <span class="ot">&lt;-</span> daily_births<span class="sc">%&gt;%</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month_day)<span class="sc">%&gt;%</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">average_md =</span> <span class="fu">mean</span>(total))</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(daily_births_m, <span class="fu">aes</span>(<span class="at">x =</span> month_day, <span class="at">y =</span> average_md))<span class="sc">+</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="homework_4_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR DISCUSSION IN THIS CALLOUT BOX There exist the trend that there are less babies born on 13th. There are fewer on 31st since not every month have 31 days, but the the trend does show there are less births in the end of the month, dramasticly droped from 29th. There are also fewer birth on 4th.</p>
+</div>
+</div>
+</section>
+<section id="part-c-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-c-1">Part c</h2>
+<p>Starting from <code>daily_births</code>, plot the total number of babies born (y-axis) per day (x-axis) in <em>1980</em>. Color each date according to its day of the week.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>daily_births_1980 <span class="ot">&lt;-</span> daily_births <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1980</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(daily_births_1980, <span class="fu">aes</span>(<span class="at">x=</span> date, <span class="at">y =</span> total, <span class="at">color =</span> week_day))<span class="sc">+</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="homework_4_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="part-d" class="level2">
+<h2 class="anchored" data-anchor-id="part-d">Part d</h2>
+<p>As in Homework 2, one thing that stands out in this plot is that fewer babies are born on weekends. BUT there are some exceptions – relative to day of the week, there are significantly fewer births than expected on some days. Explain what you think is happening here.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR EXPLAINATION IN THIS CALLOUT BOX There are some Fridays have significantly fewer births, it might because they are 13th of the month.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="exercise-4-daily-trends-and-anomalies-part-2" class="level1">
+<h1>Exercise 4: Daily Trends and Anomalies (Part 2)</h1>
+<p>In Exercise 3, you might have hypothesized that the anomalous births are explained by holidays. To test this hypothesis, import data on U.S. federal holidays <a href="data/US-Holidays.csv">here</a>. NOTE: <code>lubridate::dmy()</code> converts the character-string date stored in the CSV to a “POSIX” date-number.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>holidays <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/US-Holidays.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">as.POSIXct</span>(lubridate<span class="sc">::</span><span class="fu">dmy</span>(date)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="part-a-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-2">Part a</h2>
+<p>Create a new dataset, <code>daily_births_1980</code>, which:</p>
+<ul>
+<li>keeps only <code>daily_births</code> related to <strong>1980</strong></li>
+<li>adds a variable called <code>is_holiday</code> which is <code>TRUE</code> when the day is a holiday, and <code>FALSE</code> otherwise. NOTE: <code>!is.na(x)</code> is <code>TRUE</code> if column <code>x</code> is <em>not</em> NA, and <code>FALSE</code> if it is NA.</li>
+</ul>
+<p>Print out the first 6 rows and confirm that your dataset has 366 rows (1 per day in 1980) and 7 columns. HINT: You’ll need to combine 2 different datasets.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define daily_births_1980</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>daily_births_1980 <span class="ot">&lt;-</span> daily_births <span class="sc">|&gt;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1980</span>) <span class="sc">|&gt;</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(holidays) <span class="sc">|&gt;</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">is_holiday =</span> <span class="fu">case_when</span>(<span class="sc">!</span><span class="fu">is.na</span>(holiday) <span class="sc">~</span> <span class="cn">TRUE</span>,</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">is.na</span>(holiday) <span class="sc">~</span> <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(date, year)`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the first 6 rows</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(daily_births_1980)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+# Groups:   date [6]
+  date                total  year week_day month_day holiday        is_holiday
+  &lt;dttm&gt;              &lt;int&gt; &lt;int&gt; &lt;ord&gt;        &lt;int&gt; &lt;chr&gt;          &lt;lgl&gt;     
+1 1980-01-01 00:00:00  8232  1980 Tues             1 New Year's Day TRUE      
+2 1980-01-02 00:00:00  9011  1980 Wed              2 &lt;NA&gt;           FALSE     
+3 1980-01-03 00:00:00  9902  1980 Thurs            3 &lt;NA&gt;           FALSE     
+4 1980-01-04 00:00:00  9939  1980 Fri              4 &lt;NA&gt;           FALSE     
+5 1980-01-05 00:00:00  8691  1980 Sat              5 &lt;NA&gt;           FALSE     
+6 1980-01-06 00:00:00  8213  1980 Sun              6 &lt;NA&gt;           FALSE     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirm that daily_births_1980 has 366 rows and 7 columns</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(daily_births_1980)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 366   7</code></pre>
+</div>
+</div>
+</section>
+<section id="part-b-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-2">Part b</h2>
+<p>Plot the total number of babies born (y-axis) per day (x-axis) in 1980. Color each date according to its day of the week, and <code>shape</code> each date according to whether or not it’s a holiday. (This is a modified version of 3c!)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(daily_births_1980, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> total, <span class="at">color =</span> week_day, <span class="at">shape =</span> is_holiday))<span class="sc">+</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="homework_4_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="part-c-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-c-2">Part c</h2>
+<p>Discuss your observations. For example: To what degree does the theory that there tend to be fewer births on holidays hold up? What holidays stand out the most?</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR ANSWER IN THIS CALLOUT BOX It holds, all holidays have at least somewhat lower birth than other days on its weekday in similar season. The Christmas Day stand out the most.</p>
+</div>
+</div>
+</section>
+<section id="part-d-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-d-1">Part d</h2>
+<p>Some holidays stand out more than others. It would be helpful to label them. Use <code>geom_text</code> to add labels to each of the holidays. NOTE: You can set the orientation of a label with the <code>angle</code> argument; e.g., <code>geom_text(angle = 40, ...)</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(daily_births_1980, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> total, <span class="at">color =</span> week_day, <span class="at">shape =</span> is_holiday))<span class="sc">+</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">angle =</span> <span class="dv">40</span>, <span class="fu">aes</span>(<span class="at">label =</span> holiday),<span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 357 rows containing missing values or values outside the scale range
+(`geom_text()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="homework_4_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="exercise-5-baby-names" class="level1">
+<h1>Exercise 5: Baby Names</h1>
+<p>Let’s switch our attention to the <code>babynames</code> dataset. This dataset, provided by the U.S. Social Security Administration, provides information on the names of every baby born in the U.S. from 1880-2017. Along with names, there’s information on the <code>sex</code> assigned at birth. This information reflects that collected by the U.S. government at birth. We’ll refer to sex assigned at birth as <code>sex</code> throughout.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(babynames)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(babynames)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(babynames)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+   year sex   name          n   prop
+  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;     &lt;int&gt;  &lt;dbl&gt;
+1  1880 F     Mary       7065 0.0724
+2  1880 F     Anna       2604 0.0267
+3  1880 F     Emma       2003 0.0205
+4  1880 F     Elizabeth  1939 0.0199
+5  1880 F     Minnie     1746 0.0179
+6  1880 F     Margaret   1578 0.0162</code></pre>
+</div>
+</div>
+<section id="part-a-3" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-3">Part a</h2>
+<p>Let’s do some preliminary exploration. Address each prompt below using our wrangling tools. Be mindful that some names were assigned to both <code>male</code> and <code>female</code> babies.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the 6 most popular names for male babies in 2017</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>babynames_m <span class="ot">&lt;-</span> babynames <span class="sc">%&gt;%</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">"M"</span>, year <span class="sc">==</span> <span class="dv">2017</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(babynames_m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+   year sex   name         n    prop
+  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;int&gt;   &lt;dbl&gt;
+1  2017 M     Liam     18728 0.00954
+2  2017 M     Noah     18326 0.00933
+3  2017 M     William  14904 0.00759
+4  2017 M     James    14232 0.00725
+5  2017 M     Logan    13974 0.00712
+6  2017 M     Benjamin 13733 0.00699</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the 6 most popular names overall, i.e. combining all years and combining male &amp; female babies</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>babynames_a <span class="ot">&lt;-</span> babynames<span class="sc">%&gt;%</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name)<span class="sc">%&gt;%</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_total =</span> <span class="fu">sum</span>(n))<span class="sc">%&gt;%</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(n_total)<span class="sc">%&gt;%</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n_total))</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(babynames_a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+# Groups:   name [6]
+  name    n_total
+  &lt;chr&gt;     &lt;int&gt;
+1 James   5173828
+2 John    5137142
+3 Robert  4834915
+4 Michael 4372536
+5 Mary    4138360
+6 William 4118553</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the 6 most popular names for female babies during this time period, i.e. combining all years</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>babynames_y <span class="ot">&lt;-</span> babynames<span class="sc">%&gt;%</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name,sex)<span class="sc">%&gt;%</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">"F"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_total =</span> <span class="fu">sum</span>(n))<span class="sc">%&gt;%</span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(sex,n_total)<span class="sc">%&gt;%</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n_total))</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(babynames_y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+# Groups:   name, sex [6]
+  name      sex   n_total
+  &lt;chr&gt;     &lt;chr&gt;   &lt;int&gt;
+1 Mary      F     4123200
+2 Elizabeth F     1629679
+3 Patricia  F     1571692
+4 Jennifer  F     1466281
+5 Linda     F     1452249
+6 Barbara   F     1434060</code></pre>
+</div>
+</div>
+</section>
+<section id="part-b-3" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-3">Part b</h2>
+<p>Create a new dataset that records the most popular name by sex for each year. Print out the data for the years 2013-2017 only. NOTES:</p>
+<ul>
+<li>You can use the <code>slice_max(___)</code> verb which pulls out the row in each group that has the maximum value with respect to the variable provided.</li>
+<li>Your dataset should have 10 rows and 5 columns.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>babynames_p <span class="ot">&lt;-</span> babynames<span class="sc">%&gt;%</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex,year)<span class="sc">%&gt;%</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(n)<span class="sc">%&gt;%</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>babynames_p <span class="sc">%&gt;%</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span><span class="dv">2013</span>, year <span class="sc">&lt;=</span> <span class="dv">2017</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 5
+# Groups:   sex, year [10]
+    year sex   name       n    prop
+   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;
+ 1  2013 F     Sophia 21213 0.0110 
+ 2  2014 F     Emma   20924 0.0107 
+ 3  2015 F     Emma   20435 0.0105 
+ 4  2017 F     Emma   19738 0.0105 
+ 5  2015 M     Noah   19613 0.00962
+ 6  2016 F     Emma   19471 0.0101 
+ 7  2014 M     Noah   19286 0.00943
+ 8  2016 M     Noah   19082 0.00946
+ 9  2017 M     Liam   18728 0.00954
+10  2013 M     Noah   18241 0.00904</code></pre>
+</div>
+</div>
+</section>
+<section id="part-c-3" class="level2">
+<h2 class="anchored" data-anchor-id="part-c-3">Part c</h2>
+<p>Construct a line plot of the total number of babies per year that were named “Alicia”, no matter the sex assigned at birth.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>babynames <span class="sc">%&gt;%</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"Alicia"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> n))<span class="sc">+</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="homework_4_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="part-d-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-d-2">Part d</h2>
+<p>Repeat Part c using whatever name and whatever consideration of sex assigned at birth you wish. Discuss your observations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>babynames <span class="sc">%&gt;%</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"Alicia"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> n, <span class="at">color =</span> sex))<span class="sc">+</span></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="homework_4_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR DISCUSSION IN THIS CALLOUT BOX The line became more readable, the extreme oscillations disappeared.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="exercise-6-more-names" class="level1">
+<h1>Exercise 6: More names</h1>
+<p>In this exercise, let’s examine the neutrality or non-neutrality of names assigned to babies by sex assigned at birth.</p>
+<section id="part-a-4" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-4">Part a</h2>
+<p>Create a dataset that has one row per name observed during the study period. For each observed name, calculate the total number of females and males born with that name. Use <code>values_fill = 0</code> to replace NAs with 0s. Store this as <code>babynames_total</code> and print out the first 3 rows which should match the following:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: right;">M</th>
+<th style="text-align: right;">F</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Aaban</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Aabha</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">35</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Aabid</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define babynames_total</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>babynames_total <span class="ot">&lt;-</span> babynames<span class="sc">%&gt;%</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name,sex)<span class="sc">%&gt;%</span></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_total =</span> <span class="fu">sum</span>(n))<span class="sc">%&gt;%</span></span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(sex,n_total)<span class="sc">%&gt;%</span></span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sex, <span class="at">values_from =</span> n_total, <span class="at">values_fill =</span> <span class="dv">0</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(name)</span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the first 3 rows</span></span>
+<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(babynames_total,<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+# Groups:   name [3]
+  name      F     M
+  &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+1 Aaban     0   107
+2 Aabha    35     0
+3 Aabid     0    10</code></pre>
+</div>
+</div>
+</section>
+<section id="part-b-4" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-4">Part b</h2>
+<p>After completing Part a, run the following code. Fill in the blanks (<code>___</code>) below to comment on what each wrangling row <em>does</em>. (You can check your claims by running the code, but should first try to do this without running any code.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>popular_names <span class="ot">&lt;-</span> babynames_total <span class="sc">|&gt;</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(M <span class="sc">&gt;</span> <span class="dv">25000</span>, F <span class="sc">&gt;</span> <span class="dv">25000</span>) <span class="sc">|&gt;</span>  <span class="co"># get only the rows that have more than 25000 babies for a single gender</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ratio =</span> F <span class="sc">/</span> (F <span class="sc">+</span> M)) <span class="sc">|&gt;</span>   <span class="co"># create a variable that is the ratio of female in the total number of babies with a name</span></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ratio))              <span class="co"># arrange the rows with by the ratio of female from high to low</span></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(popular_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+# Groups:   name [6]
+  name         F     M ratio
+  &lt;chr&gt;    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+1 Robin   289395 44616 0.866
+2 Kelly   471024 81550 0.852
+3 Shannon 294878 51926 0.850
+4 Alexis  336623 62928 0.843
+5 Kim     179492 34873 0.837
+6 Morgan  212458 41983 0.835</code></pre>
+</div>
+</div>
+</section>
+<section id="part-c-4" class="level2">
+<h2 class="anchored" data-anchor-id="part-c-4">Part c</h2>
+<p>Starting from <code>popular_names</code>, identify the names that are most popular among <em>both</em> male and female babies. Specifically, names for which 45-55% of babies born with that name are female (thus 45-55% are male.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>both_popular <span class="ot">&lt;-</span> popular_names<span class="sc">%&gt;%</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ratio <span class="sc">&gt;=</span> <span class="fl">0.45</span>, ratio <span class="sc">&lt;=</span> <span class="fl">0.55</span>)</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(both_popular)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+# Groups:   name [5]
+  name         F     M ratio
+  &lt;chr&gt;    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+1 Jackie   90604 78405 0.536
+2 Riley   100881 92789 0.521
+3 Kerry    48534 49596 0.495
+4 Quinn    28283 31230 0.475
+5 Frankie  33236 40552 0.450</code></pre>
+</div>
+</div>
+</section>
+<section id="part-d-3" class="level2">
+<h2 class="anchored" data-anchor-id="part-d-3">Part d</h2>
+<p>Pick one “neutral” name from Part c. Construct a line plot of the number of babies with this name by year and sex. You should have 2 lines. Discuss your observations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>babynames <span class="sc">%&gt;%</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"Kerry"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> n, <span class="at">color =</span> sex))<span class="sc">+</span></span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="homework_4_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR DISCUSSION IN THIS CALLOUT BOX For the name “Kerry”, the trend for both female and male are similar. It became gradually popular from 1930 to 1960 for male, and from 1940 to 1970 for female, then it decreased almost as a same speed as it increased.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="exercise-7-laughing" class="level1">
+<h1>Exercise 7: Laughing</h1>
+<p>In <a href="https://pudding.cool/2019/10/laugh/">Laughing On Line</a>, The Pudding analyzed the use of different laughter expressions (e.g.&nbsp;“lol”, “haha”) in Reddit comments. And how these have changed over time.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import data (shared by The Pudding at https://github.com/the-pudding/data/tree/master/laugh)</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>laughs <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/reddit-laughs.csv"</span>)</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check it out</span></span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(laughs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        id family           description count_2009 share_2009 count_2010
+1      lol    lol                            63719 0.24246748     241274
+2     haha     ha                            50889 0.19364597     196208
+3      LOL    lol                            26038 0.09908141      70148
+4       ha     ha                            20930 0.07964413      56167
+5      heh  other                            20283 0.07718213      45803
+6 haahahha     ha keyboard smash "haha"      11282 0.04293096      33157
+  share_2010 count_2011 share_2011 count_2012 share_2012 count_2013 share_2013
+1 0.28669647     882509 0.33900448    2083298 0.35558406    3281948 0.37271772
+2 0.23314630     647712 0.24881023    1629267 0.27808857    2507590 0.28477698
+3 0.08335413     196477 0.07547411     368135 0.06283448     466509 0.05297956
+4 0.06674105     139746 0.05368163     301229 0.05141474     463033 0.05258481
+5 0.05442592      98599 0.03787554     177181 0.03024183     244618 0.02778029
+6 0.03939917      94499 0.03630058     195952 0.03344572     276116 0.03135739
+  count_2014 share_2014 count_2015 share_2015 count_2016 share_2016 count_2017
+1    5020118 0.39813165    7548949 0.43376563   10467043 0.47207181   15189198
+2    3349881 0.26566978    4059995 0.23328894    4445584 0.20049931    5328650
+3     633184 0.05021607     859447 0.04938417    1076547 0.04855311    1319891
+4     647988 0.05139013     813667 0.04675363     841035 0.03793134     955275
+5     314737 0.02496092     366573 0.02106343     366292 0.01652006     362392
+6     371280 0.02944519     471774 0.02710832     591297 0.02666796     842984
+  share_2017 count_2018 share_2018 count_2019 share_2019
+1 0.50227697   21404140 0.52110200   12263438 0.52432395
+2 0.17620800    6502422 0.15830700    3413330 0.14593711
+3 0.04364620    1574734 0.03833824     779184 0.03331405
+4 0.03158907    1131222 0.02754056     586156 0.02506113
+5 0.01198359     365398 0.00889593     170043 0.00727020
+6 0.02787583    1045384 0.02545076     558478 0.02387776</code></pre>
+</div>
+</div>
+<section id="part-a-5" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-5">Part a</h2>
+<p>What are the units of observation in <code>laughs</code>?</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR ANSWER IN THIS CALLOUT BOX Each row is a type of expression of laughing on line, with how much they are used from 2009 to 2019.</p>
+</div>
+</div>
+</section>
+<section id="part-b-5" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-5">Part b</h2>
+<p>Our goal is to create a line plot similar to that in the section titled “The evolution of lol”:</p>
+<p><img src="https://mac-stat.github.io/images/112/laughs.png" class="img-fluid"></p>
+<p>First, create a new <code>laugh_plot_data</code> set that you’ll need to make this plot. Show the first 6 rows of the data and confirm that it includes 55 rows (one per laugh type / year combination), and 3 columns: <code>id</code>, <code>year</code>, and <code>share</code>. HINTS:</p>
+<ul>
+<li>Remove any columns you don’t need for this analysis.</li>
+<li>Only keep track of 5 laugh types: “lol”, “haha”, “lmao”, “ha”, “heh”</li>
+<li>Make sure that <code>share</code> is on the scale from 0-100, not 0-1.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define your dataset</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>laugh_plot_data <span class="ot">&lt;-</span> laughs<span class="sc">%&gt;%</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"lol"</span>, <span class="st">"haha"</span>, <span class="st">"lmao"</span>, <span class="st">"ha"</span>, <span class="st">"heh"</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"share"</span>), <span class="at">names_prefix =</span> <span class="st">"share_"</span>, <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"share"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.numeric</span>(year))<span class="sc">%&gt;%</span></span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, year, share)</span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the first 6 rows</span></span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(laugh_plot_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  id     year share
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 lol    2009 0.242
+2 lol    2010 0.287
+3 lol    2011 0.339
+4 lol    2012 0.356
+5 lol    2013 0.373
+6 lol    2014 0.398</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirm that the dataset has 55 rows and 3 columns</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(laugh_plot_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 55  3</code></pre>
+</div>
+</div>
+</section>
+<section id="part-c-5" class="level2">
+<h2 class="anchored" data-anchor-id="part-c-5">Part c</h2>
+<p>Use your data from Part b to create a plot that’s <em>similar</em> to that from the article. For example, the colors and styling don’t have to be the same. Discuss your observations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(laugh_plot_data, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> share, <span class="at">color =</span> id))<span class="sc">+</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="homework_4_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR DISCUSSION IN THIS CALLOUT BOX “lol” always has tha highest percentage in the types, and it is still increasing; “haha” has relavently high percentage, but begin decreasing since 2012; “heh” and “ha” are alwasy unpopular and still decreasing; “lmao” seems to appear since 2012, and continually increasing since it appears.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="finalize-work" class="level1">
+<h1>Finalize Work</h1>
+<p>Congratulation 🎉. You’re done with the homework. See the instruction at top of the Homework Assignments page for how to submit.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Han Sun - Homework 1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../homeworks/homework_2.html" rel="next">
+<link href="../homeworks/README.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../homeworks/README.html">Homeworks</a></li><li class="breadcrumb-item"><a href="../homeworks/homework_01.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Homework 1</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Han Sun</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../homeworks/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homeworks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homeworks/homework_01.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Homework 1</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homeworks/homework_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Homework 2: Data Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homeworks/homework_3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Homework 3: More Data Viz</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#exercise-1-warming-up" id="toc-exercise-1-warming-up" class="nav-link active" data-scroll-target="#exercise-1-warming-up">Exercise 1: Warming up</a></li>
+  <li><a href="#exercise-2-import-tidy-data" id="toc-exercise-2-import-tidy-data" class="nav-link" data-scroll-target="#exercise-2-import-tidy-data">Exercise 2: Import tidy data</a></li>
+  <li><a href="#exercise-3-tidy-data-properties" id="toc-exercise-3-tidy-data-properties" class="nav-link" data-scroll-target="#exercise-3-tidy-data-properties">Exercise 3: Tidy data properties</a></li>
+  <li><a href="#exercise-4-get-to-know-the-data" id="toc-exercise-4-get-to-know-the-data" class="nav-link" data-scroll-target="#exercise-4-get-to-know-the-data">Exercise 4: Get to know the data</a></li>
+  <li><a href="#exercise-5-data-structure" id="toc-exercise-5-data-structure" class="nav-link" data-scroll-target="#exercise-5-data-structure">Exercise 5: Data structure</a></li>
+  <li><a href="#exercise-6-your-turn" id="toc-exercise-6-your-turn" class="nav-link" data-scroll-target="#exercise-6-your-turn">Exercise 6: Your turn</a></li>
+  <li><a href="#exercise-7-brainstorm" id="toc-exercise-7-brainstorm" class="nav-link" data-scroll-target="#exercise-7-brainstorm">Exercise 7: Brainstorm</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Homework 1</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="exercise-1-warming-up" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1-warming-up">Exercise 1: Warming up</h2>
+<p>I like <strong>pasta</strong> and <em>pizza</em> <img src="https://www.mediterraneanliving.com/wp-content/uploads/2022/10/1-2.png" class="img-fluid" alt="pasta"></p>
+</section>
+<section id="exercise-2-import-tidy-data" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-2-import-tidy-data">Exercise 2: Import tidy data</h2>
+<div class="cell" data-hash="homework_01_cache/html/unnamed-chunk-1_86caed579568bd41969920d8361b2e6c">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Import the data</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>survey <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/112_fall_2024_survey.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exercise-3-tidy-data-properties" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-3-tidy-data-properties">Exercise 3: Tidy data properties</h2>
+<p>Each row represent how students in mac eat a type of food, how long will it take them, the temperature they like, and the place they like cafe_mac is a categorical variable, fave_temp is a quantitative variable.</p>
+</section>
+<section id="exercise-4-get-to-know-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-4-get-to-know-the-data">Exercise 4: Get to know the data</h2>
+<div class="cell" data-hash="homework_01_cache/html/unnamed-chunk-2_50714801e778e5a45ce5784caacaf35d">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># It shows the number of row and column in the dataset.</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">dim</span>(survey)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 67  4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># It shows the number of row of this dataset.</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">nrow</span>(survey)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 67</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># It shows the first 6 rows of this dataset.</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">head</span>(survey)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           cafe_mac minutes_to_campus fave_temp       hangout
+1        fried rice                15     27.00      a forest
+2           Yogurt                 28     22.00 the mountains
+3             Pizza                 5     20.00 the mountains
+4            Pasta                 10     18.33       a beach
+5 vanilla ice cream                15     20.00       a beach
+6             Pizza                12     10.00        a city</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># It shows the first 3 rows of this dataset.</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="fu">head</span>(survey, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    cafe_mac minutes_to_campus fave_temp       hangout
+1 fried rice                15        27      a forest
+2    Yogurt                 28        22 the mountains
+3      Pizza                 5        20 the mountains</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># It shows the last 6 rows of this dataset.</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">tail</span>(survey)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                             cafe_mac minutes_to_campus fave_temp       hangout
+62                              Tacos                15        22      a forest
+63                          Chickpeas                 5        21 the mountains
+64                        Baked goods                 7        24      a forest
+65 Chocolate chip cookies and ravioli                 7        25       a beach
+66                             Burger                10        21      a forest
+67                    Pepperoni Pizza                10        24       a beach</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># It shows the name of the columns.</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">names</span>(survey)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "cafe_mac"          "minutes_to_campus" "fave_temp"        
+[4] "hangout"          </code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-5-data-structure" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-5-data-structure">Exercise 5: Data structure</h2>
+<div class="cell" data-hash="homework_01_cache/html/unnamed-chunk-3_3d1dc4a64fbfa767408144169dc020bf">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Obtain the overall class of the survey object</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a>sur <span class="ot">&lt;-</span> survey</span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="fu">class</span>(sur)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># Examine the structure of each variable within survey (including class)</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a></span>
+<span id="cb16-3"><a href="#cb16-3"></a>cafe_mac <span class="ot">&lt;-</span> <span class="st">"fried rice"</span> </span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="fu">class</span>(cafe_mac)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>minutes_to_campus <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">class</span>(minutes_to_campus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>fave_temp <span class="ot">&lt;-</span> <span class="fl">18.3</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="fu">class</span>(fave_temp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>hangout <span class="ot">&lt;-</span> <span class="st">"a forest"</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">class</span>(hangout)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="do">## cafe_mac is character, minutes_to_campus is integer, fave_temp is numeric, hangout is character.</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="co"># Just take note of what information we gain here (no need to write more)</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a><span class="do">## We have the dimension of the dataset, the class of the variables, and first few columns of each variable.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exercise-6-your-turn" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-6-your-turn">Exercise 6: Your turn</h2>
+<div class="cell" data-hash="homework_01_cache/html/unnamed-chunk-4_94c11b1468190468da551b1f9db152c6">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># Import and name the dataset (you pick a name!)</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a></span>
+<span id="cb25-3"><a href="#cb25-3"></a>football <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-11-29/worldcups.csv"</span>)</span>
+<span id="cb25-4"><a href="#cb25-4"></a></span>
+<span id="cb25-5"><a href="#cb25-5"></a><span class="co"># Print the first 6 rows of the dataset</span></span>
+<span id="cb25-6"><a href="#cb25-6"></a></span>
+<span id="cb25-7"><a href="#cb25-7"></a><span class="fu">head</span>(football)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  year        host       winner         second   third       fourth
+1 1930     Uruguay      Uruguay      Argentina     USA   Yugoslavia
+2 1934       Italy        Italy Czechoslovakia Germany      Austria
+3 1938      France        Italy        Hungary  Brazil       Sweden
+4 1950      Brazil      Uruguay         Brazil  Sweden        Spain
+5 1954 Switzerland West Germany        Hungary Austria      Uruguay
+6 1958      Sweden       Brazil         Sweden  France West Germany
+  goals_scored teams games attendance
+1           70    13    18     434000
+2           70    16    17     395000
+3           84    15    18     483000
+4           88    13    22    1337000
+5          140    16    26     943000
+6          126    16    35     868000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># How many years of data do we have? And how many measurements do we have on each year?</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="fu">dim</span>(football)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 21 10</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="do">## There are 21 years and 10 measurements.</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a></span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="co"># Get a list of all variable names in the dataset</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a></span>
+<span id="cb29-5"><a href="#cb29-5"></a><span class="fu">names</span>(football)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "year"         "host"         "winner"       "second"       "third"       
+ [6] "fourth"       "goals_scored" "teams"        "games"        "attendance"  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># Display the class and other information for each variable in the dataset</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="fu">str</span>(football)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   21 obs. of  10 variables:
+ $ year        : int  1930 1934 1938 1950 1954 1958 1962 1966 1970 1974 ...
+ $ host        : chr  "Uruguay" "Italy" "France" "Brazil" ...
+ $ winner      : chr  "Uruguay" "Italy" "Italy" "Uruguay" ...
+ $ second      : chr  "Argentina" "Czechoslovakia" "Hungary" "Brazil" ...
+ $ third       : chr  "USA" "Germany" "Brazil" "Sweden" ...
+ $ fourth      : chr  "Yugoslavia" "Austria" "Sweden" "Spain" ...
+ $ goals_scored: int  70 70 84 88 140 126 89 89 95 97 ...
+ $ teams       : int  13 16 15 13 16 16 16 16 16 16 ...
+ $ games       : int  18 17 18 22 26 35 32 32 32 38 ...
+ $ attendance  : int  434000 395000 483000 1337000 943000 868000 776000 1614677 1673975 1774022 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">summary</span>(football)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      year          host              winner             second         
+ Min.   :1930   Length:21          Length:21          Length:21         
+ 1st Qu.:1958   Class :character   Class :character   Class :character  
+ Median :1978   Mode  :character   Mode  :character   Mode  :character  
+ Mean   :1977                                                           
+ 3rd Qu.:1998                                                           
+ Max.   :2018                                                           
+    third              fourth           goals_scored       teams      
+ Length:21          Length:21          Min.   : 70.0   Min.   :13.00  
+ Class :character   Class :character   1st Qu.: 89.0   1st Qu.:16.00  
+ Mode  :character   Mode  :character   Median :126.0   Median :16.00  
+                                       Mean   :121.3   Mean   :21.76  
+                                       3rd Qu.:146.0   3rd Qu.:32.00  
+                                       Max.   :171.0   Max.   :32.00  
+     games         attendance     
+ Min.   :17.00   Min.   : 395000  
+ 1st Qu.:32.00   1st Qu.: 943000  
+ Median :38.00   Median :1774022  
+ Mean   :42.86   Mean   :1898122  
+ 3rd Qu.:64.00   3rd Qu.:2724604  
+ Max.   :64.00   Max.   :3568567  </code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-7-brainstorm" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-7-brainstorm">Exercise 7: Brainstorm</h2>
+<ul>
+<li>Which team has the best score?</li>
+<li>Which variable has the largest effect to who is the winner?</li>
+<li>Which team has fewest winner?</li>
+</ul>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../homeworks/README.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Homeworks</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../homeworks/homework_2.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Homework 2: Data Viz</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb35" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb35-1"><a href="#cb35-1"></a><span class="co">---</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="an">title:</span><span class="co"> "Homework 1"</span></span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="an">number-sections:</span><span class="co"> false</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a><span class="co">---</span></span>
+<span id="cb35-5"><a href="#cb35-5"></a></span>
+<span id="cb35-6"><a href="#cb35-6"></a><span class="fu">## Exercise 1: Warming up</span></span>
+<span id="cb35-7"><a href="#cb35-7"></a>I like **pasta** and *pizza*</span>
+<span id="cb35-8"><a href="#cb35-8"></a><span class="al">![pasta](https://www.mediterraneanliving.com/wp-content/uploads/2022/10/1-2.png)</span></span>
+<span id="cb35-9"><a href="#cb35-9"></a></span>
+<span id="cb35-10"><a href="#cb35-10"></a></span>
+<span id="cb35-11"><a href="#cb35-11"></a><span class="fu">## Exercise 2: Import tidy data</span></span>
+<span id="cb35-14"><a href="#cb35-14"></a><span class="in">```{r}</span></span>
+<span id="cb35-15"><a href="#cb35-15"></a><span class="co"># Import the data</span></span>
+<span id="cb35-16"><a href="#cb35-16"></a>survey <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/112_fall_2024_survey.csv"</span>)</span>
+<span id="cb35-17"><a href="#cb35-17"></a><span class="in">```</span></span>
+<span id="cb35-18"><a href="#cb35-18"></a></span>
+<span id="cb35-19"><a href="#cb35-19"></a></span>
+<span id="cb35-20"><a href="#cb35-20"></a><span class="fu">## Exercise 3: Tidy data properties</span></span>
+<span id="cb35-21"><a href="#cb35-21"></a></span>
+<span id="cb35-22"><a href="#cb35-22"></a>Each row represent how students in mac eat a type of food, how long will it take them, the temperature they like, and the place they like</span>
+<span id="cb35-23"><a href="#cb35-23"></a>cafe_mac is a categorical variable, fave_temp is a quantitative variable.</span>
+<span id="cb35-24"><a href="#cb35-24"></a></span>
+<span id="cb35-25"><a href="#cb35-25"></a></span>
+<span id="cb35-26"><a href="#cb35-26"></a><span class="fu">## Exercise 4: Get to know the data</span></span>
+<span id="cb35-27"><a href="#cb35-27"></a></span>
+<span id="cb35-30"><a href="#cb35-30"></a><span class="in">```{r}</span></span>
+<span id="cb35-31"><a href="#cb35-31"></a><span class="co"># It shows the number of row and column in the dataset.</span></span>
+<span id="cb35-32"><a href="#cb35-32"></a><span class="fu">dim</span>(survey)</span>
+<span id="cb35-33"><a href="#cb35-33"></a></span>
+<span id="cb35-34"><a href="#cb35-34"></a><span class="co"># It shows the number of row of this dataset.</span></span>
+<span id="cb35-35"><a href="#cb35-35"></a><span class="fu">nrow</span>(survey)</span>
+<span id="cb35-36"><a href="#cb35-36"></a></span>
+<span id="cb35-37"><a href="#cb35-37"></a><span class="co"># It shows the first 6 rows of this dataset.</span></span>
+<span id="cb35-38"><a href="#cb35-38"></a><span class="fu">head</span>(survey)</span>
+<span id="cb35-39"><a href="#cb35-39"></a></span>
+<span id="cb35-40"><a href="#cb35-40"></a><span class="co"># It shows the first 3 rows of this dataset.</span></span>
+<span id="cb35-41"><a href="#cb35-41"></a><span class="fu">head</span>(survey, <span class="dv">3</span>)</span>
+<span id="cb35-42"><a href="#cb35-42"></a></span>
+<span id="cb35-43"><a href="#cb35-43"></a><span class="co"># It shows the last 6 rows of this dataset.</span></span>
+<span id="cb35-44"><a href="#cb35-44"></a><span class="fu">tail</span>(survey)</span>
+<span id="cb35-45"><a href="#cb35-45"></a></span>
+<span id="cb35-46"><a href="#cb35-46"></a><span class="co"># It shows the name of the columns.</span></span>
+<span id="cb35-47"><a href="#cb35-47"></a><span class="fu">names</span>(survey)</span>
+<span id="cb35-48"><a href="#cb35-48"></a><span class="in">```</span></span>
+<span id="cb35-49"><a href="#cb35-49"></a></span>
+<span id="cb35-50"><a href="#cb35-50"></a></span>
+<span id="cb35-51"><a href="#cb35-51"></a><span class="fu">## Exercise 5: Data structure</span></span>
+<span id="cb35-52"><a href="#cb35-52"></a></span>
+<span id="cb35-55"><a href="#cb35-55"></a><span class="in">```{r}</span></span>
+<span id="cb35-56"><a href="#cb35-56"></a><span class="co"># Obtain the overall class of the survey object</span></span>
+<span id="cb35-57"><a href="#cb35-57"></a></span>
+<span id="cb35-58"><a href="#cb35-58"></a>sur <span class="ot">&lt;-</span> survey</span>
+<span id="cb35-59"><a href="#cb35-59"></a><span class="fu">class</span>(sur)</span>
+<span id="cb35-60"><a href="#cb35-60"></a></span>
+<span id="cb35-61"><a href="#cb35-61"></a></span>
+<span id="cb35-62"><a href="#cb35-62"></a></span>
+<span id="cb35-63"><a href="#cb35-63"></a><span class="co"># Examine the structure of each variable within survey (including class)</span></span>
+<span id="cb35-64"><a href="#cb35-64"></a></span>
+<span id="cb35-65"><a href="#cb35-65"></a>cafe_mac <span class="ot">&lt;-</span> <span class="st">"fried rice"</span> </span>
+<span id="cb35-66"><a href="#cb35-66"></a><span class="fu">class</span>(cafe_mac)</span>
+<span id="cb35-67"><a href="#cb35-67"></a></span>
+<span id="cb35-68"><a href="#cb35-68"></a>minutes_to_campus <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb35-69"><a href="#cb35-69"></a><span class="fu">class</span>(minutes_to_campus)</span>
+<span id="cb35-70"><a href="#cb35-70"></a></span>
+<span id="cb35-71"><a href="#cb35-71"></a>fave_temp <span class="ot">&lt;-</span> <span class="fl">18.3</span></span>
+<span id="cb35-72"><a href="#cb35-72"></a><span class="fu">class</span>(fave_temp)</span>
+<span id="cb35-73"><a href="#cb35-73"></a></span>
+<span id="cb35-74"><a href="#cb35-74"></a>hangout <span class="ot">&lt;-</span> <span class="st">"a forest"</span></span>
+<span id="cb35-75"><a href="#cb35-75"></a><span class="fu">class</span>(hangout)</span>
+<span id="cb35-76"><a href="#cb35-76"></a></span>
+<span id="cb35-77"><a href="#cb35-77"></a><span class="do">## cafe_mac is character, minutes_to_campus is integer, fave_temp is numeric, hangout is character.</span></span>
+<span id="cb35-78"><a href="#cb35-78"></a></span>
+<span id="cb35-79"><a href="#cb35-79"></a><span class="co"># Just take note of what information we gain here (no need to write more)</span></span>
+<span id="cb35-80"><a href="#cb35-80"></a><span class="do">## We have the dimension of the dataset, the class of the variables, and first few columns of each variable.</span></span>
+<span id="cb35-81"><a href="#cb35-81"></a></span>
+<span id="cb35-82"><a href="#cb35-82"></a><span class="in">```</span></span>
+<span id="cb35-83"><a href="#cb35-83"></a></span>
+<span id="cb35-84"><a href="#cb35-84"></a></span>
+<span id="cb35-85"><a href="#cb35-85"></a></span>
+<span id="cb35-86"><a href="#cb35-86"></a></span>
+<span id="cb35-87"><a href="#cb35-87"></a><span class="fu">## Exercise 6: Your turn</span></span>
+<span id="cb35-88"><a href="#cb35-88"></a></span>
+<span id="cb35-91"><a href="#cb35-91"></a><span class="in">```{r}</span></span>
+<span id="cb35-92"><a href="#cb35-92"></a><span class="co"># Import and name the dataset (you pick a name!)</span></span>
+<span id="cb35-93"><a href="#cb35-93"></a></span>
+<span id="cb35-94"><a href="#cb35-94"></a>football <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-11-29/worldcups.csv"</span>)</span>
+<span id="cb35-95"><a href="#cb35-95"></a></span>
+<span id="cb35-96"><a href="#cb35-96"></a><span class="co"># Print the first 6 rows of the dataset</span></span>
+<span id="cb35-97"><a href="#cb35-97"></a></span>
+<span id="cb35-98"><a href="#cb35-98"></a><span class="fu">head</span>(football)</span>
+<span id="cb35-99"><a href="#cb35-99"></a></span>
+<span id="cb35-100"><a href="#cb35-100"></a><span class="co"># How many years of data do we have? And how many measurements do we have on each year?</span></span>
+<span id="cb35-101"><a href="#cb35-101"></a></span>
+<span id="cb35-102"><a href="#cb35-102"></a><span class="fu">dim</span>(football)</span>
+<span id="cb35-103"><a href="#cb35-103"></a></span>
+<span id="cb35-104"><a href="#cb35-104"></a><span class="do">## There are 21 years and 10 measurements.</span></span>
+<span id="cb35-105"><a href="#cb35-105"></a></span>
+<span id="cb35-106"><a href="#cb35-106"></a><span class="co"># Get a list of all variable names in the dataset</span></span>
+<span id="cb35-107"><a href="#cb35-107"></a></span>
+<span id="cb35-108"><a href="#cb35-108"></a><span class="fu">names</span>(football)</span>
+<span id="cb35-109"><a href="#cb35-109"></a></span>
+<span id="cb35-110"><a href="#cb35-110"></a><span class="co"># Display the class and other information for each variable in the dataset</span></span>
+<span id="cb35-111"><a href="#cb35-111"></a><span class="fu">str</span>(football)</span>
+<span id="cb35-112"><a href="#cb35-112"></a><span class="fu">summary</span>(football)</span>
+<span id="cb35-113"><a href="#cb35-113"></a></span>
+<span id="cb35-114"><a href="#cb35-114"></a><span class="in">```</span></span>
+<span id="cb35-115"><a href="#cb35-115"></a></span>
+<span id="cb35-116"><a href="#cb35-116"></a></span>
+<span id="cb35-117"><a href="#cb35-117"></a><span class="fu">## Exercise 7: Brainstorm</span></span>
+<span id="cb35-118"><a href="#cb35-118"></a></span>
+<span id="cb35-119"><a href="#cb35-119"></a><span class="ss">- </span>Which team has the best score?</span>
+<span id="cb35-120"><a href="#cb35-120"></a><span class="ss">- </span>Which variable has the largest effect to who is the winner?</span>
+<span id="cb35-121"><a href="#cb35-121"></a><span class="ss">- </span>Which team has fewest winner?</span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>

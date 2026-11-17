@@ -1,0 +1,32 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Han Sun"
+  author: "hsun1@macalester.edu"
+  date: last-modified
+  date-format: full
+  reader-mode: true
+  
+  chapters:
+    - index.qmd
+
+    - part: homeworks/README.qmd
+      chapters: 
+      - homeworks/homework_01.qmd
+      - homeworks/homework_2.qmd
+      - homeworks/homework_3.qmd
+
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-copy: true
+    code-line-numbers: true
+    code-tools: true
+
+execute:
+  cache: true
+  freeze: auto

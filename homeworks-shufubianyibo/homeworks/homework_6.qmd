@@ -1,0 +1,520 @@
+---
+title: "Homework 6: Wrangling + More TidyTuesday"
+execute: 
+  warning: true
+fig-height: 2.57
+fig-width: 4.25
+fig-align: center
+code-fold: false
+---
+
+::: {.callout-caution title="Learning Goals"}
+- Sharpen your data wrangling and data viz skills by practicing on a different dataset.
+- Engage with the larger data science community by working on a recent TidyTuesday dataset.
+:::
+
+
+# Kiva
+
+
+
+[Kiva](https://www.kiva.org/) is a non-profit organization that allows people from around the world to lend small amounts to others to start or grow a business, go to school, access clean energy, etc. Since its founding in 2005, more than \$1.2 billion in loans to over 3 million borrowers have been funded. In the following exercises, we'll examine some Kiva data from 2005-2012. 
+
+## Exercise 1: Kiva partners
+
+To begin, let's explore data on Kiva's *field partners*. These partners act as intermediaries between Kiva (the lenders) and borrowers. They evaluate borrower risk, post loan requests on Kiva, and process payments. Load data on the field partners below. A codebook with variable descriptions is [here](https://mac-stat.github.io/data/kiva_partners2_codebook.xlsx)
+
+```{r warning = FALSE, message = FALSE}
+# Load the tidyverse
+library(tidyverse)
+
+# Load the data
+partners <- read_csv("https://mac-stat.github.io/data/kiva_partners2.csv")
+head(partners)
+```
+
+### Part a
+
+Let's get to know the data.
+
+```{r}
+# Calculate the lowest, median, and highest total amount raised by any partner
+partners_raise <- partners %>%
+  summarize(lowest = min(total_amount_raised),
+            median = median(total_amount_raised),
+            hightest = max(total_amount_raised))
+bind_rows(partners_raise)
+# Identify the 6 partners that have raised the highest total amount
+# Show just the partner names, countries, and total amount raised
+partners %>%
+  select(partner_name, countries.name, total_amount_raised)%>%
+  arrange(desc(total_amount_raised))%>%
+  head()
+
+# Show the names of the partners in Bolivia
+# (Don't include any other variables, just the partner names)
+partners_bolivia <- partners %>%
+  filter(countries.name == "Bolivia")%>%
+  select(partner_name)
+partners_bolivia
+```
+
+### Part b
+
+Create a new table with only five columns:
+
+-   `countries.region`
+-   `total_partners` = total number of partners per region
+-   `total_loans` = total number of loans posted per region
+-   `total_amount` = total amount raised per region
+-   `average_loan` = average loan size per loan posted in each region (calculated as total amount raised per region / total number of loans posted per region)
+
+Print the entire table, sorted from high to low with respect to `total_amount` raised. Note that
+
+-   Your table should have 7 rows and 5 columns.
+-   Your first row should have `countries.region = Asia`, `total_partners = 40`, `total_loans = 133060`, `total_amount = 84816225`, `average_loan = 637`.
+
+```{r}
+partners_sub <- partners %>%
+  group_by(countries.region)%>%
+  summarize(total_partners = n(),
+            total_loans = sum(loans_posted),
+            total_amount = sum(total_amount_raised),
+            average_loan = total_amount/total_loans)%>%
+  select(countries.region, total_partners, total_loans, total_amount, average_loan)%>%
+  arrange(desc(total_amount))
+partners_sub
+```
+
+### Part c
+
+Identify two things that you learned from the table in Part b. Just pick whatever you found most interesting.
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR ANSWER IN THIS CALLOUT BOX
+
+Sometimes we shouldn't just use "mean()" to get the average, we have to read carefully what average we were supposed to get.
+
+:::
+
+### Part d
+
+Draw a map that includes a dot for each of Kiva's `partners`. Color the dot corresponding to the total amount raised by the partner. NOTE: It's easier to do this on a static map, than with leaflet.
+
+```{r warning = FALSE, message = FALSE, fig.width = 8}
+library(rnaturalearth)
+library(mosaic)
+
+# Get a background map of the entire world
+world_boundaries <- ne_countries(returnclass = "sf")
+
+# Plot the partner locations on the background map
+ggplot(world_boundaries) + 
+  geom_sf() + 
+  geom_point(
+    data = partners,
+    aes(x = lon, y = lat, color = "red")
+    ) +
+  labs(color = "partners")+
+  theme_map()
+```
+
+\
+\
+\
+\
+\
+
+
+## Exercise 2: Kiva loans (Part 1)
+
+The `loans` data contains information on a sample of 10,000 individual loans to borrowers:
+
+```{r}
+# a random sample of 10,000 loans
+loans <- read_csv("https://mac-stat.github.io/data/kiva_loans_small.csv")
+```
+
+View the `loans` table, browse through some of the data, and check out the [codebook](https://mac-stat.github.io/data/kiva_loans_codebook.xlsx). Before working with this data, we have to do some pre-processing / wrangling. Take the following steps and store the results as `loans_2`.
+
+1.  Only keep the loans that have a positive `funded_amount`.
+
+2.  The information about *when* a loan request was posted is separated out into different fields for year, month, day, hour, etc. Combine some of this information into a single variable that records the exact posting time. Do this in three steps. NOTE: You'll get some warning messages, but these are not errors.
+
+    -   Define a new variable which records the exact date a loan request was posted by *pasting* together the year, month, and date of the request, separated by hyphens: `post_dt = paste(posted_yr, posted_mo, posted_day, sep = '-')`
+    -   Define a new variable which records the exact time of day a loan request was posted by *pasting* together the hour and minute of the request, separated by a colon:\
+        `post_time = paste(posted_hr, posted_min, posted_sec, sep = ':')`.
+    -   Define a new variable which combines the exact date and time of day a loan request was posted:\
+        `post_date = ymd_hms(paste(post_dt, post_time, sep = ' '))`
+
+3.  Similar to `post_date`, define a new variable called `fund_date` that reports the exact date and time at which each loan was *funded* (not *posted*).
+
+4.  Define a new variable called `days_to_fund = difftime(fund_date, post_date, units = "days")` which records the number of days between the time a loan was posted and the time it was funded.
+
+5.  Get information about the `countries.region` for the partner of each loan from the `partners` dataset. NOTE: `partners` and `loans` have many variable names in common. To avoid conflicts, simplify the `partners` dataset to just 2 columns before connecting it to `loans`.
+
+6.  Keep only the following columns: `loan_id, status, funded_amount, paid_amount, sector, countries.region, location.country, lat, lon, partner_id, post_date, fund_date, days_to_fund`
+
+```{r}
+# Define loans_2
+partners_simple <- partners %>% 
+  select(partner_id, countries.region)
+loans_2 <- loans%>%
+  filter(funded_amount > 0)%>%
+  mutate(post_dt = paste(posted_yr, posted_mo, posted_day, sep = '-'),
+         post_time = paste(posted_hr, posted_min, posted_sec, sep = ':'),
+         post_date = ymd_hms(paste(post_dt, post_time, sep = ' ')),
+         fund_dt = paste(funded_yr, funded_mo, funded_day, sep = '-'),
+         fund_time = paste(funded_hr, funded_min, funded_sec, sep = ':'),
+         fund_date = ymd_hms(paste(fund_dt, fund_time, sep = ' ')),
+         days_to_fund = difftime(fund_date, post_date, units = "days"))%>%
+  left_join(partners_simple, by = "partner_id")%>%
+  select(loan_id, status, funded_amount, paid_amount, sector, countries.region, location.country, lat, lon, partner_id, post_date, fund_date, days_to_fund)
+  
+
+# Confirm that loans_2 has 9884 rows and 13 columns
+loans_2
+
+```
+
+\
+\
+\
+\
+
+## Exercise 3: Kiva loans (Part 2)
+
+### Part a
+
+```{r}
+# Show the top 5 countries by number of loans
+loans %>% 
+  group_by(location.country)%>%
+  summarize(num_loans = n())%>%
+  arrange(desc(num_loans))%>%
+  head(5)
+
+# Show the top 5 countries by total funded loan amount
+loans %>% 
+  group_by(location.country)%>%
+  summarize(amount_loans_fund = sum(funded_amount))%>%
+  arrange(desc(amount_loans_fund))%>%
+  head(5)
+
+```
+
+### Part b
+
+Plot the mean loan size in each sector (y-axis) vs the number of loans in each sector (x-axis). Represent each sector by its name (text), not a point. HINT: You'll have to calculate the mean loan size and number of loans in each sector before you can plot them.
+```{r}
+loans_new <- loans%>%
+  group_by(sector) %>%
+  summarise(mean_loan_size = mean(funded_amount, na.rm = TRUE),
+            num_loans = n())
+  
+ggplot(loans_new, aes(y = mean_loan_size, x = num_loans, label = sector))+
+  geom_text() 
+  
+```
+
+
+
+\
+\
+\
+\
+
+## Optional Exercise: funding time
+
+NOTE: This exercise won't be graded, but it is strongly recommended as additional practice for the quiz.
+
+How many days does it take borrowers to get a loan funded? Let's explore the `days_to_fund` variable in the `loans_2`.
+
+### Part a
+
+Construct a univariate visualization of `days_to_fund`.
+
+```{r}
+
+```
+
+### Part b
+
+Construct a plot of `days_to_fund` (y-axis) vs `funded_amount` (x-axis) for each loan in `loans_2`.
+
+```{r}
+
+```
+
+### Part c
+
+Construct a plot of `days_to_fund` (y-axis) vs `funded_amount` (x-axis) in each `countries.region`. Don't represent each loan on this plot. Rather, include curves to represent the trends in each region.
+
+```{r}
+
+```
+
+### Part d
+
+Summarize, in words, some takeaway messages from parts a-c about how long it takes to get a loan funded.
+
+\
+\
+\
+\
+
+## Optional Exercise: loan status
+
+NOTE: This exercise won't be graded, but it is highly recommended as additional practice for the quiz.
+
+The `status` variable in `loans_2` indicates the status of a loan:
+
+```{r}
+# Check out a table summary after you've defined loans_2
+# loans_2 %>% 
+#   count(status)
+```
+
+Let's focus here on the patterns in loans that were paid back and those that were defaulted, i.e. not paid back.
+
+### Part a
+
+Define a new dataset, `defaults`, that only includes loans that were either defaulted or paid.
+
+```{r}
+# Define defaults
+
+# Confirm that defaults has 7010 rows and 13 columns
+
+```
+
+### Part b
+
+Using `defaults`, construct a visualization of the relationship between the funded amount and status of a loan.
+
+```{r}
+
+```
+
+### Part c
+
+Define a new dataset with four columns:
+
+-   `partner_id`
+-   number of defaulted loans through that partner
+-   number of loans completely paid back through that partner
+-   percentage of loans defaulted
+
+Sort your table from highest default percentage to lowest, and print out only those with at least a 50% default percentage. HINT: You'll have to reshape the data in this process.
+
+```{r}
+
+```
+
+### Part d
+
+Provide some take-away messages about loan defaults using your results in parts a-d.
+
+
+
+
+
+# TidyTuesday
+
+Tidy Tuesday is a weekly data project put on by some folks from the R Data Science community. Each week, a different data set is posted and people around the world wrangle and visualize that data. According to the organizers, "The intent of Tidy Tuesday is to provide a safe and supportive forum for individuals to practice their wrangling and data visualization skills independent of drawing conclusions."
+
+
+The goals of this TidyTuesday are:
+
+1.  Practice generating questions. You have to decide what to ask and how to answer it with a graphic.
+2.  Practice identifying what viz and (eventually) wrangling tools are useful for addressing your questions.
+4.  Get a sense of the broader data science community. Check out what people share out on [X/Twitter #TidyTuesday](https://x.com/search?q=%23TidyTuesday). Maybe even share your own #TidyTuesday work on social media. Recent Mac alum [Erin Franke (X/Twitter)](https://x.com/efranke7282) has an inspiring account! Scrolling through, you'll notice the trajectory of her work, starting from COMP/STAT 112 to today. Very cool.
+
+
+::: {.callout-tip title="Tips"}
+
+-   You should plan to spend 2-3 hours on the TidyTuesday part, *including* in-class work time.
+
+    -   Don't spend more than 30 minutes (at a very maximum) picking a dataset. Try to pick from just the past few weeks of TidyTuesday options, even if it's less interesting to you than another dataset might be. You won't be tied to this data all semester.
+    -   Try to complete what you start and turn it in, rather than getting half way and deciding you want to use a different dataset.
+
+-   Think about a specific skill you'd like to work on, and let this influence what questions you ask of the data.
+
+-   This is an opportunity for practice and exploration, not perfection! **IF** you have some extra time and really want to dig in and do something really creative, go ahead. But again, the expectation is that you don't spend more than 2-3 hours on this assignment.
+
+-   Work together! I encourage you to work with others on the same dataset, but **your graphics should be distinct. Though all code and writing must be your own, it helps to bounce around ideas.**
+
+:::
+
+## Part a
+
+Go to [TidyTuesday](https://github.com/rfordatascience/tidytuesday). Pick a dataset that was posted in the **last 4 weeks**. Here, include:
+
+- A short (\~2 sentence) written description of your data. This should include: 
+  - the original data source, ie, where did TidyTuesday get the data from?
+  - units of observation, ie, what are you analyzing?, and 
+  - the data size, ie, how many data points do you have? how many variables are measured on each data point?.
+
+- Code to import and examine the basic properties of your chosen dataset. This code must support the facts you cited in your short written description.
+
+```{r}
+tuesdata <- tidytuesdayR::tt_load(2024, week = 42)
+
+orcas <- tuesdata$orcas
+dim(orcas)
+```
+This data came from the Center for Whale Research (CWR), each rows of the dataset represents an encounter of a orca with basic information of time, duration, location, observer type and some summarize. There are totally 775 encounters in this dataset.
+
+
+## Part b
+
+In the 3 sections below (Viz 1, 2, 3), construct 3 separate graphs that tell a *connected* story about the data you chose.  
+
+**Before each viz:**
+
+-   write a simple but specific research question you're trying to address with the viz.
+-   write a 2-4 sentence summary of what you learn from the viz. This should connect back to your research question!
+
+**After each viz:**
+
+-   Comment on at least 2 effective aspects of the viz (consider the effective visualization principles).
+-   Comment on at least 2 aspects of the visualization that could be improved. Perhaps these are aspects that you don't know how to implement yet but wish you could update it.
+
+**Make sure each viz:**
+
+-   has meaningful axis labels and legend titles
+-   has a figure caption (fig.cap)
+-   uses alt text (fig.alt)
+-   uses a more color-blind friendly color palette
+
+
+**Tips:**
+
+-   Start with some questions in mind of what you want to learn.
+-   Start with a simple viz (viz 1), and build this up into something multivariate (viz 3).
+-   Reflect on each viz -- what new questions do you have after checking out the viz? Let these questions guide your next viz. (eg: recall how we worked through the `MacNaturalGas` data at the start of the Spatial Viz activity).
+
+**Expectations:**
+
+- You should be wrangling data throughout your visual analysis. For example, perhaps you'll need to wrangle the data before plotting it. Perhaps wrangling / summaries will help address some follow-up questions you have from your viz. 
+- At least some of this wrangling should demonstrate the combination of multiple verbs, i.e. span multiple lines.
+
+### Viz 1
+
+::: {.callout-note title="Research Question"}
+
+PLACE YOUR RESEARCH QUESTION IN THIS CALLOUT BOX
+
+How do the duration of the encounters distributed?
+
+:::
+
+```{r}
+orcas_sec <- orcas%>%
+  separate(duration, c("First", "Last"), sep = "s")%>%
+  mutate(duration_sec = as.numeric(First))
+ggplot(orcas_sec, aes(x = duration_sec))+
+  geom_density()+
+  labs(title = "Duration of Encounters with Orcas", x = "Duration(in second)")
+```
+
+::: {.callout-note title="Summary"}
+
+PLACE YOUR SUMMARY IN THIS CALLOUT BOX
+
+Most encounters are within 10000 seconds, and around 4000 second is a most frequent duration of encounter. There are some data point below 0, which might caused by the start and end of the encounter are not in a same day.
+
+:::
+
+### Viz 2
+
+::: {.callout-note title="Research Question"}
+
+PLACE YOUR RESEARCH QUESTION IN THIS CALLOUT BOX
+
+Fix the negative durations, and plot the durations for the top 5 location of encountering orcas.
+
+:::
+
+
+```{r}
+orcas_popular <- orcas_sec%>%
+  drop_na(location)%>%
+  group_by(location)%>%
+  summarize(encounters_count = n())%>%
+  slice_max(encounters_count, n = 5)
+orcas_popular
+```
+
+```{r}
+popular_locations <- c("Haro Strait", "San Juan Channel", "Rosario Strait", "Boundary Pass", "Race Rocks", "Strait of Juan de Fuca")
+orcas_sec <- orcas %>%
+  mutate(
+    begin_time = hms(begin_time),
+    end_time = hms(end_time),
+    duration_sec = as.numeric(end_time - begin_time),
+    duration_sec = ifelse(duration_sec < 0, duration_sec + 86400, duration_sec))%>%
+  filter(location %in% popular_locations)
+```
+
+```{r}
+ggplot(orcas_sec, aes(x = duration_sec, color = location))+
+  geom_density() +
+  labs(color = "location", title = "Duration of Encounters of Orcas in Most Possible Locations", x = "Duration(in second)")
+```
+
+
+::: {.callout-note title="Summary"}
+
+PLACE YOUR SUMMARY IN THIS CALLOUT BOX
+
+After fixing the negative durations, the longest duration became up to about 65000 seconds. The distribution of most locations are similar, while Strait of Juan de Fuca have no encounter more than 20000 seconds and the encounters in Race Rocks distributed very even.
+
+:::
+
+### Viz 3
+
+::: {.callout-note title="Research Question"}
+
+PLACE YOUR RESEARCH QUESTION IN THIS CALLOUT BOX
+
+Plot the locations of encounters in a map with points, and add markers to the 5 most possible locations.
+
+:::
+
+```{r}
+orcas_longlat <- orcas %>%
+  drop_na(location, begin_longitude, end_longitude, begin_latitude, end_latitude)%>%
+  group_by(location)%>%
+  summarize(lng = mean((begin_longitude+end_longitude)/2),
+            lat = mean((begin_latitude+end_latitude)/2))%>%
+  select(location, lng, lat)
+  
+orcas_popular_longlat <- orcas_longlat %>%
+  filter(location %in% popular_locations)
+orcas_popular_longlat
+```
+
+```{r}
+library(leaflet)
+leaflet(data = orcas_longlat) |> 
+  addTiles() |> 
+  addCircles(~lng, ~lat, color = "red", radius = 100) |>
+  addMarkers(data = orcas_popular_longlat)
+```
+
+
+::: {.callout-note title="Summary"}
+
+PLACE YOUR SUMMARY IN THIS CALLOUT BOX
+
+It seems that the data of this dataset is collected only in a very small range, but in this range, most possible locations are in the gulf structure.
+
+:::
+
+
+
+# Finalize Work
+
+Congratulation 🎉.  You're done with the homework.  See the instruction at top of the Homework Assignments page for how to submit.

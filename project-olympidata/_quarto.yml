@@ -1,0 +1,43 @@
+# options for Quarto book
+# https://quarto.org/docs/reference/projects/books.html
+# 
+# Options for html
+# https://quarto.org/docs/reference/projects/websites.html#section
+
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Olympidata"
+  author: ["Avery Sheindlin", "Jack Fang", "Han Sun", "Khaleesi Chen"]
+  date: today
+  date-format: full
+  reader-mode: true
+  
+  chapters:
+    - index.qmd
+    - report.qmd
+  
+  appendices:
+  - proposal.qmd
+  - sketch.qmd
+  - Shooting-Rowing-HanSun.qmd
+  - skiing.qmd
+  - Figure-Skating_Speed-Skating.qmd
+  - Football-Swimming-Jack Fang.qmd
+
+
+format:
+  html:
+    theme: #bootswatch themes.  For other options check out https://bootswatch.com/
+      light: flatly
+      dark: darkly
+    toc: true
+    toc-depth: 3
+    code-copy: true
+    code-line-numbers: true
+    code-tools: true
+
+
+

@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Han Sun - 3&nbsp; Homework 3: More Data Viz</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../homeworks/homework_2.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../homeworks/README.html">Homeworks</a></li><li class="breadcrumb-item"><a href="../homeworks/homework_3.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Homework 3: More Data Viz</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Han Sun</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../homeworks/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homeworks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homeworks/homework_01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Homework 1</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homeworks/homework_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Homework 2: Data Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homeworks/homework_3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Homework 3: More Data Viz</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#spatial-viz" id="toc-spatial-viz" class="nav-link active" data-scroll-target="#spatial-viz"><span class="header-section-number">3.1</span> Spatial Viz</a>
+  <ul class="collapse">
+  <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><span class="header-section-number">3.1.1</span> Exercise 1</a></li>
+  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="header-section-number">3.1.2</span> Exercise 2</a></li>
+  </ul></li>
+  <li><a href="#tidytuesday" id="toc-tidytuesday" class="nav-link" data-scroll-target="#tidytuesday"><span class="header-section-number">3.2</span> TidyTuesday</a>
+  <ul class="collapse">
+  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3"><span class="header-section-number">3.2.1</span> Exercise 3</a></li>
+  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><span class="header-section-number">3.2.2</span> Exercise 4</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Homework 3: More Data Viz</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>We will be using the following packages. If any is not installed on your machine, install it by either</p>
+<ol type="a">
+<li>running the command <code>install.packages(package name)</code> in the Console or</li>
+<li>via the Packages panel –&gt; Install –&gt; type <code>package name</code> –&gt; click Install.</li>
+</ol>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-1_92422b37851b7b1b2975154faba764ca">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Load required libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(openintro)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'openintro' was built under R version 4.3.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: airports
+Loading required package: cherryblossom
+Loading required package: usdata</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'usdata' was built under R version 4.3.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'sf' was built under R version 4.3.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">library</span>(mosaic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'mosaic':
+  method                           from   
+  fortify.SpatialPolygonsDataFrame ggplot2
+
+The 'mosaic' package masks several functions from core packages in order to add 
+additional features.  The original behavior of these functions should not be affected by this.
+
+Attaching package: 'mosaic'
+
+The following object is masked from 'package:Matrix':
+
+    mean
+
+The following object is masked from 'package:openintro':
+
+    dotPlot
+
+The following objects are masked from 'package:dplyr':
+
+    count, do, tally
+
+The following object is masked from 'package:purrr':
+
+    cross
+
+The following object is masked from 'package:ggplot2':
+
+    stat
+
+The following objects are masked from 'package:stats':
+
+    binom.test, cor, cor.test, cov, fivenum, IQR, median, prop.test,
+    quantile, sd, t.test, var
+
+The following objects are masked from 'package:base':
+
+    max, mean, min, prod, range, sample, sum</code></pre>
+</div>
+</div>
+<section id="spatial-viz" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="spatial-viz"><span class="header-section-number">3.1</span> Spatial Viz</h2>
+<section id="exercise-1" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="exercise-1"><span class="header-section-number">3.1.1</span> Exercise 1</h3>
+<p>In this exercise, we will use the same Starbucks location data we worked with in class but on the US state-level only while taking into account the population of each state.</p>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-2_e89665d7188e8efccfb8e4764acddec5">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Import starbucks location data</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>starbucks <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/starbucks.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The code below creates the dataset <code>starbucks_us_by_state</code> that gives the number of Starbucks in each state.</p>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-3_6dbb972639b131ac478e2ceaca386b93">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>starbucks_us_by_state <span class="ot">&lt;-</span> starbucks <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"US"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">count</span>(State.Province) <span class="sc">|&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">mutate</span>(<span class="at">state_name =</span> <span class="fu">str_to_lower</span>(<span class="fu">abbr2state</span>(State.Province)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The code below adds the variable <code>starbucks_per_10000</code> that gives the number of Starbucks per 10,000 people to the dataest <code>starbucks_with_2018_pop_est</code> which will be used for the spatial visualization.</p>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-4_0e2fd4c1ab14b5dac1af72660f4b13da">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>census_pop_est_2018 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://mac-stat.github.io/data/us_census_2018_state_pop_est.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">separate</span>(state, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"dot"</span>, <span class="st">"state"</span>), <span class="at">extra =</span> <span class="st">"merge"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">select</span>(<span class="sc">-</span>dot) <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">mutate</span>(<span class="at">state =</span> <span class="fu">str_to_lower</span>(state))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 51 Columns: 2
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): state
+dbl (1): est_pop_2018
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>starbucks_with_2018_pop_est <span class="ot">&lt;-</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>  starbucks_us_by_state <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">left_join</span>(census_pop_est_2018,</span>
+<span id="cb16-4"><a href="#cb16-4"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"state_name"</span> <span class="ot">=</span> <span class="st">"state"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a>  <span class="fu">mutate</span>(<span class="at">starbucks_per_10000 =</span> (n <span class="sc">/</span> est_pop_2018) <span class="sc">*</span> <span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="part-a" class="level4" data-number="3.1.1.1">
+<h4 data-number="3.1.1.1" class="anchored" data-anchor-id="part-a"><span class="header-section-number">3.1.1.1</span> Part a</h4>
+<p>Create a choropleth state map that shows the number of Starbucks per 10,000 people on a map of the US while taking into consideration the following instructions:</p>
+<ul>
+<li>Use a new fill color palette for the states,</li>
+<li>Add points for all Starbucks in the contiguous US,</li>
+<li>Add an informative title for the plot, and</li>
+<li>Include a caption that says who created the plot (you!).</li>
+</ul>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-5_61cf0998b8d03c343b3fe24cf4bf9edd">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>starbucks_us <span class="ot">&lt;-</span> starbucks <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"US"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">filter</span>(<span class="sc">!</span> State.Province <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"AK"</span>, <span class="st">"HI"</span>))</span>
+<span id="cb17-4"><a href="#cb17-4"></a>states_map <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"state"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="fu">ggplot</span>(starbucks_with_2018_pop_est, <span class="fu">aes</span>(<span class="at">map_id =</span> state_name, <span class="at">fill =</span> starbucks_per_10000)) <span class="sc">+</span> </span>
+<span id="cb17-6"><a href="#cb17-6"></a>  <span class="fu">geom_map</span>(<span class="at">map =</span> states_map) <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> starbucks_us,</span>
+<span id="cb17-8"><a href="#cb17-8"></a>             <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude),</span>
+<span id="cb17-9"><a href="#cb17-9"></a>             <span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
+<span id="cb17-10"><a href="#cb17-10"></a>             <span class="at">size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb17-11"><a href="#cb17-11"></a>             <span class="at">color =</span> <span class="st">"darkgreen"</span>,</span>
+<span id="cb17-12"><a href="#cb17-12"></a>             <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb17-13"><a href="#cb17-13"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> states_map<span class="sc">$</span>long, <span class="at">y =</span> states_map<span class="sc">$</span>lat) <span class="sc">+</span></span>
+<span id="cb17-14"><a href="#cb17-14"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span> </span>
+<span id="cb17-15"><a href="#cb17-15"></a>  <span class="fu">scale_fill_gradientn</span>(<span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"yellow"</span>), <span class="at">values =</span> scales<span class="sc">::</span><span class="fu">rescale</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">5</span>))) <span class="sc">+</span></span>
+<span id="cb17-16"><a href="#cb17-16"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"the number of Starbucks per 10,000 in the US"</span>, <span class="at">caption =</span> <span class="st">"Han Sun"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="homework_3_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" alt="choropleth state map of the number of Starbucks per 10,000 people on a map of the US, there are more in the west." width="480"></p>
+</div>
+</div>
+</section>
+<section id="part-b" class="level4" data-number="3.1.1.2">
+<h4 data-number="3.1.1.2" class="anchored" data-anchor-id="part-b"><span class="header-section-number">3.1.1.2</span> Part b</h4>
+<p>Make a conclusion about what you observe from that spatial visual.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR ANSWER IN THIS CALLOUT BOX</p>
+<p>Starbucks distributed densely in the west coast and east coast, sparsely in the medium. The west coast has higher number of Starbucks per 10000 people than the east coast, it might caused by the lower density of popularity.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="exercise-2" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="exercise-2"><span class="header-section-number">3.1.2</span> Exercise 2</h3>
+<p>In this exercise, you are going to create a single Leaflet map of some of your favorite places! The end result will be one map.</p>
+<section id="part-a-1" class="level4" data-number="3.1.2.1">
+<h4 data-number="3.1.2.1" class="anchored" data-anchor-id="part-a-1"><span class="header-section-number">3.1.2.1</span> Part a</h4>
+<p>Create a data set using the tribble() function that has 10-15 rows of your favorite places. The columns will be the name of the location, the latitude, the longitude, and a column that indicates if it is in your top 3 favorite locations or not. For an example of how to use tribble(), look at the <code>favorite_stp</code> that is created manually below.</p>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-6_a1bce0f6c56dc0d02e01cd98c9bd17c4">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Brianna's favorite St. Paul places - Used Google Maps to get coordinates</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="co"># https://support.google.com/maps/answer/18539?hl=en&amp;co=GENIE.Platform%3DDesktop</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>favorite_stp <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="sc">~</span>place, <span class="sc">~</span>long, <span class="sc">~</span>lat, <span class="sc">~</span>favorite,</span>
+<span id="cb18-5"><a href="#cb18-5"></a>  <span class="st">"Macalester College"</span>, <span class="sc">-</span><span class="fl">93.1712321</span>, <span class="fl">44.9378965</span>, <span class="st">"yes"</span>, </span>
+<span id="cb18-6"><a href="#cb18-6"></a>  <span class="st">"Groveland Recreation Center"</span>, <span class="sc">-</span><span class="fl">93.1851310</span>, <span class="fl">44.9351034</span>, <span class="st">"yes"</span>,</span>
+<span id="cb18-7"><a href="#cb18-7"></a>  <span class="st">"Due Focacceria"</span>, <span class="sc">-</span><span class="fl">93.1775469</span>,  <span class="fl">44.9274973</span>, <span class="st">"yes"</span>,</span>
+<span id="cb18-8"><a href="#cb18-8"></a>  <span class="st">"Shadow Falls Park"</span>, <span class="sc">-</span><span class="fl">93.1944518</span>, <span class="fl">44.9433359</span>, <span class="st">"no"</span>,</span>
+<span id="cb18-9"><a href="#cb18-9"></a>  <span class="st">"Mattocks Park"</span>, <span class="sc">-</span><span class="fl">93.171057</span>, <span class="fl">44.9284142</span>, <span class="st">"no"</span>,</span>
+<span id="cb18-10"><a href="#cb18-10"></a>  <span class="st">"Carondelet Fields"</span>, <span class="sc">-</span><span class="fl">93.1582673</span>, <span class="fl">44.9251236</span>, <span class="st">"no"</span>,</span>
+<span id="cb18-11"><a href="#cb18-11"></a>  <span class="st">"Pizza Luce"</span>, <span class="sc">-</span><span class="fl">93.1524256</span>, <span class="fl">44.9468848</span>, <span class="st">"no"</span>,</span>
+<span id="cb18-12"><a href="#cb18-12"></a>  <span class="st">"Cold Front Ice Cream"</span>, <span class="sc">-</span><span class="fl">93.156652</span>, <span class="fl">44.9266768</span>, <span class="st">"no"</span></span>
+<span id="cb18-13"><a href="#cb18-13"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-7_f6f1cf570e34017c19b687f0c087192b">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># Han's favorite Minneapolis &amp; St. Paul places</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>favorite_places <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="sc">~</span>place, <span class="sc">~</span>long, <span class="sc">~</span>lat, <span class="sc">~</span>favorite,</span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="st">"Macalester College"</span>, <span class="sc">-</span><span class="fl">93.1712321</span>, <span class="fl">44.9378965</span>, <span class="st">"yes"</span>, </span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="st">"IKEA"</span>, <span class="sc">-</span><span class="fl">93.24570751977284</span>, <span class="fl">44.86010046580454</span>, <span class="st">"yes"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6"></a>  <span class="st">"The Museum of Russian Art"</span>, <span class="sc">-</span><span class="fl">93.27590491721809</span>, <span class="fl">44.903559051053946</span>, <span class="st">"yes"</span>,</span>
+<span id="cb19-7"><a href="#cb19-7"></a>  <span class="st">"Minneapolis Institute of Art"</span>, <span class="sc">-</span><span class="fl">93.27613624973017</span>, <span class="fl">44.964208943966824</span>, <span class="st">"no"</span>,</span>
+<span id="cb19-8"><a href="#cb19-8"></a>  <span class="st">"UniUni Tea"</span>, <span class="sc">-</span><span class="fl">93.4434414163464</span>, <span class="fl">44.88093105526468</span>, <span class="st">"no"</span>,</span>
+<span id="cb19-9"><a href="#cb19-9"></a>  <span class="st">"Kura Sushi"</span>, <span class="sc">-</span><span class="fl">93.24193304051018</span>, <span class="fl">44.855711931267116</span>, <span class="st">"no"</span>,</span>
+<span id="cb19-10"><a href="#cb19-10"></a>  <span class="st">"Popeyes"</span>, <span class="sc">-</span><span class="fl">93.22426893519935</span>, <span class="fl">44.85809199278795</span>, <span class="st">"no"</span>,</span>
+<span id="cb19-11"><a href="#cb19-11"></a>  <span class="st">"Arby's"</span>, <span class="sc">-</span><span class="fl">93.17398904749186</span>, <span class="fl">44.93097898351405</span>, <span class="st">"no"</span>,</span>
+<span id="cb19-12"><a href="#cb19-12"></a>  <span class="st">"Minneapolis–Saint Paul International Airport"</span>, <span class="sc">-</span><span class="fl">93.21050983018671</span>, <span class="fl">44.88551019994176</span>, <span class="st">"no"</span>,</span>
+<span id="cb19-13"><a href="#cb19-13"></a>  <span class="st">"Target"</span>, <span class="sc">-</span><span class="fl">93.15695494295723</span>, <span class="fl">44.95743572728847</span>, <span class="st">"no"</span></span>
+<span id="cb19-14"><a href="#cb19-14"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="part-b-1" class="level4" data-number="3.1.2.2">
+<h4 data-number="3.1.2.2" class="anchored" data-anchor-id="part-b-1"><span class="header-section-number">3.1.2.2</span> Part b</h4>
+<p>Create a map that uses circles to indicate your favorite places while taking into consideration the following instructions:</p>
+<ul>
+<li>Label the circles with the name of the place.</li>
+<li>Choose the base map you like best.</li>
+<li>Color your 3 favorite places differently than the ones that are not in your top 3.</li>
+<li>Add a legend that explains what the colors mean</li>
+</ul>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-8_5c6c6223ee7205336bf8ef5b25cb32d0">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>state_shape <span class="ot">&lt;-</span> <span class="fu">states</span>(<span class="at">cb =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(STUSPS <span class="sc">==</span> <span class="st">"MN"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Retrieving data for the year 2021</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-9_0b8918ecc3e364e8093680f736928e1e">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> state_shape) <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">93.6</span>,<span class="sc">-</span><span class="dv">93</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">44.8</span>,<span class="dv">45</span>)) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> favorite_places, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">color =</span> favorite), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb22-5"><a href="#cb22-5"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> favorite_places, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">label =</span> place), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"yes"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"no"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Favorite Places"</span>, <span class="at">x =</span> <span class="st">"Longitude"</span>, <span class="at">y =</span> <span class="st">"Latitude"</span>) <span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="homework_3_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="480"></p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="tidytuesday" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="tidytuesday"><span class="header-section-number">3.2</span> TidyTuesday</h2>
+<p>Tidy Tuesday is a weekly data project put on by some folks from the R Data Science community. Each week, a different data set is posted and people around the world wrangle and visualize that data. According to the organizers, “The intent of Tidy Tuesday is to provide a safe and supportive forum for individuals to practice their wrangling and data visualization skills independent of drawing conclusions.”</p>
+<p>The goals of this TidyTuesday are:</p>
+<ol type="1">
+<li>Practice generating questions. You have to decide what to ask and how to answer it with a graphic.</li>
+<li>Practice identifying what viz and (eventually) wrangling tools are useful for addressing your questions.</li>
+<li>Get a sense of the broader data science community. Check out what people share out on <a href="https://x.com/search?q=%23TidyTuesday">X/Twitter #TidyTuesday</a>. Maybe even share your own #TidyTuesday work on social media. Recent Mac alum <a href="https://x.com/efranke7282">Erin Franke (X/Twitter)</a> has an inspiring account! Scrolling through, you’ll notice the trajectory of her work, starting from COMP/STAT 112 to today. Very cool.</li>
+</ol>
+<section id="exercise-3" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="exercise-3"><span class="header-section-number">3.2.1</span> Exercise 3</h3>
+<p>Go to <a href="https://github.com/rfordatascience/tidytuesday">TidyTuesday</a>. Pick a dataset that was posted in <strong>July, August, or September 2024</strong>. Here, include:</p>
+<ul>
+<li>A short (~2 sentence) written description of your data. This should include:
+<ul>
+<li>the original data source, ie, where did TidyTuesday get the data from?</li>
+<li>units of observation, ie, what are you analyzing?, and</li>
+<li>the data size, ie, how many data points do you have? how many variables are measured on each data point?.</li>
+</ul></li>
+<li>Code to import and examine the basic properties of your chosen dataset. This code must support the facts you cited in your short written description.</li>
+</ul>
+<p>Description: This data came from the Internet Movie Database, and they don’t have an article using exactly this dataset. There are two datasets in this data, and I will use the “summer_movies” one. Each row of this dataset represents some basic information and the rates of a movie. There are 905 data points and there are 10 variables measured on each data point.</p>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-10_0274aa49d29505fe8263ad95715d6de6">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>tuesdata <span class="ot">&lt;-</span> tidytuesdayR<span class="sc">::</span><span class="fu">tt_load</span>(<span class="st">'2024-07-30'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>---- Compiling #TidyTuesday Information for 2024-07-30 ----
+--- There are 2 files available ---
+
+
+── Downloading files ───────────────────────────────────────────────────────────
+
+  1 of 2: "summer_movie_genres.csv"
+  2 of 2: "summer_movies.csv"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>summer_movies <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>summer_movies</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-11_d17f79c060cf2c3d86027745dc10bb55">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">head</span>(summer_movies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 10
+  tconst    title_type primary_title original_title  year runtime_minutes genres
+  &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt;          &lt;dbl&gt;           &lt;dbl&gt; &lt;chr&gt; 
+1 tt0011462 movie      Midsummer Ma… Midsummer Mad…  1920              60 Drama 
+2 tt0026714 movie      A Midsummer … A Midsummer N…  1935             133 Comed…
+3 tt0033864 movie      The Teachers… Magistrarna p…  1941              86 Comedy
+4 tt0037325 movie      Summer Storm  Summer Storm    1944             106 Crime…
+5 tt0038406 movie      Centennial S… Centennial Su…  1946             102 Histo…
+6 tt0038738 tvMovie    A Midsummer … A Midsummer N…  1946             150 Drama…
+# ℹ 3 more variables: simple_title &lt;chr&gt;, average_rating &lt;dbl&gt;, num_votes &lt;dbl&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">dim</span>(summer_movies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 905  10</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-4" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="exercise-4"><span class="header-section-number">3.2.2</span> Exercise 4</h3>
+<p>In the 3 sections below (Viz 1, 2, 3), construct 3 separate graphs that tell a <em>connected</em> story about the data you chose.</p>
+<p>Before each viz:</p>
+<ul>
+<li>write a simple but specific research question you’re trying to address with the viz.</li>
+<li>write a 2-4 sentence summary of what you learn from the viz.&nbsp;This should connect back to your research question!</li>
+</ul>
+<p>After each viz:</p>
+<ul>
+<li>Comment on at least 2 effective aspects of the viz (consider the effective visualization principles).</li>
+<li>Comment on at least 2 aspects of the visualization that could be improved. Perhaps these are aspects that you don’t know how to implement yet but wish you could update it.</li>
+</ul>
+<p>Make sure each viz:</p>
+<ul>
+<li>has meaningful axis labels and legend titles</li>
+<li>has a figure caption (fig.cap)</li>
+<li>uses alt text (fig.alt)</li>
+<li>uses a more color-blind friendly color palette</li>
+</ul>
+<p>Tips:</p>
+<ul>
+<li>Start with some questions in mind of what you want to learn.</li>
+<li>Start with a simple viz (viz 1), and build this up into something multivariate (viz 3).</li>
+<li>Reflect on each viz – what new questions do you have after checking out the viz? Let these questions guide your next viz.&nbsp;(eg: recall how we worked through the <code>MacNaturalGas</code> data at the start of the Spatial Viz activity).</li>
+</ul>
+<section id="viz-1" class="level4" data-number="3.2.2.1">
+<h4 data-number="3.2.2.1" class="anchored" data-anchor-id="viz-1"><span class="header-section-number">3.2.2.1</span> Viz 1</h4>
+<p>Which genre has most movies?</p>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-12_60b76991a39d5f1012bd8e345673efe9">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">ggplot</span>(summer_movies, <span class="fu">aes</span>(<span class="at">x =</span> genres))<span class="sc">+</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">geom_bar</span>()<span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Count of all genres of movies"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="homework_3_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="480"></p>
+</div>
+</div>
+<p>In this plot, we have too many genres, and many of them have a little amount of movies. If we want to study about genres, we can ignore them, so I made the following modify to the dataset.</p>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-13_df6c75f48bae001afe94422c0f2edbc9">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>genre_count <span class="ot">&lt;-</span> <span class="fu">table</span>(summer_movies<span class="sc">$</span>genres)</span>
+<span id="cb31-2"><a href="#cb31-2"></a>low_count_classes <span class="ot">&lt;-</span> <span class="fu">names</span>(genre_count[genre_count <span class="sc">&lt;</span> <span class="dv">25</span>])</span>
+<span id="cb31-3"><a href="#cb31-3"></a>summer_movies_mod <span class="ot">&lt;-</span> summer_movies[<span class="sc">!</span>summer_movies<span class="sc">$</span>genres <span class="sc">%in%</span> low_count_classes, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-14_31ea73dae8f08c361d538dec3020041e">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">ggplot</span>(summer_movies_mod, <span class="fu">aes</span>(<span class="at">x =</span> genres))<span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">geom_bar</span>()<span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Count of genres that have more than 25 movies"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="homework_3_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="480"></p>
+</div>
+</div>
+<p>In this plot, we can see Drama has highest amount of movies.</p>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+<section id="viz-2" class="level4" data-number="3.2.2.2">
+<h4 data-number="3.2.2.2" class="anchored" data-anchor-id="viz-2"><span class="header-section-number">3.2.2.2</span> Viz 2</h4>
+<p>Which genre of movie have higher rating?</p>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-15_24f1d4a89817599b5143c62c959eae72">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">ggplot</span>(summer_movies_mod, <span class="fu">aes</span>(<span class="at">x =</span> genres, <span class="at">y =</span> average_rating))<span class="sc">+</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average rating of different genres of movies"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="homework_3_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="480"></p>
+</div>
+</div>
+<p>We can see that Documentary movies has highest average ratings, but we also learned that Documentary movies also have lower count, so the high rating might because they are not popular and have less comments.</p>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+<section id="viz-3" class="level4" data-number="3.2.2.3">
+<h4 data-number="3.2.2.3" class="anchored" data-anchor-id="viz-3"><span class="header-section-number">3.2.2.3</span> Viz 3</h4>
+<p>Does the high rating genres affected by the rating numbers?</p>
+<div class="cell" data-hash="homework_3_cache/html/unnamed-chunk-16_fe1acd00e01a9ca1d9ca6d3d75b492d9">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">library</span>(patchwork)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'patchwork' was built under R version 4.3.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>p_1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(summer_movies_mod, <span class="fu">aes</span>(<span class="at">x =</span> genres, <span class="at">y =</span> average_rating))<span class="sc">+</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average rating of different genres of movies"</span>)</span>
+<span id="cb36-4"><a href="#cb36-4"></a>p_2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(summer_movies_mod, <span class="fu">aes</span>(<span class="at">x =</span> genres, <span class="at">y =</span> num_votes))<span class="sc">+</span></span>
+<span id="cb36-5"><a href="#cb36-5"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb36-6"><a href="#cb36-6"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Numbers of ratings for different genres"</span>)</span>
+<span id="cb36-7"><a href="#cb36-7"></a>p_1<span class="sc">+</span>p_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="homework_3_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="480"></p>
+</div>
+</div>
+<p>In the plot above, the ratings of each genres are similar, with only a few outliers, so we can conclude that the numbers of ratings might not give abovious affect to the average ratings.</p>
+
+
+<!-- -->
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../homeworks/homework_2.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Homework 2: Data Viz</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb37" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb37-1"><a href="#cb37-1"></a><span class="co">---</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a><span class="an">title:</span><span class="co"> "Homework 3: More Data Viz"</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb37-4"><a href="#cb37-4"></a><span class="co">  warning: true</span></span>
+<span id="cb37-5"><a href="#cb37-5"></a><span class="an">fig-height:</span><span class="co"> 3</span></span>
+<span id="cb37-6"><a href="#cb37-6"></a><span class="an">fig-width:</span><span class="co"> 5</span></span>
+<span id="cb37-7"><a href="#cb37-7"></a><span class="an">fig-align:</span><span class="co"> center</span></span>
+<span id="cb37-8"><a href="#cb37-8"></a><span class="an">code-fold:</span><span class="co"> false</span></span>
+<span id="cb37-9"><a href="#cb37-9"></a><span class="co">---</span></span>
+<span id="cb37-10"><a href="#cb37-10"></a></span>
+<span id="cb37-11"><a href="#cb37-11"></a></span>
+<span id="cb37-12"><a href="#cb37-12"></a>We will be using the following packages.  If any is not installed on your machine, install it by either </span>
+<span id="cb37-13"><a href="#cb37-13"></a></span>
+<span id="cb37-14"><a href="#cb37-14"></a>a. running the command <span class="in">`install.packages(package name)`</span> in the Console or </span>
+<span id="cb37-15"><a href="#cb37-15"></a>b. via the Packages panel --&gt; Install --&gt; type <span class="in">`package name`</span> --&gt; click Install.</span>
+<span id="cb37-16"><a href="#cb37-16"></a></span>
+<span id="cb37-19"><a href="#cb37-19"></a><span class="in">```{r}</span></span>
+<span id="cb37-20"><a href="#cb37-20"></a><span class="co"># Load required libraries</span></span>
+<span id="cb37-21"><a href="#cb37-21"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb37-22"><a href="#cb37-22"></a><span class="fu">library</span>(openintro)</span>
+<span id="cb37-23"><a href="#cb37-23"></a><span class="fu">library</span>(sf)</span>
+<span id="cb37-24"><a href="#cb37-24"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb37-25"><a href="#cb37-25"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb37-26"><a href="#cb37-26"></a><span class="in">```</span></span>
+<span id="cb37-27"><a href="#cb37-27"></a></span>
+<span id="cb37-28"><a href="#cb37-28"></a><span class="fu">## Spatial Viz</span></span>
+<span id="cb37-29"><a href="#cb37-29"></a></span>
+<span id="cb37-30"><a href="#cb37-30"></a><span class="fu">### Exercise 1</span></span>
+<span id="cb37-31"><a href="#cb37-31"></a></span>
+<span id="cb37-32"><a href="#cb37-32"></a>In this exercise, we will use the same Starbucks location data we worked with in class but on the US state-level only while taking into account the population of each state.</span>
+<span id="cb37-33"><a href="#cb37-33"></a></span>
+<span id="cb37-34"><a href="#cb37-34"></a></span>
+<span id="cb37-35"><a href="#cb37-35"></a></span>
+<span id="cb37-38"><a href="#cb37-38"></a><span class="in">```{r}</span></span>
+<span id="cb37-39"><a href="#cb37-39"></a><span class="co"># Import starbucks location data</span></span>
+<span id="cb37-40"><a href="#cb37-40"></a>starbucks <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/starbucks.csv"</span>)</span>
+<span id="cb37-41"><a href="#cb37-41"></a><span class="in">```</span></span>
+<span id="cb37-42"><a href="#cb37-42"></a></span>
+<span id="cb37-43"><a href="#cb37-43"></a>The code below creates the dataset <span class="in">`starbucks_us_by_state`</span> that gives the number of Starbucks in each state. </span>
+<span id="cb37-44"><a href="#cb37-44"></a></span>
+<span id="cb37-47"><a href="#cb37-47"></a><span class="in">```{r}</span></span>
+<span id="cb37-48"><a href="#cb37-48"></a>starbucks_us_by_state <span class="ot">&lt;-</span> starbucks <span class="sc">|&gt;</span></span>
+<span id="cb37-49"><a href="#cb37-49"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"US"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb37-50"><a href="#cb37-50"></a>  <span class="fu">count</span>(State.Province) <span class="sc">|&gt;</span></span>
+<span id="cb37-51"><a href="#cb37-51"></a>  <span class="fu">mutate</span>(<span class="at">state_name =</span> <span class="fu">str_to_lower</span>(<span class="fu">abbr2state</span>(State.Province)))</span>
+<span id="cb37-52"><a href="#cb37-52"></a><span class="in">```</span></span>
+<span id="cb37-53"><a href="#cb37-53"></a></span>
+<span id="cb37-54"><a href="#cb37-54"></a>The code below adds the variable <span class="in">`starbucks_per_10000`</span> that gives the number of Starbucks per 10,000 people to the dataest <span class="in">`starbucks_with_2018_pop_est`</span> which will be used for the spatial visualization.</span>
+<span id="cb37-55"><a href="#cb37-55"></a></span>
+<span id="cb37-58"><a href="#cb37-58"></a><span class="in">```{r}</span></span>
+<span id="cb37-59"><a href="#cb37-59"></a>census_pop_est_2018 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://mac-stat.github.io/data/us_census_2018_state_pop_est.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb37-60"><a href="#cb37-60"></a>  <span class="fu">separate</span>(state, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"dot"</span>, <span class="st">"state"</span>), <span class="at">extra =</span> <span class="st">"merge"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb37-61"><a href="#cb37-61"></a>  <span class="fu">select</span>(<span class="sc">-</span>dot) <span class="sc">|&gt;</span></span>
+<span id="cb37-62"><a href="#cb37-62"></a>  <span class="fu">mutate</span>(<span class="at">state =</span> <span class="fu">str_to_lower</span>(state))</span>
+<span id="cb37-63"><a href="#cb37-63"></a></span>
+<span id="cb37-64"><a href="#cb37-64"></a>starbucks_with_2018_pop_est <span class="ot">&lt;-</span></span>
+<span id="cb37-65"><a href="#cb37-65"></a>  starbucks_us_by_state <span class="sc">|&gt;</span></span>
+<span id="cb37-66"><a href="#cb37-66"></a>  <span class="fu">left_join</span>(census_pop_est_2018,</span>
+<span id="cb37-67"><a href="#cb37-67"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"state_name"</span> <span class="ot">=</span> <span class="st">"state"</span>)</span>
+<span id="cb37-68"><a href="#cb37-68"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb37-69"><a href="#cb37-69"></a>  <span class="fu">mutate</span>(<span class="at">starbucks_per_10000 =</span> (n <span class="sc">/</span> est_pop_2018) <span class="sc">*</span> <span class="dv">10000</span>)</span>
+<span id="cb37-70"><a href="#cb37-70"></a><span class="in">```</span></span>
+<span id="cb37-71"><a href="#cb37-71"></a></span>
+<span id="cb37-72"><a href="#cb37-72"></a><span class="fu">#### Part a</span></span>
+<span id="cb37-73"><a href="#cb37-73"></a></span>
+<span id="cb37-74"><a href="#cb37-74"></a>Create a choropleth state map that shows the number of Starbucks per 10,000 people on a map of the US while taking into consideration the following instructions:</span>
+<span id="cb37-75"><a href="#cb37-75"></a></span>
+<span id="cb37-76"><a href="#cb37-76"></a><span class="ss">- </span>Use a new fill color palette for the states,</span>
+<span id="cb37-77"><a href="#cb37-77"></a><span class="ss">- </span>Add points for all Starbucks in the contiguous US,</span>
+<span id="cb37-78"><a href="#cb37-78"></a><span class="ss">- </span>Add an informative title for the plot, and</span>
+<span id="cb37-79"><a href="#cb37-79"></a><span class="ss">- </span>Include a caption that says who created the plot (you!).</span>
+<span id="cb37-80"><a href="#cb37-80"></a></span>
+<span id="cb37-81"><a href="#cb37-81"></a><span class="in">```{r, fig.alt = "choropleth state map of the number of Starbucks per 10,000 people on a map of the US, there are more in the west."}</span></span>
+<span id="cb37-82"><a href="#cb37-82"></a>starbucks_us <span class="ot">&lt;-</span> starbucks <span class="sc">|&gt;</span> </span>
+<span id="cb37-83"><a href="#cb37-83"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"US"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb37-84"><a href="#cb37-84"></a>  <span class="fu">filter</span>(<span class="sc">!</span> State.Province <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"AK"</span>, <span class="st">"HI"</span>))</span>
+<span id="cb37-85"><a href="#cb37-85"></a>states_map <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"state"</span>)</span>
+<span id="cb37-86"><a href="#cb37-86"></a><span class="fu">ggplot</span>(starbucks_with_2018_pop_est, <span class="fu">aes</span>(<span class="at">map_id =</span> state_name, <span class="at">fill =</span> starbucks_per_10000)) <span class="sc">+</span> </span>
+<span id="cb37-87"><a href="#cb37-87"></a>  <span class="fu">geom_map</span>(<span class="at">map =</span> states_map) <span class="sc">+</span></span>
+<span id="cb37-88"><a href="#cb37-88"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> starbucks_us,</span>
+<span id="cb37-89"><a href="#cb37-89"></a>             <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude),</span>
+<span id="cb37-90"><a href="#cb37-90"></a>             <span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
+<span id="cb37-91"><a href="#cb37-91"></a>             <span class="at">size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb37-92"><a href="#cb37-92"></a>             <span class="at">color =</span> <span class="st">"darkgreen"</span>,</span>
+<span id="cb37-93"><a href="#cb37-93"></a>             <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb37-94"><a href="#cb37-94"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> states_map<span class="sc">$</span>long, <span class="at">y =</span> states_map<span class="sc">$</span>lat) <span class="sc">+</span></span>
+<span id="cb37-95"><a href="#cb37-95"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span> </span>
+<span id="cb37-96"><a href="#cb37-96"></a>  <span class="fu">scale_fill_gradientn</span>(<span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"yellow"</span>), <span class="at">values =</span> scales<span class="sc">::</span><span class="fu">rescale</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">5</span>))) <span class="sc">+</span></span>
+<span id="cb37-97"><a href="#cb37-97"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"the number of Starbucks per 10,000 in the US"</span>, <span class="at">caption =</span> <span class="st">"Han Sun"</span>)</span>
+<span id="cb37-98"><a href="#cb37-98"></a>  </span>
+<span id="cb37-99"><a href="#cb37-99"></a><span class="in">```</span></span>
+<span id="cb37-100"><a href="#cb37-100"></a></span>
+<span id="cb37-101"><a href="#cb37-101"></a><span class="fu">#### Part b</span></span>
+<span id="cb37-102"><a href="#cb37-102"></a></span>
+<span id="cb37-103"><a href="#cb37-103"></a>Make a conclusion about what you observe from that spatial visual.</span>
+<span id="cb37-104"><a href="#cb37-104"></a></span>
+<span id="cb37-105"><a href="#cb37-105"></a>::: {.callout-note title="Answer"}</span>
+<span id="cb37-106"><a href="#cb37-106"></a></span>
+<span id="cb37-107"><a href="#cb37-107"></a>PLACE YOUR ANSWER IN THIS CALLOUT BOX</span>
+<span id="cb37-108"><a href="#cb37-108"></a></span>
+<span id="cb37-109"><a href="#cb37-109"></a>Starbucks distributed densely in the west coast and east coast, sparsely in the medium. The west coast has higher number of Starbucks per 10000 people than the east coast, it might caused by the lower density of popularity.</span>
+<span id="cb37-110"><a href="#cb37-110"></a></span>
+<span id="cb37-111"><a href="#cb37-111"></a>:::</span>
+<span id="cb37-112"><a href="#cb37-112"></a></span>
+<span id="cb37-113"><a href="#cb37-113"></a></span>
+<span id="cb37-114"><a href="#cb37-114"></a><span class="fu">### Exercise 2</span></span>
+<span id="cb37-115"><a href="#cb37-115"></a></span>
+<span id="cb37-116"><a href="#cb37-116"></a>In this exercise, you are going to create a single Leaflet map of some of your favorite places! The end result will be one map.</span>
+<span id="cb37-117"><a href="#cb37-117"></a></span>
+<span id="cb37-118"><a href="#cb37-118"></a><span class="fu">#### Part a</span></span>
+<span id="cb37-119"><a href="#cb37-119"></a></span>
+<span id="cb37-120"><a href="#cb37-120"></a>Create a data set using the tribble() function that has 10-15 rows of your favorite places. The columns will be the name of the location, the latitude, the longitude, and a column that indicates if it is in your top 3 favorite locations or not. For an example of how to use tribble(), look at the <span class="in">`favorite_stp`</span> that is created manually below.</span>
+<span id="cb37-121"><a href="#cb37-121"></a></span>
+<span id="cb37-124"><a href="#cb37-124"></a><span class="in">```{r}</span></span>
+<span id="cb37-125"><a href="#cb37-125"></a><span class="co"># Brianna's favorite St. Paul places - Used Google Maps to get coordinates</span></span>
+<span id="cb37-126"><a href="#cb37-126"></a><span class="co"># https://support.google.com/maps/answer/18539?hl=en&amp;co=GENIE.Platform%3DDesktop</span></span>
+<span id="cb37-127"><a href="#cb37-127"></a>favorite_stp <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb37-128"><a href="#cb37-128"></a>  <span class="sc">~</span>place, <span class="sc">~</span>long, <span class="sc">~</span>lat, <span class="sc">~</span>favorite,</span>
+<span id="cb37-129"><a href="#cb37-129"></a>  <span class="st">"Macalester College"</span>, <span class="sc">-</span><span class="fl">93.1712321</span>, <span class="fl">44.9378965</span>, <span class="st">"yes"</span>, </span>
+<span id="cb37-130"><a href="#cb37-130"></a>  <span class="st">"Groveland Recreation Center"</span>, <span class="sc">-</span><span class="fl">93.1851310</span>, <span class="fl">44.9351034</span>, <span class="st">"yes"</span>,</span>
+<span id="cb37-131"><a href="#cb37-131"></a>  <span class="st">"Due Focacceria"</span>, <span class="sc">-</span><span class="fl">93.1775469</span>,  <span class="fl">44.9274973</span>, <span class="st">"yes"</span>,</span>
+<span id="cb37-132"><a href="#cb37-132"></a>  <span class="st">"Shadow Falls Park"</span>, <span class="sc">-</span><span class="fl">93.1944518</span>, <span class="fl">44.9433359</span>, <span class="st">"no"</span>,</span>
+<span id="cb37-133"><a href="#cb37-133"></a>  <span class="st">"Mattocks Park"</span>, <span class="sc">-</span><span class="fl">93.171057</span>, <span class="fl">44.9284142</span>, <span class="st">"no"</span>,</span>
+<span id="cb37-134"><a href="#cb37-134"></a>  <span class="st">"Carondelet Fields"</span>, <span class="sc">-</span><span class="fl">93.1582673</span>, <span class="fl">44.9251236</span>, <span class="st">"no"</span>,</span>
+<span id="cb37-135"><a href="#cb37-135"></a>  <span class="st">"Pizza Luce"</span>, <span class="sc">-</span><span class="fl">93.1524256</span>, <span class="fl">44.9468848</span>, <span class="st">"no"</span>,</span>
+<span id="cb37-136"><a href="#cb37-136"></a>  <span class="st">"Cold Front Ice Cream"</span>, <span class="sc">-</span><span class="fl">93.156652</span>, <span class="fl">44.9266768</span>, <span class="st">"no"</span></span>
+<span id="cb37-137"><a href="#cb37-137"></a>)</span>
+<span id="cb37-138"><a href="#cb37-138"></a><span class="in">```</span></span>
+<span id="cb37-139"><a href="#cb37-139"></a></span>
+<span id="cb37-142"><a href="#cb37-142"></a><span class="in">```{r}</span></span>
+<span id="cb37-143"><a href="#cb37-143"></a><span class="co"># Han's favorite Minneapolis &amp; St. Paul places</span></span>
+<span id="cb37-144"><a href="#cb37-144"></a>favorite_places <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb37-145"><a href="#cb37-145"></a>  <span class="sc">~</span>place, <span class="sc">~</span>long, <span class="sc">~</span>lat, <span class="sc">~</span>favorite,</span>
+<span id="cb37-146"><a href="#cb37-146"></a>  <span class="st">"Macalester College"</span>, <span class="sc">-</span><span class="fl">93.1712321</span>, <span class="fl">44.9378965</span>, <span class="st">"yes"</span>, </span>
+<span id="cb37-147"><a href="#cb37-147"></a>  <span class="st">"IKEA"</span>, <span class="sc">-</span><span class="fl">93.24570751977284</span>, <span class="fl">44.86010046580454</span>, <span class="st">"yes"</span>,</span>
+<span id="cb37-148"><a href="#cb37-148"></a>  <span class="st">"The Museum of Russian Art"</span>, <span class="sc">-</span><span class="fl">93.27590491721809</span>, <span class="fl">44.903559051053946</span>, <span class="st">"yes"</span>,</span>
+<span id="cb37-149"><a href="#cb37-149"></a>  <span class="st">"Minneapolis Institute of Art"</span>, <span class="sc">-</span><span class="fl">93.27613624973017</span>, <span class="fl">44.964208943966824</span>, <span class="st">"no"</span>,</span>
+<span id="cb37-150"><a href="#cb37-150"></a>  <span class="st">"UniUni Tea"</span>, <span class="sc">-</span><span class="fl">93.4434414163464</span>, <span class="fl">44.88093105526468</span>, <span class="st">"no"</span>,</span>
+<span id="cb37-151"><a href="#cb37-151"></a>  <span class="st">"Kura Sushi"</span>, <span class="sc">-</span><span class="fl">93.24193304051018</span>, <span class="fl">44.855711931267116</span>, <span class="st">"no"</span>,</span>
+<span id="cb37-152"><a href="#cb37-152"></a>  <span class="st">"Popeyes"</span>, <span class="sc">-</span><span class="fl">93.22426893519935</span>, <span class="fl">44.85809199278795</span>, <span class="st">"no"</span>,</span>
+<span id="cb37-153"><a href="#cb37-153"></a>  <span class="st">"Arby's"</span>, <span class="sc">-</span><span class="fl">93.17398904749186</span>, <span class="fl">44.93097898351405</span>, <span class="st">"no"</span>,</span>
+<span id="cb37-154"><a href="#cb37-154"></a>  <span class="st">"Minneapolis–Saint Paul International Airport"</span>, <span class="sc">-</span><span class="fl">93.21050983018671</span>, <span class="fl">44.88551019994176</span>, <span class="st">"no"</span>,</span>
+<span id="cb37-155"><a href="#cb37-155"></a>  <span class="st">"Target"</span>, <span class="sc">-</span><span class="fl">93.15695494295723</span>, <span class="fl">44.95743572728847</span>, <span class="st">"no"</span></span>
+<span id="cb37-156"><a href="#cb37-156"></a>)</span>
+<span id="cb37-157"><a href="#cb37-157"></a><span class="in">```</span></span>
+<span id="cb37-158"><a href="#cb37-158"></a></span>
+<span id="cb37-159"><a href="#cb37-159"></a><span class="fu">#### Part b</span></span>
+<span id="cb37-160"><a href="#cb37-160"></a></span>
+<span id="cb37-161"><a href="#cb37-161"></a>Create a map that uses circles to indicate your favorite places while taking into consideration the following instructions:</span>
+<span id="cb37-162"><a href="#cb37-162"></a></span>
+<span id="cb37-163"><a href="#cb37-163"></a><span class="ss">- </span>Label the circles with the name of the place. </span>
+<span id="cb37-164"><a href="#cb37-164"></a><span class="ss">- </span>Choose the base map you like best. </span>
+<span id="cb37-165"><a href="#cb37-165"></a><span class="ss">- </span>Color your 3 favorite places differently than the ones that are not in your top 3. </span>
+<span id="cb37-166"><a href="#cb37-166"></a><span class="ss">- </span>Add a legend that explains what the colors mean</span>
+<span id="cb37-167"><a href="#cb37-167"></a></span>
+<span id="cb37-168"><a href="#cb37-168"></a><span class="in">```{r echo = T, results = 'hide'}</span></span>
+<span id="cb37-169"><a href="#cb37-169"></a>state_shape <span class="ot">&lt;-</span> <span class="fu">states</span>(<span class="at">cb =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(STUSPS <span class="sc">==</span> <span class="st">"MN"</span>)</span>
+<span id="cb37-170"><a href="#cb37-170"></a><span class="in">```</span></span>
+<span id="cb37-173"><a href="#cb37-173"></a><span class="in">```{r}</span></span>
+<span id="cb37-174"><a href="#cb37-174"></a><span class="fu">ggplot</span>(<span class="at">data =</span> state_shape) <span class="sc">+</span></span>
+<span id="cb37-175"><a href="#cb37-175"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb37-176"><a href="#cb37-176"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">93.6</span>,<span class="sc">-</span><span class="dv">93</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">44.8</span>,<span class="dv">45</span>)) <span class="sc">+</span></span>
+<span id="cb37-177"><a href="#cb37-177"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> favorite_places, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">color =</span> favorite), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb37-178"><a href="#cb37-178"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> favorite_places, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">label =</span> place), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb37-179"><a href="#cb37-179"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"yes"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"no"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb37-180"><a href="#cb37-180"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Favorite Places"</span>, <span class="at">x =</span> <span class="st">"Longitude"</span>, <span class="at">y =</span> <span class="st">"Latitude"</span>) <span class="sc">+</span></span>
+<span id="cb37-181"><a href="#cb37-181"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb37-182"><a href="#cb37-182"></a><span class="in">```</span></span>
+<span id="cb37-183"><a href="#cb37-183"></a></span>
+<span id="cb37-184"><a href="#cb37-184"></a></span>
+<span id="cb37-185"><a href="#cb37-185"></a></span>
+<span id="cb37-186"><a href="#cb37-186"></a></span>
+<span id="cb37-187"><a href="#cb37-187"></a><span class="fu">## TidyTuesday</span></span>
+<span id="cb37-188"><a href="#cb37-188"></a></span>
+<span id="cb37-189"><a href="#cb37-189"></a>Tidy Tuesday is a weekly data project put on by some folks from the R Data Science community. Each week, a different data set is posted and people around the world wrangle and visualize that data. According to the organizers, "The intent of Tidy Tuesday is to provide a safe and supportive forum for individuals to practice their wrangling and data visualization skills independent of drawing conclusions."</span>
+<span id="cb37-190"><a href="#cb37-190"></a></span>
+<span id="cb37-191"><a href="#cb37-191"></a></span>
+<span id="cb37-192"><a href="#cb37-192"></a>The goals of this TidyTuesday are:</span>
+<span id="cb37-193"><a href="#cb37-193"></a></span>
+<span id="cb37-194"><a href="#cb37-194"></a><span class="ss">1.  </span>Practice generating questions. You have to decide what to ask and how to answer it with a graphic.</span>
+<span id="cb37-195"><a href="#cb37-195"></a><span class="ss">2.  </span>Practice identifying what viz and (eventually) wrangling tools are useful for addressing your questions.</span>
+<span id="cb37-196"><a href="#cb37-196"></a><span class="ss">4.  </span>Get a sense of the broader data science community. Check out what people share out on <span class="co">[</span><span class="ot">X/Twitter #TidyTuesday</span><span class="co">](https://x.com/search?q=%23TidyTuesday)</span>. Maybe even share your own #TidyTuesday work on social media. Recent Mac alum <span class="co">[</span><span class="ot">Erin Franke (X/Twitter)</span><span class="co">](https://x.com/efranke7282)</span> has an inspiring account! Scrolling through, you'll notice the trajectory of her work, starting from COMP/STAT 112 to today. Very cool.</span>
+<span id="cb37-197"><a href="#cb37-197"></a></span>
+<span id="cb37-198"><a href="#cb37-198"></a></span>
+<span id="cb37-199"><a href="#cb37-199"></a><span class="fu">### Exercise 3</span></span>
+<span id="cb37-200"><a href="#cb37-200"></a></span>
+<span id="cb37-201"><a href="#cb37-201"></a>Go to <span class="co">[</span><span class="ot">TidyTuesday</span><span class="co">](https://github.com/rfordatascience/tidytuesday)</span>. Pick a dataset that was posted in **July, August, or September 2024**. Here, include:</span>
+<span id="cb37-202"><a href="#cb37-202"></a></span>
+<span id="cb37-203"><a href="#cb37-203"></a><span class="ss">- </span>A short (\~2 sentence) written description of your data. This should include: </span>
+<span id="cb37-204"><a href="#cb37-204"></a><span class="ss">  - </span>the original data source, ie, where did TidyTuesday get the data from?</span>
+<span id="cb37-205"><a href="#cb37-205"></a><span class="ss">  - </span>units of observation, ie, what are you analyzing?, and </span>
+<span id="cb37-206"><a href="#cb37-206"></a><span class="ss">  - </span>the data size, ie, how many data points do you have? how many variables are measured on each data point?.</span>
+<span id="cb37-207"><a href="#cb37-207"></a></span>
+<span id="cb37-208"><a href="#cb37-208"></a><span class="ss">- </span>Code to import and examine the basic properties of your chosen dataset. This code must support the facts you cited in your short written description.</span>
+<span id="cb37-209"><a href="#cb37-209"></a></span>
+<span id="cb37-210"><a href="#cb37-210"></a></span>
+<span id="cb37-211"><a href="#cb37-211"></a>Description:</span>
+<span id="cb37-212"><a href="#cb37-212"></a>This data came from the Internet Movie Database, and they don't have an article using exactly this dataset. There are two datasets in this data, and I will use the "summer_movies" one. Each row of this dataset represents some basic information and the rates of a movie. There are 905 data points and there are 10 variables measured on each data point.</span>
+<span id="cb37-215"><a href="#cb37-215"></a><span class="in">```{r}</span></span>
+<span id="cb37-216"><a href="#cb37-216"></a>tuesdata <span class="ot">&lt;-</span> tidytuesdayR<span class="sc">::</span><span class="fu">tt_load</span>(<span class="st">'2024-07-30'</span>)</span>
+<span id="cb37-217"><a href="#cb37-217"></a>summer_movies <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>summer_movies</span>
+<span id="cb37-218"><a href="#cb37-218"></a><span class="in">```</span></span>
+<span id="cb37-221"><a href="#cb37-221"></a><span class="in">```{r}</span></span>
+<span id="cb37-222"><a href="#cb37-222"></a><span class="fu">head</span>(summer_movies)</span>
+<span id="cb37-223"><a href="#cb37-223"></a><span class="fu">dim</span>(summer_movies)</span>
+<span id="cb37-224"><a href="#cb37-224"></a><span class="in">```</span></span>
+<span id="cb37-225"><a href="#cb37-225"></a></span>
+<span id="cb37-226"><a href="#cb37-226"></a></span>
+<span id="cb37-227"><a href="#cb37-227"></a></span>
+<span id="cb37-228"><a href="#cb37-228"></a><span class="fu">### Exercise 4</span></span>
+<span id="cb37-229"><a href="#cb37-229"></a></span>
+<span id="cb37-230"><a href="#cb37-230"></a></span>
+<span id="cb37-231"><a href="#cb37-231"></a>In the 3 sections below (Viz 1, 2, 3), construct 3 separate graphs that tell a *connected* story about the data you chose.  </span>
+<span id="cb37-232"><a href="#cb37-232"></a></span>
+<span id="cb37-233"><a href="#cb37-233"></a>Before each viz:</span>
+<span id="cb37-234"><a href="#cb37-234"></a></span>
+<span id="cb37-235"><a href="#cb37-235"></a><span class="ss">-   </span>write a simple but specific research question you're trying to address with the viz.</span>
+<span id="cb37-236"><a href="#cb37-236"></a><span class="ss">-   </span>write a 2-4 sentence summary of what you learn from the viz. This should connect back to your research question!</span>
+<span id="cb37-237"><a href="#cb37-237"></a></span>
+<span id="cb37-238"><a href="#cb37-238"></a>After each viz:</span>
+<span id="cb37-239"><a href="#cb37-239"></a></span>
+<span id="cb37-240"><a href="#cb37-240"></a><span class="ss">-   </span>Comment on at least 2 effective aspects of the viz (consider the effective visualization principles).</span>
+<span id="cb37-241"><a href="#cb37-241"></a><span class="ss">-   </span>Comment on at least 2 aspects of the visualization that could be improved. Perhaps these are aspects that you don't know how to implement yet but wish you could update it.</span>
+<span id="cb37-242"><a href="#cb37-242"></a></span>
+<span id="cb37-243"><a href="#cb37-243"></a>Make sure each viz:</span>
+<span id="cb37-244"><a href="#cb37-244"></a></span>
+<span id="cb37-245"><a href="#cb37-245"></a><span class="ss">-   </span>has meaningful axis labels and legend titles</span>
+<span id="cb37-246"><a href="#cb37-246"></a><span class="ss">-   </span>has a figure caption (fig.cap)</span>
+<span id="cb37-247"><a href="#cb37-247"></a><span class="ss">-   </span>uses alt text (fig.alt)</span>
+<span id="cb37-248"><a href="#cb37-248"></a><span class="ss">-   </span>uses a more color-blind friendly color palette</span>
+<span id="cb37-249"><a href="#cb37-249"></a></span>
+<span id="cb37-250"><a href="#cb37-250"></a></span>
+<span id="cb37-251"><a href="#cb37-251"></a>Tips:</span>
+<span id="cb37-252"><a href="#cb37-252"></a></span>
+<span id="cb37-253"><a href="#cb37-253"></a><span class="ss">-   </span>Start with some questions in mind of what you want to learn.</span>
+<span id="cb37-254"><a href="#cb37-254"></a><span class="ss">-   </span>Start with a simple viz (viz 1), and build this up into something multivariate (viz 3).</span>
+<span id="cb37-255"><a href="#cb37-255"></a><span class="ss">-   </span>Reflect on each viz -- what new questions do you have after checking out the viz? Let these questions guide your next viz. (eg: recall how we worked through the <span class="in">`MacNaturalGas`</span> data at the start of the Spatial Viz activity).</span>
+<span id="cb37-256"><a href="#cb37-256"></a></span>
+<span id="cb37-257"><a href="#cb37-257"></a></span>
+<span id="cb37-258"><a href="#cb37-258"></a><span class="fu">#### Viz 1</span></span>
+<span id="cb37-259"><a href="#cb37-259"></a>Which genre has most movies?</span>
+<span id="cb37-262"><a href="#cb37-262"></a><span class="in">```{r}</span></span>
+<span id="cb37-263"><a href="#cb37-263"></a><span class="fu">ggplot</span>(summer_movies, <span class="fu">aes</span>(<span class="at">x =</span> genres))<span class="sc">+</span></span>
+<span id="cb37-264"><a href="#cb37-264"></a>  <span class="fu">geom_bar</span>()<span class="sc">+</span></span>
+<span id="cb37-265"><a href="#cb37-265"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Count of all genres of movies"</span>)</span>
+<span id="cb37-266"><a href="#cb37-266"></a><span class="in">```</span></span>
+<span id="cb37-267"><a href="#cb37-267"></a>In this plot, we have too many genres, and many of them have a little amount of movies. If we want to study about genres, we can ignore them, so I made the following modify to the dataset.</span>
+<span id="cb37-270"><a href="#cb37-270"></a><span class="in">```{r}</span></span>
+<span id="cb37-271"><a href="#cb37-271"></a>genre_count <span class="ot">&lt;-</span> <span class="fu">table</span>(summer_movies<span class="sc">$</span>genres)</span>
+<span id="cb37-272"><a href="#cb37-272"></a>low_count_classes <span class="ot">&lt;-</span> <span class="fu">names</span>(genre_count[genre_count <span class="sc">&lt;</span> <span class="dv">25</span>])</span>
+<span id="cb37-273"><a href="#cb37-273"></a>summer_movies_mod <span class="ot">&lt;-</span> summer_movies[<span class="sc">!</span>summer_movies<span class="sc">$</span>genres <span class="sc">%in%</span> low_count_classes, ]</span>
+<span id="cb37-274"><a href="#cb37-274"></a><span class="in">```</span></span>
+<span id="cb37-277"><a href="#cb37-277"></a><span class="in">```{r}</span></span>
+<span id="cb37-278"><a href="#cb37-278"></a><span class="fu">ggplot</span>(summer_movies_mod, <span class="fu">aes</span>(<span class="at">x =</span> genres))<span class="sc">+</span></span>
+<span id="cb37-279"><a href="#cb37-279"></a>  <span class="fu">geom_bar</span>()<span class="sc">+</span></span>
+<span id="cb37-280"><a href="#cb37-280"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Count of genres that have more than 25 movies"</span>)</span>
+<span id="cb37-281"><a href="#cb37-281"></a><span class="in">```</span></span>
+<span id="cb37-282"><a href="#cb37-282"></a>In this plot, we can see Drama has highest amount of movies.</span>
+<span id="cb37-283"><a href="#cb37-283"></a></span>
+<span id="cb37-284"><a href="#cb37-284"></a></span>
+<span id="cb37-285"><a href="#cb37-285"></a></span>
+<span id="cb37-286"><a href="#cb37-286"></a></span>
+<span id="cb37-287"><a href="#cb37-287"></a></span>
+<span id="cb37-288"><a href="#cb37-288"></a></span>
+<span id="cb37-289"><a href="#cb37-289"></a>\</span>
+<span id="cb37-290"><a href="#cb37-290"></a>\</span>
+<span id="cb37-291"><a href="#cb37-291"></a>\</span>
+<span id="cb37-292"><a href="#cb37-292"></a>\</span>
+<span id="cb37-293"><a href="#cb37-293"></a></span>
+<span id="cb37-294"><a href="#cb37-294"></a></span>
+<span id="cb37-295"><a href="#cb37-295"></a></span>
+<span id="cb37-296"><a href="#cb37-296"></a><span class="fu">#### Viz 2</span></span>
+<span id="cb37-297"><a href="#cb37-297"></a>Which genre of movie have higher rating?</span>
+<span id="cb37-300"><a href="#cb37-300"></a><span class="in">```{r}</span></span>
+<span id="cb37-301"><a href="#cb37-301"></a><span class="fu">ggplot</span>(summer_movies_mod, <span class="fu">aes</span>(<span class="at">x =</span> genres, <span class="at">y =</span> average_rating))<span class="sc">+</span></span>
+<span id="cb37-302"><a href="#cb37-302"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb37-303"><a href="#cb37-303"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average rating of different genres of movies"</span>)</span>
+<span id="cb37-304"><a href="#cb37-304"></a><span class="in">```</span></span>
+<span id="cb37-305"><a href="#cb37-305"></a>We can see that Documentary movies has highest average ratings, but we also learned that Documentary movies also have lower count, so the high rating might because they are not popular and have less comments.</span>
+<span id="cb37-306"><a href="#cb37-306"></a></span>
+<span id="cb37-307"><a href="#cb37-307"></a></span>
+<span id="cb37-308"><a href="#cb37-308"></a></span>
+<span id="cb37-309"><a href="#cb37-309"></a></span>
+<span id="cb37-310"><a href="#cb37-310"></a></span>
+<span id="cb37-311"><a href="#cb37-311"></a></span>
+<span id="cb37-312"><a href="#cb37-312"></a></span>
+<span id="cb37-313"><a href="#cb37-313"></a>\</span>
+<span id="cb37-314"><a href="#cb37-314"></a>\</span>
+<span id="cb37-315"><a href="#cb37-315"></a>\</span>
+<span id="cb37-316"><a href="#cb37-316"></a>\</span>
+<span id="cb37-317"><a href="#cb37-317"></a></span>
+<span id="cb37-318"><a href="#cb37-318"></a></span>
+<span id="cb37-319"><a href="#cb37-319"></a></span>
+<span id="cb37-320"><a href="#cb37-320"></a><span class="fu">#### Viz 3</span></span>
+<span id="cb37-321"><a href="#cb37-321"></a>Does the high rating genres affected by the rating numbers?</span>
+<span id="cb37-324"><a href="#cb37-324"></a><span class="in">```{r}</span></span>
+<span id="cb37-325"><a href="#cb37-325"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb37-326"><a href="#cb37-326"></a>p_1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(summer_movies_mod, <span class="fu">aes</span>(<span class="at">x =</span> genres, <span class="at">y =</span> average_rating))<span class="sc">+</span></span>
+<span id="cb37-327"><a href="#cb37-327"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb37-328"><a href="#cb37-328"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average rating of different genres of movies"</span>)</span>
+<span id="cb37-329"><a href="#cb37-329"></a>p_2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(summer_movies_mod, <span class="fu">aes</span>(<span class="at">x =</span> genres, <span class="at">y =</span> num_votes))<span class="sc">+</span></span>
+<span id="cb37-330"><a href="#cb37-330"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb37-331"><a href="#cb37-331"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Numbers of ratings for different genres"</span>)</span>
+<span id="cb37-332"><a href="#cb37-332"></a>p_1<span class="sc">+</span>p_2</span>
+<span id="cb37-333"><a href="#cb37-333"></a><span class="in">```</span></span>
+<span id="cb37-334"><a href="#cb37-334"></a>In the plot above, the ratings of each genres are similar, with only a few outliers, so we can conclude that the numbers of ratings might not give abovious affect to the average ratings.</span>
+<span id="cb37-335"><a href="#cb37-335"></a></span>
+<span id="cb37-336"><a href="#cb37-336"></a></span>
+<span id="cb37-337"><a href="#cb37-337"></a></span>
+<span id="cb37-338"><a href="#cb37-338"></a></span>
+<span id="cb37-339"><a href="#cb37-339"></a></span>
+<span id="cb37-340"><a href="#cb37-340"></a></span>
+<span id="cb37-341"><a href="#cb37-341"></a></span>
+<span id="cb37-342"><a href="#cb37-342"></a></span>
+<span id="cb37-343"><a href="#cb37-343"></a></span>
+<span id="cb37-344"><a href="#cb37-344"></a></span>
+<span id="cb37-345"><a href="#cb37-345"></a></span>
+<span id="cb37-346"><a href="#cb37-346"></a></span>
+<span id="cb37-347"><a href="#cb37-347"></a></span>
+<span id="cb37-348"><a href="#cb37-348"></a></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>

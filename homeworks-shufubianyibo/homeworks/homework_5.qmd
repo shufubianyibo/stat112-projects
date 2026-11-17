@@ -1,0 +1,352 @@
+---
+title: "Homework 5: MORE Data Wrangling"
+execute: 
+  warning: true
+fig-height: 3
+fig-width: 5
+fig-align: center
+code-fold: false
+---
+
+::: {.callout-caution title="Learning Goals"}
+Practice some data wrangling and data viz in guided settings.
+The content of the exercises is not necessarily in the order that we learned it, so you'll need to practice identifying appropriate tools for a given task.
+:::
+
+
+
+# Exercise 1: Bikes
+
+In the first 5 exercises, you'll explore two datasets related to Capital Bikeshare, a bike share company, in Washington, DC. To begin, the `trips` data includes information about 10,000 bike rentals during the last quarter of 2014:
+
+```{r}
+# Load the tidyverse 
+library(tidyverse)
+library(dplyr)
+
+# Import the data
+# Only keep certain variables of interest
+trips <- readRDS(gzcon(url("https://mac-stat.github.io/data/2014-Q4-Trips-History-Data-Small.rds"))) %>% 
+  select(client, sstation, sdate, duration) %>% 
+  mutate(duration = as.numeric(hms(duration))/60)
+
+# Check it out
+head(trips)
+```
+
+For each rental, `trips` has information on:
+
+-   `client` = whether the renter is a `Registered` member of the bike share service or a `Casual` renter
+
+-   `sstation` = the name of the station where the rental *started*
+
+-   `sdate` = the date and time that a rental *started*
+
+-   `duration` = the duration of the rental in minutes
+
+
+## Part a
+
+The `sdate` variable contains a lot of information! Use it to define (and store) 5 new variables in the `trips` data:
+
+-   `s_date = as_date(sdate)`: the date (not including time) that the rental started
+-   `s_day_of_week` = day of week that the rental started, labeled `Sun`, `Mon`, etc
+-   `s_hour` = hour of day that the rentals started (0-23)
+-   `s_minute` = minute within the hour that the rentals started (0-59)
+-   `s_time_of_day` = time of day that the rentals started in decimal notation (e.g. 3:30 should be 3.5)
+
+
+::: {.callout-tip title="Working with Dates"}
+
+-   Recall that the `lubridate` package (part of the `tidyverse`) has some handy functions, including `hour()`, `minute()`, `wday(label = TRUE)`.
+-   The time of day can be calculated by hour + minute/60.
+
+:::
+
+```{r}
+# Define the new variables
+# Once you're confident, store them under trips
+library(lubridate)
+trips <- trips %>%
+  mutate(s_date = as_date(sdate),
+         s_day_of_week = wday(s_date, label = TRUE),
+         s_hour = as.numeric(hour(sdate)),
+         s_minute = as.numeric(minute(sdate)),
+         s_time_of_day = hour(sdate) + minute(sdate)/60
+         )
+
+# Confirm that your new dataset has 10000 rows and 9 columns
+dim(trips)
+
+# Convince yourself that the first entry has
+# s_date = 2014-11-06, s_day_of_week = Thu, s_hour = 16, s_minute = 26, s_time_of_day = 16.43333
+head(trips,1)
+```
+
+## Part b
+
+Let's warm up by exploring some basic patterns in the data.
+
+```{r}
+# Calculate the shortest, average, and longest rental duration 
+max(trips$duration)
+mean(trips$duration)
+min(trips$duration)
+# Show the rentals that left from Lincoln Memorial on a Monday and lasted under 10 minutes
+# HINT: You should get two data points!
+trips %>%
+  filter(sstation == "Lincoln Memorial",
+         s_day_of_week == "Mon",
+         duration <= 10)
+
+# Calculate the total number of rides taken on each day of the week
+# Sort from highest to lowest
+trips %>%
+  group_by(s_day_of_week)%>%
+  mutate(total_rides = n())%>%
+  distinct(s_day_of_week,total_rides) %>%
+  arrange(desc(total_rides))
+
+
+# Identify the 2 dates (s_date) on which there were the fewest rentals
+# (Think about the significance of these dates)
+trips %>%
+  group_by(s_date)%>%
+  mutate(total_rides = n())%>%
+  distinct(s_date,total_rides) %>%
+  arrange(total_rides)%>%
+  head(2)
+
+```
+
+\
+\
+\
+\
+
+# Exercise 2: When do people ride?
+
+Let's explore temporal patterns in bike rentals using data viz. You will make a series of plots and summarize them in the last part of the exercise.
+
+## Part a
+
+How did the volume of bike trips vary throughout the study period? Construct a univariate plot of `s_date`.
+
+```{r}
+ggplot(trips, aes(x = s_date))+
+  geom_bar()
+```
+
+## Part b
+
+How did the volume of bike trips vary at different times of the day? Construct a univariate plot of `s_time_of_day`.
+
+```{r}
+ggplot(trips, aes(x = s_time_of_day))+
+  geom_histogram()
+```
+
+## Part c
+
+How do ridership patterns vary by both time of day and day of week? *Facet* your plot from Part b by `s_day_of_week`.
+
+```{r}
+ggplot(trips, aes(x = s_time_of_day))+
+  geom_histogram()+
+  facet_wrap(~s_day_of_week)
+```
+
+## Part d
+
+Summarize, in words, the temporal patterns you observed in Parts a, b, and c.
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR ANSWER IN THIS CALLOUT BOX
+There are some periodic changes for day of month, the rides decrease quickly then increase; for only the time of day, most rides happened from 6am to 8pm, the rides are especially high at about 9am and 7pm; for the plot facet with the day of week, the week days has more obvious trend that the rides are especially high around 9am and 7pm, and the rides smoothly increase from 6am and smoothly decrease from 7pm on weekends.
+:::
+
+\
+\
+\
+\
+
+# Exercise 3: Registered vs casual riders
+
+Let's explore how ridership patterns might differ among registered and casual riders. You will make a series of plots and calculations, and summarize them in the last part of the problem.
+
+## Part a
+
+How do trip durations compare among registered and casual riders? Calculate the shortest, average, and longest rental duration among registered and casual riders.
+
+```{r}
+ride_register <- trips %>%
+  filter(client == "Registered")%>%
+  summarize(
+    Client = "Registered",
+    Max_Duration = max(duration),
+    Mean_Duration = mean(duration),
+    Min_Duration = min(duration)
+  )
+
+ride_casual <- trips %>%
+  filter(client == "Casual")%>%
+  summarize(
+    Client = "Casual",
+    Max_Duration = max(duration),
+    Mean_Duration = mean(duration),
+    Min_Duration = min(duration)
+  )
+
+bind_rows(ride_register, ride_casual)
+```
+
+## Part b
+
+On what days of the week do registered and casual riders tend to ride more? Construct a plot of `s_day_of_week`, faceted by `client`.
+
+```{r}
+ggplot(trips, aes(x = s_day_of_week))+
+  geom_bar()+
+  facet_wrap(~client)
+```
+
+## Part c
+
+At what times of day *and* days of the week do registered and casual riders tend to ride more? Construct density plots of `s_time_of_day` faceted by `s_day_of_week` and colored by `client` status.
+
+```{r}
+ggplot(trips, aes(x = s_time_of_day, color = client))+
+  geom_density()+
+  facet_wrap(~s_day_of_week)
+```
+
+## Part d
+
+Summarize some key takeaways from Parts a, b, and c. What do they tell us about registered vs casual riders? What is your explanation for why these observations make sense?
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR ANSWER IN THIS CALLOUT BOX
+Registered riders takes more trips than casual riders, and they are likely to take shorter trips. By the time of day, most registered riders has more obvious trend of the high frequency around 9am and 7pm on weekdays, it might because they commute by rides.
+:::
+
+\
+\
+\
+\
+
+# Exercise 4: Where do people ride?
+
+Beyond information about *when* the bike trips started, the `trips` data includes information about `sstation`, the stations *where* each bike trip started. Let's explore.
+
+## Part a
+
+Make a table with the *ten* stations with the *highest* number of departures (`head(10)`). Define this as `popular_stations` and print / show the data table. HINT: Your first row should have 2 entries: `Columbus Circle / Union Station`, `241`
+
+```{r}
+# Define popular_stations
+popular_stations <- trips %>%
+  group_by(sstation)%>%
+  mutate(station_count = n())%>%
+  arrange(desc(station_count))%>%
+  distinct(sstation,station_count)%>%
+  head(10)
+# Print out popular_stations (just type popular_stations)
+popular_stations
+```
+
+## Part b
+
+Get a dataset of only the `trips` that departed from the ten most `popular_stations`. Store this as `popular_trips`. HINT: Use a join operation.
+
+```{r}
+# Define popular_trips
+popular_trips <- trips %>%
+  semi_join(popular_stations, by = join_by(sstation))
+# Confirm that popular_trips has 1525 rows and 9 columns
+dim(popular_trips)
+```
+
+## Part c
+
+Get a dataset of the `trips` that did *not* depart from the most `popular_stations`. Store this as `unpopular_trips`.
+
+```{r}
+# Define unpopular_trips
+unpopular_trips <- trips %>%
+  anti_join(popular_stations, by = join_by(sstation))
+# Confirm that unpopular_trips has 8475 rows and 9 columns
+dim(unpopular_trips)
+head(unpopular_trips)
+```
+
+\
+\
+\
+\
+
+# Exercise 5: Spatial trends
+
+Let's bring in *spatial* information about the bike stations! The `stations` dataset includes the latitude / longitude coordinates and other details for the bike rental stations:
+
+```{r}
+# Import data on the bike stations
+# Only keep certain variables of interest
+stations <- read_csv("https://mac-stat.github.io/data/DC-Stations.csv") %>% 
+  select(name, lat, long)
+
+# Check it out
+head(stations)
+```
+
+## Part a
+
+To the `popular_stations` data, tack on new information about the latitude and longitude of the 10 most popular stations.
+
+```{r}
+# Define popular_stations with the additional lat / long variables
+# NOTE: Don't store the data until you know it's what you want!
+popular_stations <- popular_stations %>%
+  left_join(stations, by = c("sstation" = "name"))
+
+# Confirm that popular_stations has 10 rows and 4 columns
+dim(popular_stations)
+```
+
+## Part b
+
+Construct a leaflet map of the `stations` data:
+
+-   include *circles* representing each station in the Capital Bikeshare system
+-   add *markers* (the upside-down teardrop / flag symbols) that indicate the locations of the 10 most popular stations. NOTE: Since these 10 locations are in the `popular_stations` not `stations` data, you'll need to add a `data = popular_stations` argument to this layer.
+
+```{r}
+library(leaflet)
+leaflet(data = stations) |> 
+  addTiles() |> 
+  addCircles(color = "red") |>
+  addMarkers(data = popular_stations, lng = ~long, lat = ~lat)
+```
+
+## Part c
+
+Write a 1-sentence summary of what you learned from this map.
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR ANSWER IN THIS CALLOUT BOX
+6 of the 10 popular stations distributed relatively dense around Dupont Circle, 2 of them around Capitol Hill, and 2 of them around National Mall.
+:::
+
+\
+\
+\
+\
+
+
+# Finalize Work
+
+Congratulation 🎉.
+You're done with the homework.
+See the instruction at top of the Homework Assignments page for how to submit.

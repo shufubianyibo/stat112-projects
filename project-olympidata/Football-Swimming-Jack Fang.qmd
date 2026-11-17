@@ -1,0 +1,187 @@
+---
+title: "Football & Swimming"
+editor: visual
+---
+
+#Import Data
+
+```{r}
+olympics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-08-06/olympics.csv')
+```
+
+#Package
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+```
+
+```{r}
+Football <- olympics %>%
+  filter(sport == "Football")%>%
+  drop_na()
+Football
+
+Swimming<- olympics %>%
+  filter(sport == "Swimming")%>%
+  drop_na()
+Swimming
+```
+
+#Separate by sex
+
+```{r}
+Swimming_Male <- Swimming %>%
+  filter(sex == "M")
+
+Swimming_Female <- Swimming %>%
+  filter(sex == "F")
+
+Football_Male <- Football %>%
+  filter(sex == "M")
+
+Football_Female <- Football %>%
+  filter(sex == "F")
+```
+
+```{r}
+Swimming$Sport <- "Swimming"
+Football$Sport <- "Football"
+Combined_Data <- bind_rows(Swimming, Football)
+
+ggplot(Combined_Data, aes(x = sex, fill = Sport)) +
+  geom_bar(position = "dodge") +
+  facet_wrap(~Sport) +
+  labs(
+    title = "Participant Count by Sex in Swimming and Football",
+    x = "Sex",
+    y = "Count of Participants",
+    fill = "Sport"
+  ) +
+  theme_minimal()
+```
+
+#Compare average age, height, and weight of medalists vs non-medalists
+
+```{r}
+
+Filtered_Data <- Combined_Data %>%
+  filter(Sport %in% c("Swimming", "Football")) %>%
+  mutate(Medalist = ifelse(!is.na(medal), "Medalist", "Non-Medalist"))
+
+Physical_Summary <- Filtered_Data %>%
+  group_by(Sport, Medalist) %>%
+  summarise(
+    Avg_Age = mean(age, na.rm = TRUE),
+    Avg_Height = mean(height, na.rm = TRUE),
+    Avg_Weight = mean(weight, na.rm = TRUE)
+  )
+
+
+Physical_Summary
+
+ggplot(Physical_Summary, aes(x = Medalist, y = Avg_Age, fill = Sport)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Comparison of Average Age by Medalist Status (Swimming vs Football)",
+    x = "Medalist Status",
+    y = "Average Age",
+    fill = "Sport"
+  ) +
+  theme_minimal()
+
+```
+
+#Evaluate the role of age and repeated participation in medal success
+
+```{r}
+Filtered_Experience <- Filtered_Data
+
+ggplot(Filtered_Experience, aes(x = age, fill = Medalist)) +
+  geom_density(alpha = 0.5) +
+  facet_wrap(~Sport) +
+  labs(
+    title = "Age Distribution for Medalists vs Non-Medalists (Swimming vs Football)",
+    x = "Age",
+    y = "Density",
+    fill = "Medalist Status"
+  ) +
+  theme_minimal()
+
+Participation_Summary <- Filtered_Experience %>%
+  group_by(name, Sport) %>%
+  summarise(
+    Participation_Count = n(),
+    Medal_Count = sum(!is.na(medal))
+  ) %>%
+  arrange(desc(Participation_Count))
+
+Participation_Summary
+
+```
+
+#Analyze which countries are top performers
+
+```{r}
+Country_Dominance <- Filtered_Data %>%
+  filter(!is.na(medal)) %>%
+  group_by(noc, Sport) %>%
+  summarise(Total_Medals = n()) %>%
+  arrange(desc(Total_Medals))
+
+Country_Dominance
+
+Top_Countries <- Country_Dominance %>%
+  group_by(Sport) %>%
+  top_n(10, Total_Medals) %>%
+  arrange(Sport, desc(Total_Medals))
+
+Top_Countries
+
+
+
+Top_Countries <- Country_Dominance %>%
+  group_by(.,Sport) %>%
+  top_n(10, Total_Medals) %>%
+  arrange(.,Sport)
+
+ggplot(Top_Countries, aes(x = reorder(noc, -Total_Medals), y = Total_Medals, fill = Sport)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~Sport, scales = "free") +
+  labs(
+    title = "Top 10 Countries by Total Medals (Swimming vs Football)",
+    x = "Country (NOC)",
+    y = "Total Medals",
+    fill = "Sport"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+```
+
+#Highlight differences and similarities between Swimming and Football
+
+```{r}
+Comparison_Summary <- Filtered_Data %>%
+  group_by(Sport) %>%
+  summarise(
+    Avg_Age = mean(age, na.rm = TRUE),
+    Avg_Height = mean(height, na.rm = TRUE),
+    Avg_Weight = mean(weight, na.rm = TRUE)
+  )
+
+ggplot(Comparison_Summary, aes(x = Sport)) +
+  geom_bar(aes(y = Avg_Age, fill = "Average Age"), stat = "identity", position = "dodge") +
+  geom_bar(aes(y = Avg_Height / 10, fill = "Average Height (scaled)"), stat = "identity", position = "dodge") +
+  geom_bar(aes(y = Avg_Weight / 10, fill = "Average Weight (scaled)"), stat = "identity", position = "dodge") +
+  labs(
+    title = "Comparison of Physical Attributes Between Swimming and Football",
+    x = "Sport",
+    y = "Scaled Metrics (Height and Weight divided by 10)",
+    fill = "Metric"
+  ) +
+  theme_minimal()
+
+```

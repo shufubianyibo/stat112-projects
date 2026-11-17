@@ -1,0 +1,303 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Han Sun",
+    "section": "",
+    "text": "Introduction\nThis is my quarto book for the homeworks of COMP/STAT112 course taken at Macalester College. Please, use the side bar on the left for navigation."
+  },
+  {
+    "objectID": "homeworks/README.html",
+    "href": "homeworks/README.html",
+    "title": "Homeworks",
+    "section": "",
+    "text": "All homeworks live here."
+  },
+  {
+    "objectID": "homeworks/homework-00a.html",
+    "href": "homeworks/homework-00a.html",
+    "title": "2  Homework 00a",
+    "section": "",
+    "text": "This is test homework 00a to show how this Quarto book is organized."
+  },
+  {
+    "objectID": "homeworks/homework-00b.html",
+    "href": "homeworks/homework-00b.html",
+    "title": "3  Homework 00b",
+    "section": "",
+    "text": "This is test homework 00b to show how this Quarto book is organized."
+  },
+  {
+    "objectID": "homework_01.html#exercise-1-warming-up",
+    "href": "homework_01.html#exercise-1-warming-up",
+    "title": "1  Homework 1",
+    "section": "Exercise 1: Warming up",
+    "text": "Exercise 1: Warming up\nI like pasta and pizza"
+  },
+  {
+    "objectID": "homework_01.html#exercise-2-import-tidy-data",
+    "href": "homework_01.html#exercise-2-import-tidy-data",
+    "title": "1  Homework 1",
+    "section": "Exercise 2: Import tidy data",
+    "text": "Exercise 2: Import tidy data\n\n# Import the data\nsurvey &lt;- read.csv(\"https://mac-stat.github.io/data/112_fall_2024_survey.csv\")"
+  },
+  {
+    "objectID": "homework_01.html#exercise-3-tidy-data-properties",
+    "href": "homework_01.html#exercise-3-tidy-data-properties",
+    "title": "1  Homework 1",
+    "section": "Exercise 3: Tidy data properties",
+    "text": "Exercise 3: Tidy data properties\ncafe_mac is a categorical variable, fave_temp is a quantitative variable."
+  },
+  {
+    "objectID": "homework_01.html#exercise-4-get-to-know-the-data",
+    "href": "homework_01.html#exercise-4-get-to-know-the-data",
+    "title": "1  Homework 1",
+    "section": "Exercise 4: Get to know the data",
+    "text": "Exercise 4: Get to know the data\n\n# It shows the number of row and column in the dataset.\ndim(survey)\n\n[1] 67  4\n\n# It shows the number of row of this dataset.\nnrow(survey)\n\n[1] 67\n\n# It shows the first 6 rows of this dataset.\nhead(survey)\n\n           cafe_mac minutes_to_campus fave_temp       hangout\n1        fried rice                15     27.00      a forest\n2           Yogurt                 28     22.00 the mountains\n3             Pizza                 5     20.00 the mountains\n4            Pasta                 10     18.33       a beach\n5 vanilla ice cream                15     20.00       a beach\n6             Pizza                12     10.00        a city\n\n# It shows the first 3 rows of this dataset.\nhead(survey, 3)\n\n    cafe_mac minutes_to_campus fave_temp       hangout\n1 fried rice                15        27      a forest\n2    Yogurt                 28        22 the mountains\n3      Pizza                 5        20 the mountains\n\n# It shows the last 6 rows of this dataset.\ntail(survey)\n\n                             cafe_mac minutes_to_campus fave_temp       hangout\n62                              Tacos                15        22      a forest\n63                          Chickpeas                 5        21 the mountains\n64                        Baked goods                 7        24      a forest\n65 Chocolate chip cookies and ravioli                 7        25       a beach\n66                             Burger                10        21      a forest\n67                    Pepperoni Pizza                10        24       a beach\n\n# It shows the name of the columns.\nnames(survey)\n\n[1] \"cafe_mac\"          \"minutes_to_campus\" \"fave_temp\"        \n[4] \"hangout\""
+  },
+  {
+    "objectID": "homework_01.html#exercise-5-data-structure",
+    "href": "homework_01.html#exercise-5-data-structure",
+    "title": "1  Homework 1",
+    "section": "Exercise 5: Data structure",
+    "text": "Exercise 5: Data structure\n\n# Obtain the overall class of the survey object\n\ncafe_mac &lt;- \"fried rice\" \nclass(cafe_mac)\n\n[1] \"character\"\n\nminutes_to_campus &lt;- 15\nclass(minutes_to_campus)\n\n[1] \"numeric\"\n\nfave_temp &lt;- 18.3\nclass(fave_temp)\n\n[1] \"numeric\"\n\nhangout &lt;- \"a forest\"\nclass(hangout)\n\n[1] \"character\"\n\n# Examine the structure of each variable within survey (including class)\n\n## cafe_mac is character, minutes_to_campus is integer, fave_temp is numeric, hangout is character.\n\n# Just take note of what information we gain here (no need to write more)\n## We have the dimension of the dataset, the class of the variables, and first few columns of each variable.\nstr(survey)\n\n'data.frame':   67 obs. of  4 variables:\n $ cafe_mac         : chr  \"fried rice\" \"Yogurt \" \"Pizza\" \"Pasta \" ...\n $ minutes_to_campus: int  15 28 5 10 15 12 4 2 10 7 ...\n $ fave_temp        : num  27 22 20 18.3 20 ...\n $ hangout          : chr  \"a forest\" \"the mountains\" \"the mountains\" \"a beach\" ..."
+  },
+  {
+    "objectID": "homework_01.html#exercise-6-your-turn",
+    "href": "homework_01.html#exercise-6-your-turn",
+    "title": "1  Homework 1",
+    "section": "Exercise 6: Your turn",
+    "text": "Exercise 6: Your turn\n\n# Import and name the dataset (you pick a name!)\n\nfootball &lt;- read.csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-11-29/worldcups.csv\")\n\n# Print the first 6 rows of the dataset\n\nhead(football)\n\n  year        host       winner         second   third       fourth\n1 1930     Uruguay      Uruguay      Argentina     USA   Yugoslavia\n2 1934       Italy        Italy Czechoslovakia Germany      Austria\n3 1938      France        Italy        Hungary  Brazil       Sweden\n4 1950      Brazil      Uruguay         Brazil  Sweden        Spain\n5 1954 Switzerland West Germany        Hungary Austria      Uruguay\n6 1958      Sweden       Brazil         Sweden  France West Germany\n  goals_scored teams games attendance\n1           70    13    18     434000\n2           70    16    17     395000\n3           84    15    18     483000\n4           88    13    22    1337000\n5          140    16    26     943000\n6          126    16    35     868000\n\n# How many years of data do we have? And how many measurements do we have on each year?\n\ndim(football)\n\n[1] 21 10\n\n## There are 21 years and 10 measurements.\n\n# Get a list of all variable names in the dataset\n\nnames(football)\n\n [1] \"year\"         \"host\"         \"winner\"       \"second\"       \"third\"       \n [6] \"fourth\"       \"goals_scored\" \"teams\"        \"games\"        \"attendance\"  \n\n# Display the class and other information for each variable in the dataset\nstr(football)\n\n'data.frame':   21 obs. of  10 variables:\n $ year        : int  1930 1934 1938 1950 1954 1958 1962 1966 1970 1974 ...\n $ host        : chr  \"Uruguay\" \"Italy\" \"France\" \"Brazil\" ...\n $ winner      : chr  \"Uruguay\" \"Italy\" \"Italy\" \"Uruguay\" ...\n $ second      : chr  \"Argentina\" \"Czechoslovakia\" \"Hungary\" \"Brazil\" ...\n $ third       : chr  \"USA\" \"Germany\" \"Brazil\" \"Sweden\" ...\n $ fourth      : chr  \"Yugoslavia\" \"Austria\" \"Sweden\" \"Spain\" ...\n $ goals_scored: int  70 70 84 88 140 126 89 89 95 97 ...\n $ teams       : int  13 16 15 13 16 16 16 16 16 16 ...\n $ games       : int  18 17 18 22 26 35 32 32 32 38 ...\n $ attendance  : int  434000 395000 483000 1337000 943000 868000 776000 1614677 1673975 1774022 ...\n\nsummary(football)\n\n      year          host              winner             second         \n Min.   :1930   Length:21          Length:21          Length:21         \n 1st Qu.:1958   Class :character   Class :character   Class :character  \n Median :1978   Mode  :character   Mode  :character   Mode  :character  \n Mean   :1977                                                           \n 3rd Qu.:1998                                                           \n Max.   :2018                                                           \n    third              fourth           goals_scored       teams      \n Length:21          Length:21          Min.   : 70.0   Min.   :13.00  \n Class :character   Class :character   1st Qu.: 89.0   1st Qu.:16.00  \n Mode  :character   Mode  :character   Median :126.0   Median :16.00  \n                                       Mean   :121.3   Mean   :21.76  \n                                       3rd Qu.:146.0   3rd Qu.:32.00  \n                                       Max.   :171.0   Max.   :32.00  \n     games         attendance     \n Min.   :17.00   Min.   : 395000  \n 1st Qu.:32.00   1st Qu.: 943000  \n Median :38.00   Median :1774022  \n Mean   :42.86   Mean   :1898122  \n 3rd Qu.:64.00   3rd Qu.:2724604  \n Max.   :64.00   Max.   :3568567"
+  },
+  {
+    "objectID": "homework_01.html#exercise-7-brainstorm",
+    "href": "homework_01.html#exercise-7-brainstorm",
+    "title": "1  Homework 1",
+    "section": "Exercise 7: Brainstorm",
+    "text": "Exercise 7: Brainstorm\n\nWhich team has the best score?\nWhich variable has the largest effect to who is the winner?\nWhich team has fewest winner?"
+  },
+  {
+    "objectID": "homeworks/homework_01.html#exercise-1-warming-up",
+    "href": "homeworks/homework_01.html#exercise-1-warming-up",
+    "title": "1  Homework 1",
+    "section": "Exercise 1: Warming up",
+    "text": "Exercise 1: Warming up\nI like pasta and pizza"
+  },
+  {
+    "objectID": "homeworks/homework_01.html#exercise-2-import-tidy-data",
+    "href": "homeworks/homework_01.html#exercise-2-import-tidy-data",
+    "title": "1  Homework 1",
+    "section": "Exercise 2: Import tidy data",
+    "text": "Exercise 2: Import tidy data\n\n# Import the data\nsurvey &lt;- read.csv(\"https://mac-stat.github.io/data/112_fall_2024_survey.csv\")"
+  },
+  {
+    "objectID": "homeworks/homework_01.html#exercise-3-tidy-data-properties",
+    "href": "homeworks/homework_01.html#exercise-3-tidy-data-properties",
+    "title": "1  Homework 1",
+    "section": "Exercise 3: Tidy data properties",
+    "text": "Exercise 3: Tidy data properties\nEach row represent how students in mac eat a type of food, how long will it take them, the temperature they like, and the place they like cafe_mac is a categorical variable, fave_temp is a quantitative variable."
+  },
+  {
+    "objectID": "homeworks/homework_01.html#exercise-4-get-to-know-the-data",
+    "href": "homeworks/homework_01.html#exercise-4-get-to-know-the-data",
+    "title": "1  Homework 1",
+    "section": "Exercise 4: Get to know the data",
+    "text": "Exercise 4: Get to know the data\n\n# It shows the number of row and column in the dataset.\ndim(survey)\n\n[1] 67  4\n\n# It shows the number of row of this dataset.\nnrow(survey)\n\n[1] 67\n\n# It shows the first 6 rows of this dataset.\nhead(survey)\n\n           cafe_mac minutes_to_campus fave_temp       hangout\n1        fried rice                15     27.00      a forest\n2           Yogurt                 28     22.00 the mountains\n3             Pizza                 5     20.00 the mountains\n4            Pasta                 10     18.33       a beach\n5 vanilla ice cream                15     20.00       a beach\n6             Pizza                12     10.00        a city\n\n# It shows the first 3 rows of this dataset.\nhead(survey, 3)\n\n    cafe_mac minutes_to_campus fave_temp       hangout\n1 fried rice                15        27      a forest\n2    Yogurt                 28        22 the mountains\n3      Pizza                 5        20 the mountains\n\n# It shows the last 6 rows of this dataset.\ntail(survey)\n\n                             cafe_mac minutes_to_campus fave_temp       hangout\n62                              Tacos                15        22      a forest\n63                          Chickpeas                 5        21 the mountains\n64                        Baked goods                 7        24      a forest\n65 Chocolate chip cookies and ravioli                 7        25       a beach\n66                             Burger                10        21      a forest\n67                    Pepperoni Pizza                10        24       a beach\n\n# It shows the name of the columns.\nnames(survey)\n\n[1] \"cafe_mac\"          \"minutes_to_campus\" \"fave_temp\"        \n[4] \"hangout\""
+  },
+  {
+    "objectID": "homeworks/homework_01.html#exercise-5-data-structure",
+    "href": "homeworks/homework_01.html#exercise-5-data-structure",
+    "title": "1  Homework 1",
+    "section": "Exercise 5: Data structure",
+    "text": "Exercise 5: Data structure\n\n# Obtain the overall class of the survey object\n\nsur &lt;- survey\nclass(sur)\n\n[1] \"data.frame\"\n\n# Examine the structure of each variable within survey (including class)\n\ncafe_mac &lt;- \"fried rice\" \nclass(cafe_mac)\n\n[1] \"character\"\n\nminutes_to_campus &lt;- 15\nclass(minutes_to_campus)\n\n[1] \"numeric\"\n\nfave_temp &lt;- 18.3\nclass(fave_temp)\n\n[1] \"numeric\"\n\nhangout &lt;- \"a forest\"\nclass(hangout)\n\n[1] \"character\"\n\n## cafe_mac is character, minutes_to_campus is integer, fave_temp is numeric, hangout is character.\n\n# Just take note of what information we gain here (no need to write more)\n## We have the dimension of the dataset, the class of the variables, and first few columns of each variable."
+  },
+  {
+    "objectID": "homeworks/homework_01.html#exercise-6-your-turn",
+    "href": "homeworks/homework_01.html#exercise-6-your-turn",
+    "title": "1  Homework 1",
+    "section": "Exercise 6: Your turn",
+    "text": "Exercise 6: Your turn\n\n# Import and name the dataset (you pick a name!)\n\nfootball &lt;- read.csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-11-29/worldcups.csv\")\n\n# Print the first 6 rows of the dataset\n\nhead(football)\n\n  year        host       winner         second   third       fourth\n1 1930     Uruguay      Uruguay      Argentina     USA   Yugoslavia\n2 1934       Italy        Italy Czechoslovakia Germany      Austria\n3 1938      France        Italy        Hungary  Brazil       Sweden\n4 1950      Brazil      Uruguay         Brazil  Sweden        Spain\n5 1954 Switzerland West Germany        Hungary Austria      Uruguay\n6 1958      Sweden       Brazil         Sweden  France West Germany\n  goals_scored teams games attendance\n1           70    13    18     434000\n2           70    16    17     395000\n3           84    15    18     483000\n4           88    13    22    1337000\n5          140    16    26     943000\n6          126    16    35     868000\n\n# How many years of data do we have? And how many measurements do we have on each year?\n\ndim(football)\n\n[1] 21 10\n\n## There are 21 years and 10 measurements.\n\n# Get a list of all variable names in the dataset\n\nnames(football)\n\n [1] \"year\"         \"host\"         \"winner\"       \"second\"       \"third\"       \n [6] \"fourth\"       \"goals_scored\" \"teams\"        \"games\"        \"attendance\"  \n\n# Display the class and other information for each variable in the dataset\nstr(football)\n\n'data.frame':   21 obs. of  10 variables:\n $ year        : int  1930 1934 1938 1950 1954 1958 1962 1966 1970 1974 ...\n $ host        : chr  \"Uruguay\" \"Italy\" \"France\" \"Brazil\" ...\n $ winner      : chr  \"Uruguay\" \"Italy\" \"Italy\" \"Uruguay\" ...\n $ second      : chr  \"Argentina\" \"Czechoslovakia\" \"Hungary\" \"Brazil\" ...\n $ third       : chr  \"USA\" \"Germany\" \"Brazil\" \"Sweden\" ...\n $ fourth      : chr  \"Yugoslavia\" \"Austria\" \"Sweden\" \"Spain\" ...\n $ goals_scored: int  70 70 84 88 140 126 89 89 95 97 ...\n $ teams       : int  13 16 15 13 16 16 16 16 16 16 ...\n $ games       : int  18 17 18 22 26 35 32 32 32 38 ...\n $ attendance  : int  434000 395000 483000 1337000 943000 868000 776000 1614677 1673975 1774022 ...\n\nsummary(football)\n\n      year          host              winner             second         \n Min.   :1930   Length:21          Length:21          Length:21         \n 1st Qu.:1958   Class :character   Class :character   Class :character  \n Median :1978   Mode  :character   Mode  :character   Mode  :character  \n Mean   :1977                                                           \n 3rd Qu.:1998                                                           \n Max.   :2018                                                           \n    third              fourth           goals_scored       teams      \n Length:21          Length:21          Min.   : 70.0   Min.   :13.00  \n Class :character   Class :character   1st Qu.: 89.0   1st Qu.:16.00  \n Mode  :character   Mode  :character   Median :126.0   Median :16.00  \n                                       Mean   :121.3   Mean   :21.76  \n                                       3rd Qu.:146.0   3rd Qu.:32.00  \n                                       Max.   :171.0   Max.   :32.00  \n     games         attendance     \n Min.   :17.00   Min.   : 395000  \n 1st Qu.:32.00   1st Qu.: 943000  \n Median :38.00   Median :1774022  \n Mean   :42.86   Mean   :1898122  \n 3rd Qu.:64.00   3rd Qu.:2724604  \n Max.   :64.00   Max.   :3568567"
+  },
+  {
+    "objectID": "homeworks/homework_01.html#exercise-7-brainstorm",
+    "href": "homeworks/homework_01.html#exercise-7-brainstorm",
+    "title": "1  Homework 1",
+    "section": "Exercise 7: Brainstorm",
+    "text": "Exercise 7: Brainstorm\n\nWhich team has the best score?\nWhich variable has the largest effect to who is the winner?\nWhich team has fewest winner?"
+  },
+  {
+    "objectID": "homeworks/homework_2.html",
+    "href": "homeworks/homework_2.html",
+    "title": "2  Homework 2: Data Viz",
+    "section": "",
+    "text": "3 Exercise 0\nThe Birthdays dataset in the mosaic package includes information on births in the United States. Run the chunk below which wrangles this information into a new dataset, daily_births, which records the total number of births per day in the U.S. between 1969 and 1988.\n# Create the daily_births dataset\n# Don't worry about the code. We'll learn this in the next unit!\ndata(\"Birthdays\")\ndaily_births &lt;- Birthdays %&gt;% \n  group_by(date) %&gt;% \n  summarize(births = sum(births)) %&gt;% \n  mutate(year = year(date), \n         month = month(date, label = TRUE),\n         day_of_month = mday(date),\n         day_of_week = wday(date, label = TRUE))\nOur general goal is to understand how births vary from day to day. Let’s start by focusing on just the births variable.\nYour plots above illustrate that there’s something interesting happening here! Perhaps it can be explained by changes in birth rates over time. For example, we might wonder: Have births increased or decreased? Have there been any peaks or valleys in births? Are there any seasonal trends?\nYour above plot of births over time has an interesting pattern: there seem to be 2-3 distinct groups of points. Let’s sleuth it out.\nLet’s dig into weekly and monthly birth trends.\nIn the remaining exercises, we’ll explore new data. The “Bechdel test” tests whether movies meet the following criteria:\nIn the fivethirtyeight.com article “The Dollar-And-Cents Case Against Hollywood’s Exclusion of Women”, the authors analyze which Hollywood movies do/don’t pass the test. Their data are available in the fivethirtyeight package\nRun the chunk below which wrangles this information into a new dataset, new_bechdel, which tidies up some of the categorical variables.\n# Create the new_bechdel dataset\n# Don't worry about the code. We'll learn this in the next unit!\ndata(bechdel)\nnew_bechdel &lt;- bechdel %&gt;%\n  mutate(clean_test = factor(clean_test, c(\"nowomen\", \"notalk\", \"men\", \"dubious\", \"ok\"))) %&gt;%\n  mutate(half_decades = cut(year, breaks = seq(1969, 2014, by = 5)))\nThe clean_test variable goes into more detail than the binary variable. Not only does it indicate whether a film passes the test, it indicates why a failing film fails. Read more about it in the codebook.\nNOTE: The following exercise is inspired by a similar exercise by Albert Kim, a fivethirtyeight package co-author.\nThe plot in Exercise 7 illustrates that more of the films in our dataset are more recent, but it’s not easy to examine the breakdown of the Bechdel test in each 5-year period. To that end, return to the fivethirtyeight.com article (linked above and in the codebook) and examine the plot titled “The Bechdel Test Over Time”."
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-a",
+    "href": "homeworks/homework_2.html#part-a",
+    "title": "2  Homework 2: Data Viz",
+    "section": "3.1 Part a",
+    "text": "3.1 Part a\nWe’ll be using some data stored in the mosaic and fivethirtyeight packages. Follow the instructions from Activity 3 to:\n\nCheck whether you already have these packages.\nIf not, install them."
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-b",
+    "href": "homeworks/homework_2.html#part-b",
+    "title": "2  Homework 2: Data Viz",
+    "section": "3.2 Part b",
+    "text": "3.2 Part b\n\n# Load packages we'll need for HW 2: tidyverse, mosaic, fivethirtyeight\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.0\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(mosaic)\n\nRegistered S3 method overwritten by 'mosaic':\n  method                           from   \n  fortify.SpatialPolygonsDataFrame ggplot2\n\nThe 'mosaic' package masks several functions from core packages in order to add \nadditional features.  The original behavior of these functions should not be affected by this.\n\nAttaching package: 'mosaic'\n\nThe following object is masked from 'package:Matrix':\n\n    mean\n\nThe following objects are masked from 'package:dplyr':\n\n    count, do, tally\n\nThe following object is masked from 'package:purrr':\n\n    cross\n\nThe following object is masked from 'package:ggplot2':\n\n    stat\n\nThe following objects are masked from 'package:stats':\n\n    binom.test, cor, cor.test, cov, fivenum, IQR, median, prop.test,\n    quantile, sd, t.test, var\n\nThe following objects are masked from 'package:base':\n\n    max, mean, min, prod, range, sample, sum\n\nlibrary(fivethirtyeight)\n\nSome larger datasets need to be installed separately, like senators and\nhouse_district_forecast. To install these, we recommend you install the\nfivethirtyeightdata package by running:\ninstall.packages('fivethirtyeightdata', repos =\n'https://fivethirtyeightdata.github.io/drat/', type = 'source')"
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-a-1",
+    "href": "homeworks/homework_2.html#part-a-1",
+    "title": "2  Homework 2: Data Viz",
+    "section": "4.1 Part a",
+    "text": "4.1 Part a\nLet’s get to know the data! Complete the tasks indicated by each comment in the chunk below. Put your code directly after the relevant comment.\n\n# Determine the number of data points we have\nnrow(Birthdays)\n\n[1] 372864\n\n# Check out the first 6 rows of the dataset\nhead(Birthdays)\n\n  state year month day       date wday births\n1    AK 1969     1   1 1969-01-01  Wed     14\n2    AL 1969     1   1 1969-01-01  Wed    174\n3    AR 1969     1   1 1969-01-01  Wed     78\n4    AZ 1969     1   1 1969-01-01  Wed     84\n5    CA 1969     1   1 1969-01-01  Wed    824\n6    CO 1969     1   1 1969-01-01  Wed    100\n\n# Check out the structure / class of each variable in the dataset (1 line of code)\nstr(Birthdays)\n\n'data.frame':   372864 obs. of  7 variables:\n $ state : chr  \"AK\" \"AL\" \"AR\" \"AZ\" ...\n $ year  : int  1969 1969 1969 1969 1969 1969 1969 1969 1969 1969 ...\n $ month : int  1 1 1 1 1 1 1 1 1 1 ...\n $ day   : int  1 1 1 1 1 1 1 1 1 1 ...\n $ date  : POSIXct, format: \"1969-01-01\" \"1969-01-01\" ...\n $ wday  : Ord.factor w/ 7 levels \"Sun\"&lt;\"Mon\"&lt;\"Tues\"&lt;..: 4 4 4 4 4 4 4 4 4 4 ...\n $ births: int  14 174 78 84 824 100 90 88 32 288 ..."
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-b-1",
+    "href": "homeworks/homework_2.html#part-b-1",
+    "title": "2  Homework 2: Data Viz",
+    "section": "4.2 Part b",
+    "text": "4.2 Part b\nNotice from your work in part a that day_of_week and month are special types of categorical variables: Ord.factors or ordinal factors. Explain what makes day_of_week and month ordinal.\n\n\n\n\n\n\nInstructions\n\n\n\nLooking up a definition of “ordinal” is fair, but you need to interpret the definition in the context of the variables here.\n\n\n\n\n\n\n\n\nAnswer\n\n\n\nPLACE YOUR ANSWER IN THIS CALLOUT BOX\nday_of_week and month are discrete numbers that have a certain sequence themselves, they can be arrange in order like numeric variables by their the sequence of their numbers."
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-c",
+    "href": "homeworks/homework_2.html#part-c",
+    "title": "2  Homework 2: Data Viz",
+    "section": "4.3 Part c",
+    "text": "4.3 Part c\nWhat are the units of observation?\n\n\n\n\n\n\nAnswer\n\n\n\nPLACE YOUR ANSWER IN THIS CALLOUT BOX\nEach row is the number of people born on a specific date."
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-a-2",
+    "href": "homeworks/homework_2.html#part-a-2",
+    "title": "2  Homework 2: Data Viz",
+    "section": "5.1 Part a",
+    "text": "5.1 Part a\nConstruct two plots of births. Each plot should use a different layer / geometric element.\n\n# Plot 1\nggplot(daily_births, aes(x = births)) +\n  geom_histogram(color = \"white\")\n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\n\n\n\n\n# Plot 2\nggplot(daily_births, aes(x = births)) +\n  geom_density()"
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-b-2",
+    "href": "homeworks/homework_2.html#part-b-2",
+    "title": "2  Homework 2: Data Viz",
+    "section": "5.2 Part b",
+    "text": "5.2 Part b\nSummarize your observations about daily births in the U.S. Tell a cohesive story here (not a list of distinct observations) that incorporates important aspects of quantitative variables: range, distribution / shape, typical outcome, outliers.\n\n\n\n\n\n\nAnswer\n\n\n\nPLACE YOUR ANSWER IN THIS CALLOUT BOX\nThe births per day distributed from about 6700 to 13000. The plot is bell shaped. The typical outcome is about 8900."
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-a-3",
+    "href": "homeworks/homework_2.html#part-a-3",
+    "title": "2  Homework 2: Data Viz",
+    "section": "6.1 Part a",
+    "text": "6.1 Part a\nConstruct a plot of births over time. Only use 2 variables in your plot and make sure that every data point is represented in the plot (not just a summary of trends). We’ll come back to this later.\n\nggplot(daily_births, aes(x = date, y = births))+\n  geom_point()+\n  geom_smooth()\n\n`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = \"cs\")'"
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-b-3",
+    "href": "homeworks/homework_2.html#part-b-3",
+    "title": "2  Homework 2: Data Viz",
+    "section": "6.2 Part b",
+    "text": "6.2 Part b\nSummarize your observation about births over time. Be sure to comment on the following:\n\nWhat are the longer-term birth trends over time (on the scale of years)?\nAre there any seasonal trends within years (on the scale of months)?\nWhat other interesting or unusual patterns do you notice?!?\n\n\n\n\n\n\n\nAnswer\n\n\n\nPLACE YOUR ANSWER IN THIS CALLOUT BOX\nIn the scale of year, from 1968 to 1988, the births first decreased, and then smoothly increase from 1974. There are some obvious outliers in about 1970 and they are above 12000.\nOn the scale of month, the births seems to have a periodic pattern that first decrease then increase each year.\nI find that the points have a leap in the center."
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-a-4",
+    "href": "homeworks/homework_2.html#part-a-4",
+    "title": "2  Homework 2: Data Viz",
+    "section": "7.1 Part a",
+    "text": "7.1 Part a\nStarting from your plot of births over time from above, add a new scale / variable that explains the distinction between the distinct groups.\n\n\n\n\n\n\nInstructions\n\n\n\nUse your intuition–What variables do we have that might explain the 2 groups? and play around. If you get stuck, move on to Exercise 5 and come back.\nThe ‘day_of_week’ might explain the 2 groups, because the birth on weekend is obviously lower than birth on weekdays.\n\n\n\nggplot(daily_births, aes(x = month))+\n  geom_bar()\n\n\n\nggplot(daily_births, aes(x = day_of_month, y = births))+\n  geom_boxplot()\n\nWarning: Continuous x aesthetic\nℹ did you forget `aes(group = ...)`?\n\n\n\n\nggplot(daily_births, aes(x = day_of_week, y = births))+\n  geom_boxplot()"
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-b-4",
+    "href": "homeworks/homework_2.html#part-b-4",
+    "title": "2  Homework 2: Data Viz",
+    "section": "7.2 Part b",
+    "text": "7.2 Part b\nExplain in words what is going on here (e.g. “over time, there tend to be more births on… than on….”) and why you think this is happening. NOTE: The “why” might be challenging, so just do your best.\n\n\n\n\n\n\nAnswer\n\n\n\nPLACE YOUR ANSWER IN THIS CALLOUT BOX\nThe birth on weekend is obviously lower than birth on weekdays, and the a week is only 7 days which is very small in a scale of year, and weekend has a large percentage in a week. Therefore it can make the points in the plot in exercise 3 almost evenly divided to two groups that one group is obviously higher than the other one. I think this situation might caused by that caesarean sections are usually schedule on weekdays so it will be convenient for the doctors."
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-a-5",
+    "href": "homeworks/homework_2.html#part-a-5",
+    "title": "2  Homework 2: Data Viz",
+    "section": "8.1 Part a",
+    "text": "8.1 Part a\nConstruct 2 plots that illustrate how birth rates might vary by month, one using density plots and another using boxplots. One of these will be more useful than the other!\n\nggplot(daily_births, aes(x = month))+\n  geom_density()\n\n\n\nggplot(daily_births, aes(x = month))+\n  geom_boxplot()"
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-b-5",
+    "href": "homeworks/homework_2.html#part-b-5",
+    "title": "2  Homework 2: Data Viz",
+    "section": "8.2 Part b",
+    "text": "8.2 Part b\nConstruct a plot that illustrates how birth rates might vary by day of the week.\n\nggplot(daily_births, aes(x = day_of_week, y = births))+\n  geom_boxplot()"
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-c-1",
+    "href": "homeworks/homework_2.html#part-c-1",
+    "title": "2  Homework 2: Data Viz",
+    "section": "8.3 Part c",
+    "text": "8.3 Part c\nSummarize your observations from parts a and b. Do birth rates tend to be higher in some months than others? Or higher on some days of the weeks than others? Explain.\n\n\n\n\n\n\nInstructions\n\n\n\nIf you skipped Exercise 4, you now have the hints.\n\n\n\n\n\n\n\n\nAnswer\n\n\n\nPLACE YOUR ANSWER IN THIS CALLOUT BOX\nBirth rate increases each month, since the boxes are higher for each month; and birth rate tend to be higher on weekdays, because the median, and the 25% to 75% points of weekdays are totally higher than weekend’s."
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-a-6",
+    "href": "homeworks/homework_2.html#part-a-6",
+    "title": "2  Homework 2: Data Viz",
+    "section": "9.1 Part a",
+    "text": "9.1 Part a\nConstruct a plot that addresses the following research question: Do bigger budgets (budget_2013) pay off with greater box office returns (domgross_2013)? In constructing this plot:\n\nInclude a layer that represents each individual film in the dataset. There are a lot of data points, so use transparency to improve the visualization.\nInclude a layer that highlights the trends in this relationship.\nPay attention to which of these is the response variable and which is the predictor.\n\n\nggplot(new_bechdel, aes(x = budget_2013, y = domgross_2013)) + \n  geom_point() +\n  geom_smooth()\n\n`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = \"cs\")'\n\n\nWarning: Removed 18 rows containing non-finite outside the scale range\n(`stat_smooth()`).\n\n\nWarning: Removed 18 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-b-6",
+    "href": "homeworks/homework_2.html#part-b-6",
+    "title": "2  Homework 2: Data Viz",
+    "section": "9.2 Part b",
+    "text": "9.2 Part b\nCreate new plot, which tweaks the plot in part a, that addresses the following research question: Does the dependence of box office returns on budget differ among films that do and do not pass the Bechdel test? In examining the Bechdel test, use a variable that simply captures PASS or FAIL for each film.\n\nggplot(new_bechdel, aes(x = budget_2013, y = domgross_2013, color = binary)) + \n  geom_point() +\n  geom_smooth()\n\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n\n\nWarning: Removed 18 rows containing non-finite outside the scale range\n(`stat_smooth()`).\n\n\nWarning: Removed 18 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-c-2",
+    "href": "homeworks/homework_2.html#part-c-2",
+    "title": "2  Homework 2: Data Viz",
+    "section": "9.3 Part c",
+    "text": "9.3 Part c\nSummarize your observations about the relationship between box office returns and budget, and how (if at all) this differs between films that do and do not pass the Bechdel test.\n\n\n\n\n\n\nAnswer\n\n\n\nPLACE YOUR ANSWER IN THIS CALLOUT BOX\nBigger budgets did pay off with greater box office returns a little bit, but this relation isn’t very strong, and not very accurate since the slope is flat and have many outliers. The relation almost have no difference between films that do and do not pass the Bechdel test."
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-a-7",
+    "href": "homeworks/homework_2.html#part-a-7",
+    "title": "2  Homework 2: Data Viz",
+    "section": "10.1 Part a",
+    "text": "10.1 Part a\nConstruct a plot of the clean_test variable that allows us to explore the number of films that fall into each category.\n\nggplot(new_bechdel, aes(x = clean_test)) +\n  geom_bar()"
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-b-7",
+    "href": "homeworks/homework_2.html#part-b-7",
+    "title": "2  Homework 2: Data Viz",
+    "section": "10.2 Part b",
+    "text": "10.2 Part b\nAmong films that fail the Bechdel test, what’s the primary reason?\n\n\n\n\n\n\nAnswer\n\n\n\nPLACE YOUR ANSWER IN THIS CALLOUT BOX\nNo talk between women is the primary reason."
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-c-3",
+    "href": "homeworks/homework_2.html#part-c-3",
+    "title": "2  Homework 2: Data Viz",
+    "section": "10.3 Part c",
+    "text": "10.3 Part c\nConsider two more questions: How are the films in the data set distributed across half decades, i.e. 5-year periods (half_decades)? And within each half_decade, how are the films distributed across Bechdel categories (clean_test)? Construct a single plot that answers both of these questions. Your y-axis should reflect counts, i.e. numbers of movies.\n\nggplot(new_bechdel, aes(x = half_decades, fill = clean_test))+\n  geom_bar()"
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-a-8",
+    "href": "homeworks/homework_2.html#part-a-8",
+    "title": "2  Homework 2: Data Viz",
+    "section": "11.1 Part a",
+    "text": "11.1 Part a\nSummarize the trends captured by this plot. (How has the representation of women in movies evolved over time?)\n\n\n\n\n\n\nAnswer\n\n\n\nPLACE YOUR ANSWER IN THIS CALLOUT BOX\nThe percentage of movies with fewer than two woman and the movies that women don’t talk to each other is decreasing. The percentage of movies that women only talk about men have few changes over time."
+  },
+  {
+    "objectID": "homeworks/homework_2.html#part-b-8",
+    "href": "homeworks/homework_2.html#part-b-8",
+    "title": "2  Homework 2: Data Viz",
+    "section": "11.2 Part b",
+    "text": "11.2 Part b\nRecreate this plot from the article! Your plot won’t look exactly like the authors’, but should be close to that below. You’ll need to add the following layer to get a similar color scheme:\n\nscale_fill_manual(values = c(\"red\", \"salmon\", \"pink\", \"steelblue1\", \"steelblue4\"))\n\n\n\n\n\n\n\nnnew_bechdel &lt;- new_bechdel %&gt;%\n  group_by(half_decades, clean_test) %&gt;%\n  summarise(count = n(), .groups = 'drop')\nggplot(nnew_bechdel, aes(x = half_decades, y = count, fill = clean_test)) +\n  geom_col(stat = \"identity\", position = \"fill\") +\n  scale_y_continuous(labels = scales::percent_format()) +\n  scale_fill_manual(values = c(\"red\", \"salmon\", \"pink\", \"steelblue1\", \"steelblue4\"))\n\nWarning in geom_col(stat = \"identity\", position = \"fill\"): Ignoring unknown\nparameters: `stat`"
+  },
+  {
+    "objectID": "homeworks/homework_3.html#spatial-viz",
+    "href": "homeworks/homework_3.html#spatial-viz",
+    "title": "3  Homework 3: More Data Viz",
+    "section": "3.1 Spatial Viz",
+    "text": "3.1 Spatial Viz\n\n3.1.1 Exercise 1\nIn this exercise, we will use the same Starbucks location data we worked with in class but on the US state-level only while taking into account the population of each state.\n\n# Import starbucks location data\nstarbucks &lt;- read.csv(\"https://mac-stat.github.io/data/starbucks.csv\")\n\nThe code below creates the dataset starbucks_us_by_state that gives the number of Starbucks in each state.\n\nstarbucks_us_by_state &lt;- starbucks |&gt;\n  filter(Country == \"US\") |&gt;\n  count(State.Province) |&gt;\n  mutate(state_name = str_to_lower(abbr2state(State.Province)))\n\nThe code below adds the variable starbucks_per_10000 that gives the number of Starbucks per 10,000 people to the dataest starbucks_with_2018_pop_est which will be used for the spatial visualization.\n\ncensus_pop_est_2018 &lt;- read_csv(\"https://mac-stat.github.io/data/us_census_2018_state_pop_est.csv\") |&gt;\n  separate(state, into = c(\"dot\", \"state\"), extra = \"merge\") |&gt;\n  select(-dot) |&gt;\n  mutate(state = str_to_lower(state))\n\nRows: 51 Columns: 2\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (1): state\ndbl (1): est_pop_2018\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\nstarbucks_with_2018_pop_est &lt;-\n  starbucks_us_by_state |&gt;\n  left_join(census_pop_est_2018,\n    by = c(\"state_name\" = \"state\")\n  ) |&gt;\n  mutate(starbucks_per_10000 = (n / est_pop_2018) * 10000)\n\n\n3.1.1.1 Part a\nCreate a choropleth state map that shows the number of Starbucks per 10,000 people on a map of the US while taking into consideration the following instructions:\n\nUse a new fill color palette for the states,\nAdd points for all Starbucks in the contiguous US,\nAdd an informative title for the plot, and\nInclude a caption that says who created the plot (you!).\n\n\nstarbucks_us &lt;- starbucks |&gt; \n  filter(Country == \"US\") |&gt;\n  filter(! State.Province %in% c(\"AK\", \"HI\"))\nstates_map &lt;- map_data(\"state\")\nggplot(starbucks_with_2018_pop_est, aes(map_id = state_name, fill = starbucks_per_10000)) + \n  geom_map(map = states_map) +\n  geom_point(data = starbucks_us,\n             aes(x = Longitude, y = Latitude),\n             alpha = 0.3,\n             size = 0.2,\n             color = \"darkgreen\",\n             inherit.aes = FALSE) +\n  expand_limits(x = states_map$long, y = states_map$lat) +\n  theme_map() + \n  scale_fill_gradientn(colors = c(\"blue\", \"red\", \"yellow\"), values = scales::rescale(seq(0, 100, by = 5))) +\n  labs(title = \"the number of Starbucks per 10,000 in the US\", caption = \"Han Sun\")\n\n\n\n\n\n\n3.1.1.2 Part b\nMake a conclusion about what you observe from that spatial visual.\n\n\n\n\n\n\nAnswer\n\n\n\nPLACE YOUR ANSWER IN THIS CALLOUT BOX\nStarbucks distributed densely in the west coast and east coast, sparsely in the medium. The west coast has higher number of Starbucks per 10000 people than the east coast, it might caused by the lower density of popularity.\n\n\n\n\n\n3.1.2 Exercise 2\nIn this exercise, you are going to create a single Leaflet map of some of your favorite places! The end result will be one map.\n\n3.1.2.1 Part a\nCreate a data set using the tribble() function that has 10-15 rows of your favorite places. The columns will be the name of the location, the latitude, the longitude, and a column that indicates if it is in your top 3 favorite locations or not. For an example of how to use tribble(), look at the favorite_stp that is created manually below.\n\n# Brianna's favorite St. Paul places - Used Google Maps to get coordinates\n# https://support.google.com/maps/answer/18539?hl=en&co=GENIE.Platform%3DDesktop\nfavorite_stp &lt;- tribble(\n  ~place, ~long, ~lat, ~favorite,\n  \"Macalester College\", -93.1712321, 44.9378965, \"yes\", \n  \"Groveland Recreation Center\", -93.1851310, 44.9351034, \"yes\",\n  \"Due Focacceria\", -93.1775469,  44.9274973, \"yes\",\n  \"Shadow Falls Park\", -93.1944518, 44.9433359, \"no\",\n  \"Mattocks Park\", -93.171057, 44.9284142, \"no\",\n  \"Carondelet Fields\", -93.1582673, 44.9251236, \"no\",\n  \"Pizza Luce\", -93.1524256, 44.9468848, \"no\",\n  \"Cold Front Ice Cream\", -93.156652, 44.9266768, \"no\"\n)\n\n\n# Han's favorite Minneapolis & St. Paul places\nfavorite_places &lt;- tribble(\n  ~place, ~long, ~lat, ~favorite,\n  \"Macalester College\", -93.1712321, 44.9378965, \"yes\", \n  \"IKEA\", -93.24570751977284, 44.86010046580454, \"yes\",\n  \"The Museum of Russian Art\", -93.27590491721809, 44.903559051053946, \"yes\",\n  \"Minneapolis Institute of Art\", -93.27613624973017, 44.964208943966824, \"no\",\n  \"UniUni Tea\", -93.4434414163464, 44.88093105526468, \"no\",\n  \"Kura Sushi\", -93.24193304051018, 44.855711931267116, \"no\",\n  \"Popeyes\", -93.22426893519935, 44.85809199278795, \"no\",\n  \"Arby's\", -93.17398904749186, 44.93097898351405, \"no\",\n  \"Minneapolis–Saint Paul International Airport\", -93.21050983018671, 44.88551019994176, \"no\",\n  \"Target\", -93.15695494295723, 44.95743572728847, \"no\"\n)\n\n\n\n3.1.2.2 Part b\nCreate a map that uses circles to indicate your favorite places while taking into consideration the following instructions:\n\nLabel the circles with the name of the place.\nChoose the base map you like best.\nColor your 3 favorite places differently than the ones that are not in your top 3.\nAdd a legend that explains what the colors mean\n\n\nstate_shape &lt;- states(cb = TRUE) %&gt;% filter(STUSPS == \"MN\")\n\nRetrieving data for the year 2021\n\n\n\nggplot(data = state_shape) +\n  geom_sf(fill = \"lightblue\", color = \"black\") +\n  coord_sf(xlim = c(-93.6,-93), ylim = c(44.8,45)) +\n  geom_point(data = favorite_places, aes(x = long, y = lat, color = favorite), size = 3) + \n  geom_text(data = favorite_places, aes(x = long, y = lat, label = place), vjust = -1, size = 3) +\n  scale_color_manual(values = c(\"yes\" = \"blue\", \"no\" = \"red\")) +\n  labs(title = \"Favorite Places\", x = \"Longitude\", y = \"Latitude\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "homeworks/homework_3.html#tidytuesday",
+    "href": "homeworks/homework_3.html#tidytuesday",
+    "title": "3  Homework 3: More Data Viz",
+    "section": "3.2 TidyTuesday",
+    "text": "3.2 TidyTuesday\nTidy Tuesday is a weekly data project put on by some folks from the R Data Science community. Each week, a different data set is posted and people around the world wrangle and visualize that data. According to the organizers, “The intent of Tidy Tuesday is to provide a safe and supportive forum for individuals to practice their wrangling and data visualization skills independent of drawing conclusions.”\nThe goals of this TidyTuesday are:\n\nPractice generating questions. You have to decide what to ask and how to answer it with a graphic.\nPractice identifying what viz and (eventually) wrangling tools are useful for addressing your questions.\nGet a sense of the broader data science community. Check out what people share out on X/Twitter #TidyTuesday. Maybe even share your own #TidyTuesday work on social media. Recent Mac alum Erin Franke (X/Twitter) has an inspiring account! Scrolling through, you’ll notice the trajectory of her work, starting from COMP/STAT 112 to today. Very cool.\n\n\n3.2.1 Exercise 3\nGo to TidyTuesday. Pick a dataset that was posted in July, August, or September 2024. Here, include:\n\nA short (~2 sentence) written description of your data. This should include:\n\nthe original data source, ie, where did TidyTuesday get the data from?\nunits of observation, ie, what are you analyzing?, and\nthe data size, ie, how many data points do you have? how many variables are measured on each data point?.\n\nCode to import and examine the basic properties of your chosen dataset. This code must support the facts you cited in your short written description.\n\nDescription: This data came from the Internet Movie Database, and they don’t have an article using exactly this dataset. There are two datasets in this data, and I will use the “summer_movies” one. Each row of this dataset represents some basic information and the rates of a movie. There are 905 data points and there are 10 variables measured on each data point.\n\ntuesdata &lt;- tidytuesdayR::tt_load('2024-07-30')\n\n---- Compiling #TidyTuesday Information for 2024-07-30 ----\n--- There are 2 files available ---\n\n\n── Downloading files ───────────────────────────────────────────────────────────\n\n  1 of 2: \"summer_movie_genres.csv\"\n  2 of 2: \"summer_movies.csv\"\n\nsummer_movies &lt;- tuesdata$summer_movies\n\n\nhead(summer_movies)\n\n# A tibble: 6 × 10\n  tconst    title_type primary_title original_title  year runtime_minutes genres\n  &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt;          &lt;dbl&gt;           &lt;dbl&gt; &lt;chr&gt; \n1 tt0011462 movie      Midsummer Ma… Midsummer Mad…  1920              60 Drama \n2 tt0026714 movie      A Midsummer … A Midsummer N…  1935             133 Comed…\n3 tt0033864 movie      The Teachers… Magistrarna p…  1941              86 Comedy\n4 tt0037325 movie      Summer Storm  Summer Storm    1944             106 Crime…\n5 tt0038406 movie      Centennial S… Centennial Su…  1946             102 Histo…\n6 tt0038738 tvMovie    A Midsummer … A Midsummer N…  1946             150 Drama…\n# ℹ 3 more variables: simple_title &lt;chr&gt;, average_rating &lt;dbl&gt;, num_votes &lt;dbl&gt;\n\ndim(summer_movies)\n\n[1] 905  10\n\n\n\n\n3.2.2 Exercise 4\nIn the 3 sections below (Viz 1, 2, 3), construct 3 separate graphs that tell a connected story about the data you chose.\nBefore each viz:\n\nwrite a simple but specific research question you’re trying to address with the viz.\nwrite a 2-4 sentence summary of what you learn from the viz. This should connect back to your research question!\n\nAfter each viz:\n\nComment on at least 2 effective aspects of the viz (consider the effective visualization principles).\nComment on at least 2 aspects of the visualization that could be improved. Perhaps these are aspects that you don’t know how to implement yet but wish you could update it.\n\nMake sure each viz:\n\nhas meaningful axis labels and legend titles\nhas a figure caption (fig.cap)\nuses alt text (fig.alt)\nuses a more color-blind friendly color palette\n\nTips:\n\nStart with some questions in mind of what you want to learn.\nStart with a simple viz (viz 1), and build this up into something multivariate (viz 3).\nReflect on each viz – what new questions do you have after checking out the viz? Let these questions guide your next viz. (eg: recall how we worked through the MacNaturalGas data at the start of the Spatial Viz activity).\n\n\n3.2.2.1 Viz 1\nWhich genre has most movies?\n\nggplot(summer_movies, aes(x = genres))+\n  geom_bar()+\n  labs(title = \"Count of all genres of movies\")\n\n\n\n\nIn this plot, we have too many genres, and many of them have a little amount of movies. If we want to study about genres, we can ignore them, so I made the following modify to the dataset.\n\ngenre_count &lt;- table(summer_movies$genres)\nlow_count_classes &lt;- names(genre_count[genre_count &lt; 25])\nsummer_movies_mod &lt;- summer_movies[!summer_movies$genres %in% low_count_classes, ]\n\n\nggplot(summer_movies_mod, aes(x = genres))+\n  geom_bar()+\n  labs(title = \"Count of genres that have more than 25 movies\")\n\n\n\n\nIn this plot, we can see Drama has highest amount of movies.\n\n\n\n\n\n\n\n3.2.2.2 Viz 2\nWhich genre of movie have higher rating?\n\nggplot(summer_movies_mod, aes(x = genres, y = average_rating))+\n  geom_boxplot()+\n  labs(title = \"Average rating of different genres of movies\")\n\n\n\n\nWe can see that Documentary movies has highest average ratings, but we also learned that Documentary movies also have lower count, so the high rating might because they are not popular and have less comments.\n\n\n\n\n\n\n\n3.2.2.3 Viz 3\nDoes the high rating genres affected by the rating numbers?\n\nlibrary(patchwork)\n\nWarning: package 'patchwork' was built under R version 4.3.3\n\np_1 &lt;- ggplot(summer_movies_mod, aes(x = genres, y = average_rating))+\n  geom_boxplot()+\n  labs(title = \"Average rating of different genres of movies\")\np_2 &lt;- ggplot(summer_movies_mod, aes(x = genres, y = num_votes))+\n  geom_boxplot()+\n  labs(title = \"Numbers of ratings for different genres\")\np_1+p_2\n\n\n\n\nIn the plot above, the ratings of each genres are similar, with only a few outliers, so we can conclude that the numbers of ratings might not give abovious affect to the average ratings."
+  }
+]

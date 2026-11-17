@@ -1,0 +1,413 @@
+---
+title: "Shooting & Rowing"
+subtitle: "project olympidata"
+author: "Han Sun"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# Shooting & Rowing
+
+```{r include = FALSE}
+palette("Okabe-Ito")
+scale_colour_discrete <- function(...) scale_colour_manual(values = palette())
+scale_fill_discrete   <- function(...) scale_fill_manual(values = palette())
+
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  warning = FALSE,
+  message = FALSE,
+  fig.height = 2.75, 
+  fig.width = 4.25,
+  fig.env='figure',
+  fig.pos = 'h',
+  fig.align = 'center')
+```
+
+# Import Data
+```{r}
+olympics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-08-06/olympics.csv')
+```
+
+# Packages
+```{r}
+library(plotly)
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(tidymodels)
+library(glmnet)
+library(tidyr)
+```
+
+
+# Generating Data
+## filter by sports
+```{r}
+shooting <- olympics %>%
+  filter(sport == "Shooting")%>%
+  drop_na()
+shooting
+
+rowing<- olympics %>%
+  filter(sport == "Rowing")%>%
+  drop_na()
+rowing
+```
+
+## divide by sex
+```{r}
+shooting_M <- shooting %>%
+  filter(sex == "M")
+shooting_F <- shooting %>%
+  filter(sex == "F")
+
+rowing_M <- rowing %>%
+  filter(sex == "M")
+rowing_F <- rowing %>%
+  filter(sex == "F")
+```
+
+# Primary Studies For Events
+## Shooting
+### male
+```{r}
+shooting_eventM <- shooting_M %>%
+  group_by(event)%>%
+  summarize(avg_h = mean(height),
+            avg_w = mean(weight),
+            avg_a = mean(age),
+            count = n())
+ggplot(shooting_M, aes(x = event))+
+  geom_bar()
+ggplot(shooting_eventM, aes(x = event, y = avg_h))+
+  geom_point()
+ggplot(shooting_eventM, aes(x = event, y = avg_w))+
+  geom_point()
+ggplot(shooting_eventM, aes(x = event, y = avg_a))+
+  geom_point()
+```
+### female
+```{r}
+shooting_eventF <- shooting_F %>%
+  group_by(event)%>%
+  summarize(avg_h = mean(height),
+            avg_w = mean(weight),
+            avg_a = mean(age),
+            count = n())
+ggplot(shooting_F, aes(x = event))+
+  geom_bar()
+ggplot(shooting_eventF, aes(x = event, y = avg_h))+
+  geom_point()
+ggplot(shooting_eventF, aes(x = event, y = avg_w))+
+  geom_point()
+ggplot(shooting_eventF, aes(x = event, y = avg_a))+
+  geom_point()
+```
+
+For shooting, from the plots, both average height, weight, and age varied a lot for the prized athletes for both gender. We should pay attention to how event will affect our outcomes, for example, if we are study about year, we have to get rid of the effects from event. 
+
+## Rowing
+### male
+```{r}
+rowing_eventM <- rowing_M %>%
+  group_by(event)%>%
+  summarize(avg_h = mean(height),
+            avg_w = mean(weight),
+            avg_a = mean(age),
+            count = n())
+ggplot(rowing_M, aes(x = event))+
+  geom_bar()
+ggplot(rowing_eventM, aes(x = event, y = avg_h))+
+  geom_point()
+ggplot(rowing_eventM, aes(x = event, y = avg_w))+
+  geom_point()
+ggplot(rowing_eventM, aes(x = event, y = avg_a))+
+  geom_point()
+```
+
+### female
+```{r}
+rowing_eventF <- rowing_F %>%
+  group_by(event)%>%
+  summarize(avg_h = mean(height),
+            avg_w = mean(weight),
+            avg_a = mean(age),
+            count = n())
+ggplot(rowing_F, aes(x = event))+
+  geom_bar()
+ggplot(rowing_eventF, aes(x = event, y = avg_h))+
+  geom_point()
+ggplot(rowing_eventF, aes(x = event, y = avg_w))+
+  geom_point()
+ggplot(rowing_eventF, aes(x = event, y = avg_a))+
+  geom_point()
+```
+
+For rowing, from the plot, both average height and weight varied a lot for the prized athletes for both gender, while the average age is in a much smaller range, we should pay more attention on the effect from event for average height and weight.
+
+
+# Primary Studies For Year
+## shooting
+### male
+```{r}
+shooting_yearM <- shooting_M %>%
+  group_by(year)%>%
+  summarize(avg_h = mean(height),
+            avg_w = mean(weight),
+            avg_a = mean(age),
+            count = n())
+ggplot(shooting_M, aes(x = year))+
+  geom_bar()
+ggplot(shooting_yearM, aes(x = year, y = avg_h))+
+  geom_point()
+ggplot(shooting_yearM, aes(x = year, y = avg_w))+
+  geom_point()
+ggplot(shooting_yearM, aes(x = year, y = avg_a))+
+  geom_point()
+```
+
+### female
+```{r}
+shooting_yearF <- shooting_F %>%
+  group_by(year)%>%
+  summarize(avg_h = mean(height),
+            avg_w = mean(weight),
+            avg_a = mean(age),
+            count = n())
+ggplot(shooting_F, aes(x = year))+
+  geom_bar()
+ggplot(shooting_yearF, aes(x = year, y = avg_h))+
+  geom_point()
+ggplot(shooting_yearF, aes(x = year, y = avg_w))+
+  geom_point()
+ggplot(shooting_yearF, aes(x = year, y = avg_a))+
+  geom_point()
+```
+
+For shooting, most data points are in a small range. In very early years, some data was very different. However, there are few data points in early years, so the effect from year isn't very obvious for avg_h, avg_w and avg_a.
+
+
+## Rowing
+### male
+```{r}
+rowing_yearM <- rowing_M %>%
+  group_by(year)%>%
+  summarize(avg_h = mean(height),
+            avg_w = mean(weight),
+            avg_a = mean(age),
+            count = n())
+ggplot(rowing_M, aes(x = year))+
+  geom_bar()
+ggplot(rowing_yearM, aes(x = year, y = avg_h))+
+  geom_point()
+ggplot(rowing_yearM, aes(x = year, y = avg_w))+
+  geom_point()
+ggplot(rowing_yearM, aes(x = year, y = avg_a))+
+  geom_point()
+```
+
+### female
+```{r}
+rowing_yearF <- rowing_F %>%
+  group_by(year)%>%
+  summarize(avg_h = mean(height),
+            avg_w = mean(weight),
+            avg_a = mean(age),
+            count = n())
+ggplot(rowing_F, aes(x = year))+
+  geom_bar()
+ggplot(rowing_yearF, aes(x = year, y = avg_h))+
+  geom_point()
+ggplot(rowing_yearF, aes(x = year, y = avg_w))+
+  geom_point()
+ggplot(rowing_yearF, aes(x = year, y = avg_a))+
+  geom_point()
+```
+
+For rowing, especially for male, both average weight, height, and age have a increasing by year, for female, the trend is not that obvious but still exist. It might be a good point to have more studies.
+
+
+
+# Fitting models
+## shooting
+### male
+```{r}
+shooting_M<- shooting_M %>%
+  mutate(event = str_replace(event, "Shooting Men's", ""))%>%
+  mutate(event = str_replace_all(event, " ", ""))%>%
+  mutate(event = str_replace(event, ",", ""))%>%
+  mutate(event = str_wrap(event, width = 6))
+ggplot(shooting_M, aes(x = year, y = height))+
+  geom_point()+
+  geom_smooth(method = "lm")+
+  facet_wrap(~ event)
+
+ggplot(shooting_M, aes(x = year, y = weight))+
+  geom_point()+
+  geom_smooth(method = "lm")+
+  facet_wrap(~ event)
+
+ggplot(shooting_M, aes(x = year, y = age))+
+  geom_point()+
+  geom_smooth(method = "lm")+
+  facet_wrap(~ event)
+```
+For every event individually, year doesn't have much effect. The relation showed in previous part might caused by that some events only hold in specific duration, so we might only need a boxplot for events.
+
+
+```{r}
+ggplot(shooting_M, aes(x = event, y = height))+
+  geom_boxplot()
+ggplot(shooting_M, aes(x = event, y = weight))+
+  geom_boxplot()
+ggplot(shooting_M, aes(x = event, y = age))+
+  geom_boxplot()
+```
+
+From the boxplot, most male shooting athletes are around 170-180cm despite their event and year; the event trap team will require higher weight than other event, which around 90-115kg, while most other events are around 70-90kg; most events have wide age range from about 25-35, while events including running like running target 50 meters, will have smaller ranges from 20-30.
+
+### female
+ 
+```{r}
+shooting_F<- shooting_F %>%
+  mutate(event = str_replace(event, "Shooting Women's", ""))%>%
+  mutate(event = str_replace_all(event, " ", ""))%>%
+  mutate(event = str_replace(event, ",", ""))%>%
+  mutate(event = str_wrap(event, width = 6))
+ggplot(shooting_F, aes(x = year, y = height))+
+  geom_point()+
+  geom_smooth(method = "lm")+
+  facet_wrap(~ event)
+
+ggplot(shooting_F, aes(x = year, y = weight))+
+  geom_point()+
+  geom_smooth(method = "lm")+
+  facet_wrap(~ event)
+
+ggplot(shooting_F, aes(x = year, y = age))+
+  geom_point()+
+  geom_smooth(method = "lm")+
+  facet_wrap(~ event)
+```
+
+The linear regression also doesn't show strong relation between weight, age and year for female. However, the weight for event Trap and Skeet increase by year, and Double Trap decreases.
+
+
+```{r}
+ggplot(shooting_F, aes(x = event, y = height))+
+  geom_boxplot()
+ggplot(shooting_F, aes(x = event, y = weight))+
+  geom_boxplot()
+ggplot(shooting_F, aes(x = event, y = age))+
+  geom_boxplot()
+```
+
+From the boxplot, for almost all event, the best height is in a range covered around 160-170cm, while Trap and Skeet have slightly higher range at about 165-173cm. 
+
+The weight varied by event a lot, Air Pistol 10 meters have a range around 60-70kg; Air Rifle 10 meters have a range around 50-55kg; Double Trap have a range around 65-83kg, and its mean value extremely at about 83kg; Skeet have a range around 60-83kg, also have a extrem mean value at about 80kg; Small-Bore Rifle Three Positions 50 meters have a range around 52kg-62kg; Sporting Pistol 25 meters have a range around 55-65kg; and Trap have a range around 63-85kg.
+
+Most events have the best age at a range in 25-35, while Air Pistol 10 meters, Air Rifle 10 meters and Small-Bore Rifle Three Positions 50 meters have younger age almost all under 30. 
+
+There are too few data points for Shooting Mixed Sheet and Shooting Mixed Small-Bore Rifle Three Positions,50 metres to have solid conclusion.
+
+
+## Rowing
+### male
+```{r}
+rowing_M<- rowing_M %>%
+  mutate(event = str_replace(event, "Rowing Men's", ""))%>%
+  mutate(event = str_replace_all(event, " ", ""))%>%
+  mutate(event = str_replace(event, ",", ""))%>%
+  mutate(event = str_wrap(event, width = 6))
+ggplot(rowing_M, aes(x = year, y = height))+
+  geom_point()+
+  geom_smooth(method = "lm")+
+  facet_wrap(~ event)
+
+ggplot(rowing_M, aes(x = year, y = weight))+
+  geom_point()+
+  geom_smooth(method = "lm")+
+  facet_wrap(~ event)
+
+ggplot(rowing_M, aes(x = year, y = age))+
+  geom_point()+
+  geom_smooth(method = "lm")+
+  facet_wrap(~ event)
+```
+
+Both height and weight increase by year for almost all events in male rowing while Lightweight Double Sculls and Lightweight Coxless Fours only hold after 2000 that doesn't show clear relation yet.
+
+```{r}
+ggplot(rowing_M, aes(x = event, y = height))+
+  geom_boxplot()
+ggplot(rowing_M, aes(x = event, y = weight))+
+  geom_boxplot()
+ggplot(rowing_M, aes(x = event, y = age))+
+  geom_boxplot()
+```
+
+Event have few effects to both weight, height and age for male's rowing events, the best age is around 23-28; despite of Coxed Paired, Lightweight Double Sculls and Lightweight Coxless Fours, all events have a best range of height around 185-195cm, weight around 85-95kg. Coxed Paired allows wider range that height is around 170-195cm, and weight is around 55-95kg, and Lightweight Double Sculls and Lightweight Coxless Fours have few data points.
+
+
+### female
+```{r}
+rowing_F<- rowing_F %>%
+  mutate(event = str_replace(event, "RowingWomen's", ""))%>%
+  mutate(event = str_replace_all(event, " ", ""))%>%
+  mutate(event = str_replace(event, ",", ""))%>%
+  mutate(event = str_wrap(event, width = 6))
+ggplot(rowing_F, aes(x = year, y = height))+
+  geom_point()+
+  geom_smooth(method = "lm")+
+  facet_wrap(~ event)
+
+ggplot(rowing_F, aes(x = year, y = weight))+
+  geom_point()+
+  geom_smooth(method = "lm")+
+  facet_wrap(~ event)
+
+ggplot(rowing_F, aes(x = year, y = age))+
+  geom_point()+
+  geom_smooth(method = "lm")+
+  facet_wrap(~ event)
+```
+
+The data points distributed evenly in large ranges by year, so the linear regression doesn't show obvious relation between both height, weight and age.
+
+```{r}
+ggplot(rowing_F, aes(x = event, y = height))+
+  geom_boxplot()
+ggplot(rowing_F, aes(x = event, y = weight))+
+  geom_boxplot()
+ggplot(rowing_F, aes(x = event, y = age))+
+  geom_boxplot()
+```
+
+For all events, height, weight and age are roughly in same range. The height is among 175-185cm; weight is among 70-80kg, where Lightweight Double Sculls is much lower since it is lightweight which is among 57-60kg; age is among 25-30.
+
+
+# Conclusion
+
+Shooting:
+Most male shooting athletes are around 170-180cm despite their event and year; the event trap team will require higher weight than other event, which around 90-115kg, while most other events are around 70-90kg. For female shooting athletes, for almost all event, the best height is in a range covered around 160-170cm, while Trap and Skeet have slightly higher range at about 165-173cm. The weight varied by event a lot, Air Pistol 10 meters have a range around 60-70kg; Air Rifle 10 meters have a range around 50-55kg; Double Trap have a range around 65-83kg, and its mean value extremely at about 83kg; Skeet have a range around 60-83kg, also have an extreme mean value at about 80kg; Small-Bore Rifle Three Positions 50 meters have a range around 52kg-62kg; Sporting Pistol 25 meters have a range around 55-65kg; and Trap have a range around 63-85kg.
+
+
+For male shooting athletes, most events have wide age range from about 25-35, while events including running like running target 50 meters, will have smaller ranges from 20-30. 
+For female shooting athletes, most events have the best age at a range in 25-35, while Air Pistol 10 meters, Air Rifle 10 meters and Small-Bore Rifle Three Positions 50 meters have younger age almost all under 30. It seems that for both gender, experience is important, while the events including running still require younger athletes that have better body condition.
+
+(There are too few data points for Shooting Mixed Sheet and Shooting Mixed Small-Bore Rifle Three Positions, 50 meters to have solid conclusion in female shooting events.)
+
+
+
+Rowing:
+For male rowing athletes, despite of Coxed Paired, Lightweight Double Sculls and Lightweight Coxless Fours, all events have a best range of height around 185-195cm, weight around 85-95kg. Coxed Paired allows wider range that height is around 170-195cm, and weight is around 55-95kg. Lightweight Double Sculls and Lightweight Coxless Fours have few data points to have solid conclusion. For female rowing athletes, for all events despite of Lightweight Double Sculls, the height is among 175-185cm; weight is among 70-80kg. Lightweight Double Sculls is much lower since it is lightweight which is among 57-60kg. Moreover, for all events in Rowing, weight and height are increasing very slightly but continually, which might cause by the restrictions to the weight to rowing athletes, there exist a upper bound for them and they are reaching that limitation closer.
+
+For male rowing athletes, the best age is around 23-28; and for female, this range is larger which is 23-30. Rowing has strong requirements to the body conditions of the athletes that younger age is important.
+
+
+
+
+

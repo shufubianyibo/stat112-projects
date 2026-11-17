@@ -1,0 +1,3 @@
+# Introduction {.unnumbered}
+
+This is my quarto book for the homeworks of COMP/STAT112 course taken at [Macalester College](https://www.macalester.edu/).  Please, use the side bar on the left for navigation.

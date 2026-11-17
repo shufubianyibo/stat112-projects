@@ -1,0 +1,75 @@
+---
+title: "Welcome to COMP/STAT112"
+format: 
+  html:
+    code-copy: true
+---
+
+## Clear Workspace
+
+Always start by clearing the workspace. This ensure objects created in other files are not used here.
+
+```{r}
+#| results: 'hide'
+
+rm(list = ls())
+```
+
+## List Used Packages
+
+List all the packages that will be used in chunks below.
+
+```{r}
+#| results: 'hide'
+
+packages <- c("wordcloud2", "here")
+```
+
+## Install Missing Packages
+
+Any missing package will be installed automatically. This ensure smoother execution when run on another machine.
+
+::: callout-important
+
+### Installing Packages on Other People Machine
+
+Be aware that people may not like installing packages into their machine automatically.  This might break some of their previous code.
+
+:::
+
+```{r}
+#| results: 'hide'
+
+install.packages(setdiff(packages, rownames(installed.packages())))
+```
+
+## Load Packages
+
+```{r results='hide', message=FALSE}
+#| results: 'hide'
+#| message: FALSE
+
+lapply(packages, require, character.only = TRUE)
+```
+
+## Load Dataset
+
+Load some data to visualize.
+
+```{r}
+ds <- read.csv(here("data", "msg.csv"))
+```
+
+## Visualize Dataset
+
+Visualize data as a wordcloud. The wordcloud will have different colors and alignments each run.
+
+```{r}
+wordcloud2(data=ds, shape = "cardioid")
+```
+
+## References
+
+-   Céline Van den Rul, How to Generate Word Clouds in R \[[Medium](https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a)\]
+-   Sean Murphy, Check for installed packages before running `install.packages()` \[[Stack Overflow](https://stackoverflow.com/questions/9341635/check-for-installed-packages-before-running-install-packages)\]
+-   Hadley Wickham, The tidyverse style guide \[[Website](https://style.tidyverse.org/index.html)\]

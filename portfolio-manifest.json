@@ -1,0 +1,26 @@
+[
+  {
+    "name": "project-olympidata",
+    "source_files": 10,
+    "source_lines_including_scaffolding": 1650,
+    "origin": "https://github.com/mac-stat112-f24/project-olympidata",
+    "snapshot_commit": "c5ca4dcd2e7d80461ec1dda700c145a48f000574",
+    "file_count": 29
+  },
+  {
+    "name": "homeworks-shufubianyibo",
+    "source_files": 21,
+    "source_lines_including_scaffolding": 4702,
+    "origin": "https://github.com/mac-stat112-f24/homeworks-shufubianyibo",
+    "snapshot_commit": "0a4d43ac3c9c1e5573819de642e8fa0e11a95dd8",
+    "file_count": 146
+  },
+  {
+    "name": "welcome-viz",
+    "source_files": 1,
+    "source_lines_including_scaffolding": 75,
+    "origin": "https://github.com/mac-stat112/welcome-viz",
+    "snapshot_commit": "41adec1f1808b41dbc4a70dc315e6d08a9b9131e",
+    "file_count": 3
+  }
+]

@@ -1,0 +1,592 @@
+---
+title: "Homework 4: Data Wrangling"
+execute: 
+  warning: true
+fig-height: 3
+fig-width: 5
+fig-align: center
+code-fold: false
+---
+
+::: {.callout-caution title="Learning Goals"}
+Practice some data wrangling and data viz in guided settings.
+The content of the exercises is not necessarily in the order that we learned it, so you'll need to practice identifying appropriate tools for a given task.
+:::
+
+# Exercise 1: Birthdays
+
+In Exercises 1-4 we'll return to the daily `Birthdays` dataset in the `mosaic` package:
+
+```{r}
+library(mosaic)
+library(tidyverse)
+data("Birthdays")
+head(Birthdays)
+```
+
+Address each prompt below using our wrangling tools.
+
+## Part a
+
+```{r}
+# How many total births were there in the U.S. during this time period?
+sum(Birthdays$births)
+
+# Show the 6 data points with the fewest number of births
+# (What do these have in common?!)
+head(Birthdays)
+
+# February 29, "leap day", occurs once every 4 years
+# Report data on leap day births in Alaska (AK) during this time period
+# Your dataset should have 5 rows!
+Birth_leap <- Birthdays %>%
+  filter(state == "AK", month == 2, day == 29)
+head(Birth_leap)
+```
+
+## Part b
+
+```{r}
+# Show the 6 states with the most total births during this time period
+# (your answer should indicate both the state and its number of births)
+Birth_high <- Birthdays %>%
+  group_by(state) %>%
+  summarize(total_births = sum(births)) %>%
+  select(state, total_births) %>%
+  distinct(state, total_births) %>%
+  arrange(desc(total_births)) 
+head(Birth_high)
+
+# Show the 6 states with the fewest total births in 1988
+# (your answer should indicate both the state and its number of births)
+Birth_low <- Birthdays %>%
+  filter(year == 1988) %>%
+  group_by(state) %>%
+  summarize(total_births = sum(births)) %>%
+  select(state, total_births) %>%
+  distinct(state, total_births) %>%
+  arrange(total_births) 
+head(Birth_low)
+```
+
+## Part c
+
+Open https://chatgpt.com/.
+You should have access to a free version of this tool.
+
+Give it the prompt "Show the 6 states with the fewest total births in 1988" and see what it generates.
+Record any *additional information* you give it to help it understand the prompt.
+Evaluate the *quality of the response* and how it compares to your response to the question above.
+Lastly, reflect on the *strengths and weaknesses* of this tool to help you understand the data science tools.
+
+::: {.callout-note title="Answer"}
+**Additional Information Provided**
+Use the data set Birthdays in mosaic.
+**Evaluate of Quality of Response**
+High, included detailed processes and explains.
+**Strengths and weaknesses of Tool**
+It gives clear and correct answers, but it uses some codes not very effeciently, like for showing the outcome, it will have head(state_births_1988, 6) rather than head(state_births_1988).
+:::
+
+# Exercise 2: Temporal & Geographical Trends
+
+Let's examine some temporal trends in birth.
+For each part, you will need to wrangle and plot some data.
+You can decide whether you want to: (1) wrangle and store data, then plot; or (2) wrangle data and pipe directly into ggplot.
+For example:
+
+```{r}
+Birthdays |> 
+  filter(state == "MN") |> 
+  ggplot(aes(y = births, x = date)) + 
+    geom_smooth()
+```
+
+## Part a: Monthly Trends
+
+Calculate the total number of births in each month and year, eg, Jan 1969, Feb 1969, ..., combining all states.
+Label month by names not numbers, eg, Jan not 1.
+Then, plot the relationship of births with month and **summarize** (in words) what you learn.
+NOTE: You should have / use multiple data points for each month!
+
+```{r}
+Birth_month <- Birthdays%>%
+  group_by(year, month)%>%
+  mutate(total_births = sum(births),
+         month_name = month.name[month],
+         year_month = paste(month_name, year, sep = " "))%>%
+  ungroup()%>%
+  distinct(month, year_month, total_births)
+head(Birth_month)
+ggplot(Birth_month, aes(x = month, y = total_births))+
+  geom_point()
+```
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR SUMMARY IN THIS CALLOUT BOX
+It looks like the births by month increases from Feb to Aut, then decrease from Aut to Nov, then increase from Nov to Dec, then decrease from Dec to Feb.
+:::
+
+## Part b: weekly Trends
+
+Construct a line plot of the total number of births per week in *1988* for each state.
+It should have 51 lines (for the 50 states + DC) and eliminate week "53" (which isn't a complete week).
+Then **summarize** (in words) what you learn.
+For example, do you notice any seasonal trends?
+Are these the same in every state?
+Any outliers?
+NOTE: It's tough to identify individual states, so focusing on bigger trends is fine.
+
+```{r}
+library(lubridate)
+Birth_week <- Birthdays%>%
+  filter(year == 1988) %>%
+  mutate(week = week(date))%>%
+  group_by(state, week) %>%
+  mutate(total_births = sum(births))%>%
+  filter(week != 53)
+head(Birth_week)
+ggplot(Birth_week, aes(x = week, y= total_births, color = state))+
+  geom_line()
+```
+
+
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR SUMMARY IN THIS CALLOUT BOX
+There seems to be a seasonal trend that increased in fall, and the trends aren't same for all states, CA's trend seems to be especially strong, but other states that have lower brith seems to be more smooth.
+:::
+
+## Part c: Geography
+
+Repeat Part b for just Minnesota (MN) and Louisiana (LA).
+MN has one of the coldest climates, and LA has one of the warmest.
+Discuss how their seasonal trends compare.
+
+```{r}
+Birth_weeksub<- Birth_week %>%
+  filter(state == c("MN","LA"))
+ggplot(Birth_weeksub, aes(x = week, y= total_births, color = state))+
+  geom_line()
+```
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR DISCUSSION IN THIS CALLOUT BOX
+LA has lowest briths in the summer and highest in the fall, while MN has highest births in the summer, it seems that births are likely to happened on weathers that are not too hot or too cold.
+:::
+
+# OPTIONAL Exercise
+
+Dig deeper into the geography of birth patterns.
+Are the trends you observed in MN vs LA similar in other colder and warmer states?
+Which states have the largest increases or decreases in their proportion of US births over time?
+Is the weekend effect less strong for states with a higher percentage of their populations living in rural areas?
+
+# Exercise 3: Daily Trends and Anomalies (Part 1)
+
+## Part a
+
+Define a new dataset, `daily_births`, which has the following variables for each *date* in the study period:
+
+-   `date`
+-   `total` = total number of births on that date
+-   `year` = the corresponding year
+-   `week_day` = day of week, labeled "Mon", "Tue", etc
+-   `month_day` = day of the month (e.g. 1--31)
+
+Use code to show the first 6 rows and confirm that your dataset has 7305 rows (one per date in the dataset) and 5 columns.
+
+```{r}
+# Wrangle and store your data
+daily_births <- Birthdays %>%
+  group_by(date)%>%
+  mutate(total = sum(births),
+         week_day = wday,
+         month_day = mday(date))%>%
+  distinct(date, total, year, week_day, month_day)
+  
+
+# Show first 6 rows
+head(daily_births)
+
+# Confirm there are 7305 rows and 5 columns
+dim(daily_births)
+```
+
+## Part b
+
+The [538 article (html)](https://fivethirtyeight.com/features/some-people-are-too-superstitious-to-have-a-baby-on-friday-the-13th/) demonstrates that fewer babies are born on the 13th of each month, and the effect is even stronger when the 13th falls on a Friday.
+Let's see if that theory holds up in our data.
+There are lots of ways to do this.
+Consider just one.
+
+Start from the `daily_births` dataset you made in Part a, not `Birthdays`.
+From there, calculate and plot the *average* number of births (y-axis) per day of month (x-axis) in the U.S.
+Your plot should include 31 points.
+Discuss your observations.
+Does your plot support the theory that fewer babies tend to be born on the 13th day of the month?
+Any other data points that stand out.
+
+```{r}
+daily_births_m <- daily_births%>%
+  group_by(month_day)%>%
+  summarize(average_md = mean(total))
+ggplot(daily_births_m, aes(x = month_day, y = average_md))+
+  geom_point()
+```
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR DISCUSSION IN THIS CALLOUT BOX
+There exist the trend that there are less babies born on 13th. There are fewer on 31st since not every month have 31 days, but the the trend does show there are less births in the end of the month, dramasticly droped from 29th. There are also fewer birth on 4th.
+:::
+
+## Part c
+
+Starting from `daily_births`, plot the total number of babies born (y-axis) per day (x-axis) in *1980*.
+Color each date according to its day of the week.
+
+```{r}
+daily_births_1980 <- daily_births %>%
+  filter(year == 1980)
+ggplot(daily_births_1980, aes(x= date, y = total, color = week_day))+
+  geom_point()
+```
+
+## Part d
+
+As in Homework 2, one thing that stands out in this plot is that fewer babies are born on weekends.
+BUT there are some exceptions -- relative to day of the week, there are significantly fewer births than expected on some days.
+Explain what you think is happening here.
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR EXPLAINATION IN THIS CALLOUT BOX
+There are some Fridays have significantly fewer births, it might because they are 13th of the month.
+:::
+
+# Exercise 4: Daily Trends and Anomalies (Part 2)
+
+In Exercise 3, you might have hypothesized that the anomalous births are explained by holidays.
+To test this hypothesis, import data on U.S. federal holidays [here](data/US-Holidays.csv).
+NOTE: `lubridate::dmy()` converts the character-string date stored in the CSV to a "POSIX" date-number.
+
+```{r}
+holidays <- read.csv("https://mac-stat.github.io/data/US-Holidays.csv") |>
+  mutate(date = as.POSIXct(lubridate::dmy(date)))
+```
+
+## Part a
+
+Create a new dataset, `daily_births_1980`, which:
+
+-   keeps only `daily_births` related to **1980**
+-   adds a variable called `is_holiday` which is `TRUE` when the day is a holiday, and `FALSE` otherwise. NOTE: `!is.na(x)` is `TRUE` if column `x` is *not* NA, and `FALSE` if it is NA.
+
+Print out the first 6 rows and confirm that your dataset has 366 rows (1 per day in 1980) and 7 columns.
+HINT: You'll need to combine 2 different datasets.
+
+```{r}
+# Define daily_births_1980
+daily_births_1980 <- daily_births |>
+  filter(year == 1980) |>
+  left_join(holidays) |>
+  mutate(is_holiday = case_when(!is.na(holiday) ~ TRUE,
+                                is.na(holiday) ~ FALSE))
+
+# Check out the first 6 rows
+head(daily_births_1980)
+
+# Confirm that daily_births_1980 has 366 rows and 7 columns
+dim(daily_births_1980)
+
+```
+
+## Part b
+
+Plot the total number of babies born (y-axis) per day (x-axis) in 1980.
+Color each date according to its day of the week, and `shape` each date according to whether or not it's a holiday.
+(This is a modified version of 3c!)
+
+```{r}
+ggplot(daily_births_1980, aes(x = date, y = total, color = week_day, shape = is_holiday))+
+  geom_point()
+```
+
+## Part c
+
+Discuss your observations.
+For example: To what degree does the theory that there tend to be fewer births on holidays hold up?
+What holidays stand out the most?
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR ANSWER IN THIS CALLOUT BOX
+It holds, all holidays have at least somewhat lower birth than other days on its weekday in similar season. The Christmas Day stand out the most.
+:::
+
+## Part d
+
+Some holidays stand out more than others.
+It would be helpful to label them.
+Use `geom_text` to add labels to each of the holidays.
+NOTE: You can set the orientation of a label with the `angle` argument; e.g., `geom_text(angle = 40, ...)`.
+
+```{r}
+ggplot(daily_births_1980, aes(x = date, y = total, color = week_day, shape = is_holiday))+
+  geom_point()+
+  geom_text(angle = 40, aes(label = holiday),size = 2)
+```
+
+# Exercise 5: Baby Names
+
+Let's switch our attention to the `babynames` dataset.
+This dataset, provided by the U.S.
+Social Security Administration, provides information on the names of every baby born in the U.S. from 1880-2017.
+Along with names, there's information on the `sex` assigned at birth.
+This information reflects that collected by the U.S. government at birth.
+We'll refer to sex assigned at birth as `sex` throughout.
+
+```{r}
+library(babynames)
+data(babynames)
+head(babynames)
+```
+
+## Part a
+
+Let's do some preliminary exploration.
+Address each prompt below using our wrangling tools.
+Be mindful that some names were assigned to both `male` and `female` babies.
+
+```{r}
+# Find the 6 most popular names for male babies in 2017
+babynames_m <- babynames %>%
+  filter(sex == "M", year == 2017)%>%
+  arrange(desc(n))
+head(babynames_m)
+
+# Find the 6 most popular names overall, i.e. combining all years and combining male & female babies
+babynames_a <- babynames%>%
+  group_by(name)%>%
+  mutate(n_total = sum(n))%>%
+  distinct(n_total)%>%
+  arrange(desc(n_total))
+head(babynames_a)
+
+
+# Find the 6 most popular names for female babies during this time period, i.e. combining all years
+babynames_y <- babynames%>%
+  group_by(name,sex)%>%
+  filter(sex == "F") %>%
+  mutate(n_total = sum(n))%>%
+  distinct(sex,n_total)%>%
+  arrange(desc(n_total))
+head(babynames_y)
+```
+
+## Part b
+
+Create a new dataset that records the most popular name by sex for each year.
+Print out the data for the years 2013-2017 only.
+NOTES:
+
+-   You can use the `slice_max(___)` verb which pulls out the row in each group that has the maximum value with respect to the variable provided.
+-   Your dataset should have 10 rows and 5 columns.
+
+```{r}
+babynames_p <- babynames%>%
+  group_by(sex,year)%>%
+  slice_max(n)%>%
+  arrange(desc(n))
+babynames_p %>%
+  filter(year >=2013, year <= 2017)%>%
+  print()
+```
+
+## Part c
+
+Construct a line plot of the total number of babies per year that were named "Alicia", no matter the sex assigned at birth.
+
+```{r}
+babynames %>%
+  filter(name == "Alicia")%>%
+  ggplot(aes(x = year, y = n))+
+    geom_line()
+```
+
+## Part d
+
+Repeat Part c using whatever name and whatever consideration of sex assigned at birth you wish.
+Discuss your observations.
+
+```{r}
+babynames %>%
+  filter(name == "Alicia")%>%
+  ggplot(aes(x = year, y = n, color = sex))+
+    geom_line()
+```
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR DISCUSSION IN THIS CALLOUT BOX
+The line became more readable, the extreme oscillations disappeared.
+:::
+
+# Exercise 6: More names
+
+In this exercise, let's examine the neutrality or non-neutrality of names assigned to babies by sex assigned at birth.
+
+## Part a
+
+Create a dataset that has one row per name observed during the study period.
+For each observed name, calculate the total number of females and males born with that name.
+Use `values_fill = 0` to replace NAs with 0s.
+Store this as `babynames_total` and print out the first 3 rows which should match the following:
+
+| name  |   M |   F |
+|:------|----:|----:|
+| Aaban | 107 |   0 |
+| Aabha |   0 |  35 |
+| Aabid |  10 |   0 |
+
+```{r}
+# Define babynames_total
+babynames_total <- babynames%>%
+  group_by(name,sex)%>%
+  mutate(n_total = sum(n))%>%
+  distinct(sex,n_total)%>%
+  pivot_wider(names_from = sex, values_from = n_total, values_fill = 0)%>%
+  arrange(name)
+  
+
+# Print out the first 3 rows
+head(babynames_total,3)
+
+```
+
+## Part b
+
+After completing Part a, run the following code.
+Fill in the blanks (`___`) below to comment on what each wrangling row *does*.
+(You can check your claims by running the code, but should first try to do this without running any code.)
+
+```{r}
+popular_names <- babynames_total |>
+  filter(M > 25000, F > 25000) |>  # get only the rows that have more than 25000 babies for a single gender
+  mutate(ratio = F / (F + M)) |>   # create a variable that is the ratio of female in the total number of babies with a name
+  arrange(desc(ratio))              # arrange the rows with by the ratio of female from high to low
+
+head(popular_names)
+```
+
+## Part c
+
+Starting from `popular_names`, identify the names that are most popular among *both* male and female babies.
+Specifically, names for which 45-55% of babies born with that name are female (thus 45-55% are male.)
+
+```{r}
+both_popular <- popular_names%>%
+  filter(ratio >= 0.45, ratio <= 0.55)
+print(both_popular)
+```
+
+## Part d
+
+Pick one "neutral" name from Part c.
+Construct a line plot of the number of babies with this name by year and sex.
+You should have 2 lines.
+Discuss your observations.
+
+```{r}
+babynames %>%
+  filter(name == "Kerry")%>%
+  ggplot(aes(x = year, y = n, color = sex))+
+    geom_line()
+```
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR DISCUSSION IN THIS CALLOUT BOX
+For the name "Kerry", the trend for both female and male are similar. It became gradually popular from 1930 to 1960 for male, and from 1940 to 1970 for female, then it decreased almost as a same speed as it increased.
+:::
+
+# Exercise 7: Laughing
+
+In [Laughing On Line](https://pudding.cool/2019/10/laugh/), The Pudding analyzed the use of different laughter expressions (e.g. "lol", "haha") in Reddit comments.
+And how these have changed over time.
+
+```{r}
+# Import data (shared by The Pudding at https://github.com/the-pudding/data/tree/master/laugh)
+laughs <- read.csv("https://mac-stat.github.io/data/reddit-laughs.csv")
+
+# Check it out
+head(laughs)
+```
+
+## Part a
+
+What are the units of observation in `laughs`?
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR ANSWER IN THIS CALLOUT BOX
+Each row is a type of expression of laughing on line, with how much they are used from 2009 to 2019.
+:::
+
+## Part b
+
+Our goal is to create a line plot similar to that in the section titled "The evolution of lol":
+
+![](https://mac-stat.github.io/images/112/laughs.png)
+
+First, create a new `laugh_plot_data` set that you'll need to make this plot.
+Show the first 6 rows of the data and confirm that it includes 55 rows (one per laugh type / year combination), and 3 columns: `id`, `year`, and `share`.
+HINTS:
+
+-   Remove any columns you don't need for this analysis.
+-   Only keep track of 5 laugh types: "lol", "haha", "lmao", "ha", "heh"
+-   Make sure that `share` is on the scale from 0-100, not 0-1.
+
+```{r}
+# Define your dataset
+laugh_plot_data <- laughs%>%
+  filter(id %in% c("lol", "haha", "lmao", "ha", "heh"))%>%
+  pivot_longer(cols = starts_with("share"), names_prefix = "share_", names_to = "year", values_to = "share")%>%
+  mutate(year = as.numeric(year))%>%
+  select(id, year, share)
+  
+
+# Show the first 6 rows
+head(laugh_plot_data)
+
+# Confirm that the dataset has 55 rows and 3 columns
+dim(laugh_plot_data)
+
+```
+
+## Part c
+
+Use your data from Part b to create a plot that's *similar* to that from the article.
+For example, the colors and styling don't have to be the same.
+Discuss your observations.
+
+```{r}
+ggplot(laugh_plot_data, aes(x = year, y = share, color = id))+
+  geom_smooth()
+```
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR DISCUSSION IN THIS CALLOUT BOX
+"lol" always has tha highest percentage in the types, and it is still increasing; "haha" has relavently high percentage, but begin decreasing since 2012; "heh" and "ha" are alwasy unpopular and still decreasing; "lmao" seems to appear since 2012, and continually increasing since it appears.
+:::
+
+# Finalize Work
+
+Congratulation 🎉.
+You're done with the homework.
+See the instruction at top of the Homework Assignments page for how to submit.

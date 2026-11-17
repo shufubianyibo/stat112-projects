@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Homework 7: EDA</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="homework_7_files/libs/clipboard/clipboard.min.js"></script>
+<script src="homework_7_files/libs/quarto-html/quarto.js"></script>
+<script src="homework_7_files/libs/quarto-html/popper.min.js"></script>
+<script src="homework_7_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="homework_7_files/libs/quarto-html/anchor.min.js"></script>
+<link href="homework_7_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="homework_7_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="homework_7_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="homework_7_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="homework_7_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Homework 7: EDA</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="callout callout-style-default callout-caution callout-titled" title="Learning Goals">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Goals
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Sharpen your data wrangling and data viz skills by practicing on a different dataset.</li>
+<li>Engage with the larger data science community by working on a recent TidyTuesday dataset.</li>
+</ul>
+</div>
+</div>
+<section id="context" class="level1">
+<h1>Context</h1>
+<p>The <code>running_112.csv</code> data file posted in the Homework 7 link on Moodle contains data on people that have run in the annual 10-mile “Cherry Blossom” race in Washington, D.C. Our general goal will be to use these data to explore the broad research question:</p>
+<p><strong>What’s the relationship between running time and age?</strong></p>
+<p>You will address this questions through <em>guided</em> exploratory data analysis (EDA). That is, you will be told what steps to take in this process. The steps provided are merely <em>one</em> approach, not the <em>only</em> approach. With that, pay special attention to:</p>
+<ul>
+<li>What follow-up questions <em>you</em> have along the way / how your EDA might deviate from that here.</li>
+<li>The general vibe behind the EDA process.</li>
+</ul>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+<section id="exercise-1-import-and-know-data" class="level1">
+<h1>Exercise 1: Import and Know Data</h1>
+<p>The first step in our EDA is to import and get to know some basics about the data structure.</p>
+<section id="part-a" class="level2">
+<h2 class="anchored" data-anchor-id="part-a">Part a</h2>
+<p>Import the <code>running_112.csv</code> data into RStudio. NOTE: This data is a modified version of the <code>Cherry</code> data in the <code>mdsr</code> package, and contains different info than the running data we’ve used elsewhere. You must use the provided <code>running_112.csv</code> dataset for these exercises.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>running_112 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/Downloads/running_112.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 41128 Columns: 6
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (2): name.yob, sex
+dbl (4): net, year, previous, nruns
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<p>Check out and familiarize yourself with the data in a <code>View()</code> window. Included in each row is data on:</p>
+<ul>
+<li><code>name.yob</code> = name and year of birth (yob) for the runner</li>
+<li><code>sex</code> = binary sex</li>
+<li><code>net</code> = net running time to complete the 10-mile race, in minutes</li>
+<li><code>year</code> = year of the race</li>
+<li><code>previous</code> = how many times the runner participated in the years from 1999 to 2008, <em>previous</em> to this race</li>
+<li><code>nruns</code> = number of times the runner participated in the years from 1999 to 2008</li>
+</ul>
+</section>
+<section id="part-b" class="level2">
+<h2 class="anchored" data-anchor-id="part-b">Part b</h2>
+<p>Write some code in the chunk below to familiarize yourself with the basics of this data. Mainly, after this part you should have a sense of:</p>
+<ul>
+<li>how many data points you have</li>
+<li>what the first several rows of the dataset look like</li>
+<li>a quick <code>summary()</code> of each variable in the dataset. (Each quantitative variable should be summarized with some simple summary statistics (eg: mean), and each categorical variable should be summarized by its categories and the number of observations per category.)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(running_112)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 41128</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(running_112)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  name.yob               sex     net  year previous nruns
+  &lt;chr&gt;                  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
+1 a. renee callahan 1966 F     100.   2003        0     2
+2 a. renee callahan 1966 F      NA    2008        1     2
+3 aaren pastor 1991      F      89.4  2005        0     2
+4 aaren pastor 1991      F      71.2  2006        1     2
+5 aaron alton 1974       M      85.4  2005        0     4
+6 aaron alton 1974       M      91.8  2006        1     4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(running_112)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   name.yob             sex                 net              year     
+ Length:41128       Length:41128       Min.   :  1.50   Min.   :1999  
+ Class :character   Class :character   1st Qu.: 79.07   1st Qu.:2002  
+ Mode  :character   Mode  :character   Median : 88.70   Median :2004  
+                                       Mean   : 89.37   Mean   :2004  
+                                       3rd Qu.: 98.47   3rd Qu.:2006  
+                                       Max.   :175.60   Max.   :2008  
+                                       NA's   :12338                  
+    previous         nruns       
+ Min.   :0.000   Min.   : 2.000  
+ 1st Qu.:0.000   1st Qu.: 2.000  
+ Median :1.000   Median : 3.000  
+ Mean   :1.264   Mean   : 3.527  
+ 3rd Qu.:2.000   3rd Qu.: 4.000  
+ Max.   :9.000   Max.   :10.000  
+                                 </code></pre>
+</div>
+</div>
+</section>
+<section id="part-c" class="level2">
+<h2 class="anchored" data-anchor-id="part-c">Part c</h2>
+<p>Reflect on what you’ve noticed about the data thus far. For example: Are there any interesting patterns? Anything that looks like it will need to be cleaned before addressing our research questions? Any obvious outliers? (The only wrong answers here are answers that lack reflection.)</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Reflection">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reflection
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR REFLECTION IN THIS CALLOUT BOX</p>
+<p>I noticed that there are almost 1/4 of the net are NAs, and the previous and nruns have very large maxes compared to the 3rd Qu.</p>
+</div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="exercise-2-prep" class="level1">
+<h1>Exercise 2: Prep</h1>
+<p>Recall that our general research question is about the relationship between running time and age. In this exercise, prep any variables you’ll need for this analysis. NOTE: After completing this exercise, you should have the same number of rows that you started with, but you might have a different number of columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>running_age <span class="ot">&lt;-</span> running_112 <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">birth_year =</span> <span class="fu">as.numeric</span>(<span class="fu">str_sub</span>(name.yob, <span class="sc">-</span><span class="dv">4</span>)),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">age =</span> year <span class="sc">-</span> birth_year)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>running_age</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 41,128 × 8
+   name.yob               sex     net  year previous nruns birth_year   age
+   &lt;chr&gt;                  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
+ 1 a. renee callahan 1966 F     100.   2003        0     2       1966    37
+ 2 a. renee callahan 1966 F      NA    2008        1     2       1966    42
+ 3 aaren pastor 1991      F      89.4  2005        0     2       1991    14
+ 4 aaren pastor 1991      F      71.2  2006        1     2       1991    15
+ 5 aaron alton 1974       M      85.4  2005        0     4       1974    31
+ 6 aaron alton 1974       M      91.8  2006        1     4       1974    32
+ 7 aaron alton 1974       M      NA    2007        2     4       1974    33
+ 8 aaron alton 1974       M      NA    2008        3     4       1974    34
+ 9 aaron bernstein 1981   M      63.5  2005        0     2       1981    24
+10 aaron bernstein 1981   M      NA    2007        1     2       1981    26
+# ℹ 41,118 more rows</code></pre>
+</div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+<section id="exercise-3-important-variables-more-cleaning" class="level1">
+<h1>Exercise 3: Important Variables + More Cleaning</h1>
+<p>Before examining the <em>relationship</em> between running time and age, we should check these 2 variables out on their own in order to understand their scale, range, typical outcomes, etc.</p>
+<section id="part-a-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-1">Part a</h2>
+<p>Construct a plot of age. You don’t need to write anything, but take note of the range, shape, and typical outcome of the age distribution among runners.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(running_age, <span class="fu">aes</span>(<span class="at">x =</span> age))<span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="homework_7_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="408"></p>
+</div>
+</div>
+</section>
+<section id="part-b-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-1">Part b</h2>
+<p>Similarly, construct and think about the plot of running time.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(running_age, <span class="fu">aes</span>(<span class="at">x =</span> net))<span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 12338 rows containing non-finite outside the scale range
+(`stat_density()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="homework_7_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="408"></p>
+</div>
+</div>
+</section>
+<section id="part-c-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-c-1">Part c</h2>
+<p>Follow-up observation: The plot in part b revealed a data point that needs to be removed from our analysis. (If this isn’t clear yet, look back at the numerical summaries in exercise 1 and/or move on to the next exercise and then come back.) Do 3 things here:</p>
+<ul>
+<li>Show all data points for the runner associated with this odd data point.</li>
+<li>Explain what you think the odd data point is <em>supposed</em> to be.</li>
+<li>Explain why removing this particular data point isn’t a deceptive practice (i.e.&nbsp;we’re not being dishonest).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show all data points on the runner of interest </span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (There should be 5 data points!)</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>running_odd <span class="ot">&lt;-</span> running_age<span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(net <span class="sc">&lt;</span> <span class="dv">25</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>running_odd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 8
+  name.yob       sex     net  year previous nruns birth_year   age
+  &lt;chr&gt;          &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
+1 peter hui 1931 M       1.5  2001        1     5       1931    70</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Explanation">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Explanation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR EXPLANATION IN THIS CALLOUT BOX</p>
+<p>This data might caused by that actually the runner ran very slow and over the upper bound of the measurement of time since it is impossible to run that fast and the runner is already 70. Therefore, this data point seems to be an error during recording, and it is proper for us to remove it.</p>
+</div>
+</div>
+</section>
+<section id="part-d" class="level2">
+<h2 class="anchored" data-anchor-id="part-d">Part d</h2>
+<p>Permanently remove the data point in question from your dataset. You shouldn’t use it in any of the remaining exercises! Be careful in this process to not remove more than 1 data point. Confirm that your new dataset has 41127 data points, only 1 fewer than your original.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the data point</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># HINT: "a | b" indicates condition "a" OR "b" (or look to Google for other approaches)</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>running_age<span class="ot">&lt;-</span> running_age <span class="sc">%&gt;%</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name.yob <span class="sc">!=</span> <span class="st">"peter hui 1931"</span> <span class="sc">|</span> year <span class="sc">!=</span> <span class="dv">2001</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirm that your dataset now has 41127 data points</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(running_age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 41127</code></pre>
+</div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="exercise-4-simple-calc-aggregate-explorations" class="level1">
+<h1>Exercise 4: Simple Calc + aggregate Explorations</h1>
+<p>In studying the relationship between running time and age, let’s start by obtaining and plotting some simple calculations.</p>
+<section id="part-a-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-2">Part a</h2>
+<p>In a single plot, plot the fastest running time by age, the average running time by age, and the slowest running time by age.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>running_byage <span class="ot">&lt;-</span> running_age <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(age)<span class="sc">%&gt;%</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">min =</span> <span class="fu">min</span>(net), </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean =</span> <span class="fu">mean</span>(net), </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">max =</span> <span class="fu">max</span>(net))<span class="sc">%&gt;%</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(min,mean,max), <span class="at">names_to =</span> <span class="st">"by_age"</span>, <span class="at">values_to =</span> <span class="st">"by_age_value"</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(running_byage, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> by_age_value, <span class="at">color =</span> by_age))<span class="sc">+</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="homework_7_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="408"></p>
+</div>
+</div>
+</section>
+<section id="part-b-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-2">Part b</h2>
+<p>Provide a list of 3 things that your plot from Part a indicates about the relationship between running time and age.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>put thing 1 here</li>
+</ul>
+<p>The maximum of runing time with very low or high age is lower, the reason might be that only children and old people that are especially confident about running join this event.</p>
+<ul>
+<li>put thing 2 here</li>
+</ul>
+<p>The average grows smoothly when age increaseing.</p>
+<ul>
+<li>put thing 3 here</li>
+</ul>
+<p>The minimum first decraese from 12, then begin increase by age from 25.</p>
+</div>
+</div>
+</section>
+<section id="part-c-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-c-2">Part c</h2>
+<p>Follow-up observation: Notice that there’s a lot more volatility in the fastest, average, and slowest running times across <em>older</em> runners. This is probably a feature of our <em>data</em>, not because of actual volatility across older runners. Explain <em>why</em> this is happening. AND support your answer with numerical evidence from the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Numerical evidence</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>running_young<span class="ot">&lt;-</span> running_age <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&lt;</span> <span class="dv">25</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>running_mid <span class="ot">&lt;-</span> running_age<span class="sc">%&gt;%</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> age <span class="sc">&lt;</span> <span class="dv">50</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>running_old <span class="ot">&lt;-</span> running_age <span class="sc">%&gt;%</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age<span class="sc">&gt;=</span><span class="dv">75</span>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(running_young)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2110</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(running_mid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 31468</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(running_old)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 66</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Explanation">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Explanation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR EXPLANATION IN THIS CALLOUT BOX</p>
+<p>The amount of older(mid and old) runners are larger than younger runners, so the data will be more variable for older runners.</p>
+</div>
+</div>
+</section>
+<section id="part-d-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-d-1">Part d</h2>
+<p>This isn’t the end of the EDA! Reflecting on what you did and didn’t learn from the plot above, identify some follow-up questions that you have about the relationship between running time and age. (The only wrong answers here are answers that lack reflection.)</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Reflection">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reflection
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR REFLECTION IN THIS CALLOUT BOX</p>
+<p>I learned the trend of running time by age, but there are still a lot of variables that are valuable, like the relation between running time and how many times have the runner attend, and for the relation between runing time and age, we can also study more about the slowest time, since they seems more complicated.</p>
+</div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="exercise-5-follow-up-plots" class="level1">
+<h1>Exercise 5: Follow-up Plots</h1>
+<p>In Exercise 4, we used <em>aggregate</em> information (i.e.&nbsp;summaries by groups, not individual observations) to explore the relationship between running time and age. This group-level information provides a nice, <em>first</em> glimpse into the relationship. BUT it oversimplifies the information in our dataset, and so we don’t want to <em>stop</em> with Exercise 4. Let’s now consider the relationship between running time and age using the <em>individual</em> observations.</p>
+<section id="part-a-3" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-3">Part a</h2>
+<p>Construct a plot of running time vs age that reflects the outcome for each data point in our dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(running_age,<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> net))<span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 12338 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="homework_7_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="408"></p>
+</div>
+</div>
+</section>
+<section id="part-b-3" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-3">Part b</h2>
+<p>Follow-up observation: The plot in part a puts all runners into the same bucket, thus the relationship between running time and age doesn’t seem very strong. Perhaps this is because we ignored information about prior running experience. Do the following:</p>
+<ul>
+<li>Create a new version of the plot from part a to include information related to a person’s prior running experience.</li>
+<li>Provide a one sentence caveat. Specifically, explain why the additional variable you used is a <em>proxy</em> for prior experience but not a perfect measure. (THINK: Can you imagine a runner for whom your proxy measure is high even though prior experience is actually low? Or a runner for whom your proxy measure is low even though prior experience is actually high?)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>running_onlyage <span class="ot">&lt;-</span> running_age<span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(age, name.yob, net)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>running_1 <span class="ot">&lt;-</span> running_age <span class="sc">%&gt;%</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name.yob)<span class="sc">%&gt;%</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">best =</span> <span class="fu">min</span>(net))<span class="sc">%&gt;%</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(running_onlyage, <span class="at">by =</span> <span class="st">"name.yob"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(best <span class="sc">==</span> net)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>running_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5,798 × 4
+   name.yob              best   age   net
+   &lt;chr&gt;                &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 aaren pastor 1991     71.2    15  71.2
+ 2 aaron cheskis 1976    67.3    25  67.3
+ 3 aaron colangelo 1975  67.3    30  67.3
+ 4 aaron koch 1979       76.2    26  76.2
+ 5 aaron schavey 1969   107.     33 107. 
+ 6 aaron schneider 1969  81.5    33  81.5
+ 7 aaron trent 1977      68.1    26  68.1
+ 8 abby solomon 1984    108.     22 108. 
+ 9 abhijit ghosh 1974   112.     32 112. 
+10 abigail gordon 1977   93.4    27  93.4
+# ℹ 5,788 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(running_1, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> best))<span class="sc">+</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="homework_7_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="408"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Caveat">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caveat
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR CAVEAT IN THIS CALLOUT BOX</p>
+<p>I tooke the best attempt of every runner, it make sure most runners are in their best condition, but there are some runners only ran once.</p>
+</div>
+</div>
+</section>
+<section id="part-c-3" class="level2">
+<h2 class="anchored" data-anchor-id="part-c-3">Part c</h2>
+<p>In one sentence, explain what new information you’ve gained about the relationship between running time and age through the plots in this exercise.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR ANSWER IN THIS CALLOUT BOX</p>
+<p>From about 20, runners run slower by age, while they run faster when age grows before 20.</p>
+</div>
+</div>
+</section>
+<section id="part-d-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-d-2">Part d</h2>
+<p>This isn’t the end of the EDA! Each new step in the process is helping us <em>refine</em> our research questions and introducing even <em>more</em> research questions. Pick the option below which best reflects the refined research questions we <em>do</em> have insight into at this point in our analysis:</p>
+<p>c</p>
+<ol type="a">
+<li>How do older runners compare to younger runners?</li>
+<li>How does a person’s running time change with age?</li>
+<li>Both a and b.</li>
+</ol>
+<p><br>
+<br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="exercise-6-more-follow-up-plots" class="level1">
+<h1>Exercise 6: More Follow-up Plots</h1>
+<p>At this point, we’ve “sliced” the data in two different ways or at different levels to examine the relationship between running time and age:</p>
+<ol type="1">
+<li>at the aggregate level at each age</li>
+<li>at the individual race outcome level at each age</li>
+</ol>
+<p>Let’s slice the data yet another way by exploring running time and age dynamics among individual <em>runners</em>.</p>
+<section id="part-a-4" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-4">Part a</h2>
+<p>Some people appear in our dataset more than once. To that end, address some related properties of our data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How many unique runners are there in the dataset?</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Address this with code and provide just one number (e.g. do not print out a long table)</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>running_unique <span class="ot">&lt;-</span> running_age <span class="sc">%&gt;%</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(previous <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(running_unique)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 14392</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the fewest number of times that somebody appears in the dataset?</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Again, address this with code and provide just one number</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(running_age<span class="sc">$</span>nruns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the most number of times that somebody appears in the dataset?</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Again, address this with code and provide just one number</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(running_age<span class="sc">$</span>nruns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+</div>
+</section>
+<section id="part-b-4" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-4">Part b</h2>
+<p>Let’s focus <em>only</em> on the runners that participated in the Cherry Blossom Race <em>at least</em> 7 times (i.e.&nbsp;7 or more times) in the years from 1999 to 2008. Construct a plot that represents the relationship between running time and age for each of these individual runners.</p>
+<ul>
+<li>Show a smooth trend <em>line</em> (not curve) for each runner.</li>
+<li>Put these trend lines all on the same frame.</li>
+<li>Show <em>only</em> the trend lines for each runner, otherwise it would be very messy.</li>
+<li>Use <code>group</code> not <code>color</code>, <code>fill</code>, or facets to represent the individual runners. Otherwise, we’d get messy legends. Since we don’t necessarily care about these particular runners, just runners in general, we don’t need a legend.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>running_7 <span class="ot">&lt;-</span> running_age <span class="sc">%&gt;%</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(nruns <span class="sc">&gt;=</span> <span class="dv">7</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(running_7, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> net, <span class="at">group =</span> name.yob))<span class="sc">+</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1023 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="homework_7_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="408"></p>
+</div>
+</div>
+</section>
+<section id="part-c-4" class="level2">
+<h2 class="anchored" data-anchor-id="part-c-4">Part c</h2>
+<p>Our <em>intention</em> in restricting our data to runners with at least 7 <code>nruns</code> was to focus on people for whom we had at least 7 observed data points. But our plot makes clear that this isn’t always the case – some lines span only 2 or 3 years. Explain <em>how</em> this happened. That is, how can somebody have fewer data points than suggested by their <code>nruns</code>?</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR ANSWER IN THIS CALLOUT BOX</p>
+<p>They might be some races have incomplete information, like na in running time.</p>
+</div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="exercise-7-a-final-follow-up-plot" class="level1">
+<h1>Exercise 7: A “final” follow-up plot</h1>
+<p>Let’s improve upon our analysis from Exercise 6.</p>
+<section id="part-a-5" class="level2">
+<h2 class="anchored" data-anchor-id="part-a-5">Part a</h2>
+<p>Obtain data on <em>only</em> the runners for whom we <em>observed</em> at least 7 race outcomes, and <em>only</em> on their races for which we have complete information. Again, since we’re missing some data, this is different than the runners that <em>completed</em> at least 7 races.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new dataset</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>running_7full <span class="ot">&lt;-</span> running_7 <span class="sc">%&gt;%</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name.yob)<span class="sc">%&gt;%</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>())<span class="sc">%&gt;%</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(count <span class="sc">&gt;=</span> <span class="dv">7</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(running_7, <span class="at">by =</span> <span class="st">"name.yob"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirm that we have 511 data points</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(running_7full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 511</code></pre>
+</div>
+</div>
+</section>
+<section id="part-b-5" class="level2">
+<h2 class="anchored" data-anchor-id="part-b-5">Part b</h2>
+<p>Ignoring individual <em>runners</em> and focusing on the individual <em>race outcomes</em>, construct a scatterplot of running time vs age using your new dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(running_7full, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> net))<span class="sc">+</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="homework_7_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="408"></p>
+</div>
+</div>
+</section>
+<section id="part-c-5" class="level2">
+<h2 class="anchored" data-anchor-id="part-c-5">Part c</h2>
+<p>Now focusing on individual <em>runners</em>, recreate the plot from Exercise 6 Part b using your new dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(running_7full, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> net, <span class="at">group =</span> name.yob))<span class="sc">+</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="homework_7_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="408"></p>
+</div>
+</div>
+</section>
+<section id="part-d-3" class="level2">
+<h2 class="anchored" data-anchor-id="part-d-3">Part d</h2>
+<p>Summarize your combined observations from Parts b and c.&nbsp;Your summary should address:</p>
+<ul>
+<li>What you learned about the relationship between running time and age in Part b.</li>
+<li>What you learned about the relationship between running time and age in Part c.</li>
+<li>What explains any conflicting messages between these 2 plots.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PLACE YOUR ANSWER IN THIS CALLOUT BOX</p>
+<p>In part b, the age between 20-50 varies more; but in c, for individual runners, most large variations are among young runners, which might because there are more runners amoung 20-50 that are in differet but stable levels.</p>
+</div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="reflection" class="level1">
+<h1>Reflection</h1>
+<p>The exercises above represent <em>one</em> possible EDA of the relationship between running time and age. As we did here, any EDA has the following steps:</p>
+<ul>
+<li>import the data</li>
+<li>do some quick data checks</li>
+<li><strong>iterate</strong> between the following:
+<ul>
+<li>clean the data</li>
+<li>construct some summaries and plots</li>
+<li>ask yourself what questions these summaries and plots <em>do</em> answer, what questions <em>don’t</em> they answer, and what follow-up questions they provoke</li>
+<li>repeat as necessary, letting your reflections on the previous questions inspire your next steps</li>
+</ul></li>
+</ul>
+<p>Further, this is the beginning, not the <em>end</em> of our analysis!</p>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+<section id="finalize-work" class="level1">
+<h1>Finalize Work</h1>
+<p>Congratulation 🎉. You’re done with the homework. See the instruction at top of the Homework Assignments page for how to submit.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

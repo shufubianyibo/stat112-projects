@@ -1,0 +1,467 @@
+---
+title: "Homework 7: EDA"
+execute: 
+  warning: true
+fig-height: 2.57
+fig-width: 4.25
+fig-align: center
+code-fold: false
+---
+
+::: {.callout-caution title="Learning Goals"}
+- Sharpen your data wrangling and data viz skills by practicing on a different dataset.
+- Engage with the larger data science community by working on a recent TidyTuesday dataset.
+:::
+
+
+# Context
+
+The `running_112.csv` data file posted in the Homework 7 link on Moodle contains data on people that have run in the annual 10-mile "Cherry Blossom" race in Washington, D.C. Our general goal will be to use these data to explore the broad research question:
+
+**What's the relationship between running time and age?**
+
+You will address this questions through *guided* exploratory data analysis (EDA). That is, you will be told what steps to take in this process. The steps provided are merely *one* approach, not the *only* approach. With that, pay special attention to:
+
+-   What follow-up questions *you* have along the way / how your EDA might deviate from that here.
+-   The general vibe behind the EDA process.
+
+\
+\
+\
+\
+
+# Exercise 1: Import and Know Data
+
+The first step in our EDA is to import and get to know some basics about the data structure.
+
+## Part a
+
+Import the `running_112.csv` data into RStudio. NOTE: This data is a modified version of the `Cherry` data in the `mdsr` package, and contains different info than the running data we've used elsewhere. You must use the provided `running_112.csv` dataset for these exercises.
+
+```{r}
+library(tidyverse)
+running_112 <- read_csv("~/Downloads/running_112.csv")
+```
+
+Check out and familiarize yourself with the data in a `View()` window. Included in each row is data on:
+
+-   `name.yob` = name and year of birth (yob) for the runner
+-   `sex` = binary sex
+-   `net` = net running time to complete the 10-mile race, in minutes
+-   `year` = year of the race
+-   `previous` = how many times the runner participated in the years from 1999 to 2008, *previous* to this race
+-   `nruns` = number of times the runner participated in the years from 1999 to 2008
+
+## Part b
+
+Write some code in the chunk below to familiarize yourself with the basics of this data. Mainly, after this part you should have a sense of:
+
+-   how many data points you have
+-   what the first several rows of the dataset look like
+-   a quick `summary()` of each variable in the dataset. (Each quantitative variable should be summarized with some simple summary statistics (eg: mean), and each categorical variable should be summarized by its categories and the number of observations per category.)
+
+```{r}
+nrow(running_112)
+head(running_112)
+summary(running_112)
+```
+
+## Part c
+
+Reflect on what you've noticed about the data thus far. For example: Are there any interesting patterns? Anything that looks like it will need to be cleaned before addressing our research questions? Any obvious outliers? (The only wrong answers here are answers that lack reflection.)
+
+::: {.callout-note title="Reflection"}
+
+PLACE YOUR REFLECTION IN THIS CALLOUT BOX
+
+I noticed that there are almost 1/4 of the net are NAs, and the previous and nruns have very large maxes compared to the 3rd Qu.
+:::
+
+\
+\
+\
+\
+
+# Exercise 2: Prep
+
+Recall that our general research question is about the relationship between running time and age. In this exercise, prep any variables you'll need for this analysis. NOTE: After completing this exercise, you should have the same number of rows that you started with, but you might have a different number of columns.
+
+```{r}
+running_age <- running_112 %>%
+  mutate(birth_year = as.numeric(str_sub(name.yob, -4)),
+         age = year - birth_year)
+running_age
+```
+
+\
+\
+\
+\
+
+# Exercise 3: Important Variables + More Cleaning
+
+Before examining the *relationship* between running time and age, we should check these 2 variables out on their own in order to understand their scale, range, typical outcomes, etc.
+
+## Part a
+
+Construct a plot of age. You don't need to write anything, but take note of the range, shape, and typical outcome of the age distribution among runners.
+
+```{r}
+ggplot(running_age, aes(x = age))+
+  geom_density()
+```
+
+## Part b
+
+Similarly, construct and think about the plot of running time.
+
+```{r}
+ggplot(running_age, aes(x = net))+
+  geom_density()
+```
+
+## Part c
+
+Follow-up observation: The plot in part b revealed a data point that needs to be removed from our analysis. (If this isn't clear yet, look back at the numerical summaries in exercise 1 and/or move on to the next exercise and then come back.) Do 3 things here:
+
+-   Show all data points for the runner associated with this odd data point.
+-   Explain what you think the odd data point is *supposed* to be.
+-   Explain why removing this particular data point isn't a deceptive practice (i.e. we're not being dishonest).
+
+```{r}
+# Show all data points on the runner of interest 
+# (There should be 5 data points!)
+running_odd <- running_age%>%
+  filter(net < 25)
+running_odd
+```
+
+::: {.callout-note title="Explanation"}
+
+PLACE YOUR EXPLANATION IN THIS CALLOUT BOX
+
+This data might caused by that actually the runner ran very slow and over the upper bound of the measurement of time since it is impossible to run that fast and the runner is already 70. Therefore, this data point seems to be an error during recording, and it is proper for us to remove it.
+:::
+
+
+## Part d
+
+Permanently remove the data point in question from your dataset. You shouldn't use it in any of the remaining exercises! Be careful in this process to not remove more than 1 data point. Confirm that your new dataset has 41127 data points, only 1 fewer than your original.
+
+```{r}
+# Remove the data point
+# HINT: "a | b" indicates condition "a" OR "b" (or look to Google for other approaches)
+
+running_age<- running_age %>%
+  filter(name.yob != "peter hui 1931" | year != 2001)
+# Confirm that your dataset now has 41127 data points
+nrow(running_age)
+```
+
+\
+\
+\
+\
+
+# Exercise 4: Simple Calc + aggregate Explorations
+
+In studying the relationship between running time and age, let's start by obtaining and plotting some simple calculations.
+
+## Part a
+
+In a single plot, plot the fastest running time by age, the average running time by age, and the slowest running time by age.
+
+```{r}
+running_byage <- running_age %>%
+  na.omit()%>%
+  group_by(age)%>%
+  summarize(min = min(net), 
+            mean = mean(net), 
+            max = max(net))%>%
+  pivot_longer(cols = c(min,mean,max), names_to = "by_age", values_to = "by_age_value")
+ggplot(running_byage, aes(x = age, y = by_age_value, color = by_age))+
+  geom_point()
+```
+
+## Part b
+
+Provide a list of 3 things that your plot from Part a indicates about the relationship between running time and age.
+
+::: {.callout-note title="Answer"}
+
+-   put thing 1 here
+
+The maximum of runing time with very low or high age is lower, the reason might be that only children and old people that are especially confident about running join this event.
+
+-   put thing 2 here
+
+The average grows smoothly when age increaseing.
+
+-   put thing 3 here
+
+The minimum first decraese from 12, then begin increase by age from 25.
+
+:::
+
+## Part c
+
+Follow-up observation: Notice that there's a lot more volatility in the fastest, average, and slowest running times across *older* runners. This is probably a feature of our *data*, not because of actual volatility across older runners. Explain *why* this is happening. AND support your answer with numerical evidence from the data.
+
+```{r}
+# Numerical evidence
+running_young<- running_age %>%
+  filter(age < 25)
+running_mid <- running_age%>%
+  filter(age >= 25 & age < 50)
+running_old <- running_age %>%
+  filter(age>=75)
+nrow(running_young)
+nrow(running_mid)
+nrow(running_old)
+```
+
+::: {.callout-note title="Explanation"}
+
+PLACE YOUR EXPLANATION IN THIS CALLOUT BOX
+
+The amount of older(mid and old) runners are larger than younger runners, so the data will be more variable for older runners. 
+
+:::
+
+
+## Part d
+
+This isn't the end of the EDA! Reflecting on what you did and didn't learn from the plot above, identify some follow-up questions that you have about the relationship between running time and age. (The only wrong answers here are answers that lack reflection.)
+
+::: {.callout-note title="Reflection"}
+
+PLACE YOUR REFLECTION IN THIS CALLOUT BOX
+
+I learned the trend of running time by age, but there are still a lot of variables that are valuable, like the relation between running time and how many times have the runner attend, and for the relation between runing time and age, we can also study more about the slowest time, since they seems more complicated.
+:::
+
+\
+\
+\
+\
+
+# Exercise 5: Follow-up Plots
+
+In Exercise 4, we used *aggregate* information (i.e. summaries by groups, not individual observations) to explore the relationship between running time and age. This group-level information provides a nice, *first* glimpse into the relationship. BUT it oversimplifies the information in our dataset, and so we don't want to *stop* with Exercise 4. Let's now consider the relationship between running time and age using the *individual* observations.
+
+## Part a
+
+Construct a plot of running time vs age that reflects the outcome for each data point in our dataset.
+
+```{r}
+ggplot(running_age,aes(x = age, y = net))+
+  geom_point()
+```
+
+## Part b
+
+Follow-up observation: The plot in part a puts all runners into the same bucket, thus the relationship between running time and age doesn't seem very strong. Perhaps this is because we ignored information about prior running experience. Do the following:
+
+-   Create a new version of the plot from part a to include information related to a person's prior running experience.
+-   Provide a one sentence caveat. Specifically, explain why the additional variable you used is a *proxy* for prior experience but not a perfect measure. (THINK: Can you imagine a runner for whom your proxy measure is high even though prior experience is actually low? Or a runner for whom your proxy measure is low even though prior experience is actually high?)
+
+```{r}
+running_onlyage <- running_age%>%
+  select(age, name.yob, net)
+running_1 <- running_age %>%
+  group_by(name.yob)%>%
+  summarize(best = min(net))%>%
+  left_join(running_onlyage, by = "name.yob")%>%
+  filter(best == net)
+running_1
+ggplot(running_1, aes(x = age, y = best))+
+  geom_point()
+```
+
+::: {.callout-note title="Caveat"}
+
+PLACE YOUR CAVEAT IN THIS CALLOUT BOX
+
+I tooke the best attempt of every runner, it make sure most runners are in their best condition, but there are some runners only ran once.
+
+:::
+
+
+
+## Part c
+
+In one sentence, explain what new information you've gained about the relationship between running time and age through the plots in this exercise.
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR ANSWER IN THIS CALLOUT BOX
+
+From about 20, runners run slower by age, while they run faster when age grows before 20.
+:::
+
+
+## Part d
+
+This isn't the end of the EDA! Each new step in the process is helping us *refine* our research questions and introducing even *more* research questions. Pick the option below which best reflects the refined research questions we *do* have insight into at this point in our analysis: 
+
+c
+
+a.  How do older runners compare to younger runners?
+b.  How does a person's running time change with age?
+c.  Both a and b.
+
+\
+\
+\
+\
+\
+
+# Exercise 6: More Follow-up Plots
+
+At this point, we've "sliced" the data in two different ways or at different levels to examine the relationship between running time and age:
+
+1.  at the aggregate level at each age
+2.  at the individual race outcome level at each age
+
+Let's slice the data yet another way by exploring running time and age dynamics among individual *runners*.
+
+## Part a
+
+Some people appear in our dataset more than once. To that end, address some related properties of our data.
+
+```{r}
+# How many unique runners are there in the dataset?
+# Address this with code and provide just one number (e.g. do not print out a long table)
+running_unique <- running_age %>%
+  filter(previous == 0)
+nrow(running_unique)
+
+# What is the fewest number of times that somebody appears in the dataset?
+# Again, address this with code and provide just one number
+
+min(running_age$nruns)
+
+# What is the most number of times that somebody appears in the dataset?
+# Again, address this with code and provide just one number
+
+max(running_age$nruns)
+```
+
+## Part b
+
+Let's focus *only* on the runners that participated in the Cherry Blossom Race *at least* 7 times (i.e. 7 or more times) in the years from 1999 to 2008. Construct a plot that represents the relationship between running time and age for each of these individual runners.
+
+-   Show a smooth trend *line* (not curve) for each runner.
+-   Put these trend lines all on the same frame.
+-   Show *only* the trend lines for each runner, otherwise it would be very messy.
+-   Use `group` not `color`, `fill`, or facets to represent the individual runners. Otherwise, we'd get messy legends. Since we don't necessarily care about these particular runners, just runners in general, we don't need a legend.
+
+```{r}
+running_7 <- running_age %>%
+  filter(nruns >= 7)
+ggplot(running_7, aes(x = age, y = net, group = name.yob))+
+  geom_smooth(method = "lm" )
+```
+
+## Part c
+
+Our *intention* in restricting our data to runners with at least 7 `nruns` was to focus on people for whom we had at least 7 observed data points. But our plot makes clear that this isn't always the case -- some lines span only 2 or 3 years. Explain *how* this happened. That is, how can somebody have fewer data points than suggested by their `nruns`?
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR ANSWER IN THIS CALLOUT BOX
+
+They might be some races have incomplete information, like na in running time.
+
+:::
+
+\
+\
+\
+\
+
+# Exercise 7: A "final" follow-up plot
+
+Let's improve upon our analysis from Exercise 6.
+
+## Part a
+
+Obtain data on *only* the runners for whom we *observed* at least 7 race outcomes, and *only* on their races for which we have complete information. Again, since we're missing some data, this is different than the runners that *completed* at least 7 races.
+
+```{r}
+# Create new dataset
+
+running_7full <- running_7 %>%
+  na.omit()%>%
+  group_by(name.yob)%>%
+  summarize(count = n())%>%
+  filter(count >= 7)%>%
+  left_join(running_7, by = "name.yob") %>%
+  na.omit()
+
+# Confirm that we have 511 data points
+
+nrow(running_7full)
+```
+
+## Part b
+
+Ignoring individual *runners* and focusing on the individual *race outcomes*, construct a scatterplot of running time vs age using your new dataset.
+
+```{r}
+ggplot(running_7full, aes(x = age, y = net))+
+  geom_point()
+```
+
+## Part c
+
+Now focusing on individual *runners*, recreate the plot from Exercise 6 Part b using your new dataset.
+
+```{r}
+ggplot(running_7full, aes(x = age, y = net, group = name.yob))+
+  geom_smooth(method = "lm" )
+```
+
+## Part d
+
+Summarize your combined observations from Parts b and c. Your summary should address:
+
+-   What you learned about the relationship between running time and age in Part b.
+-   What you learned about the relationship between running time and age in Part c.
+-   What explains any conflicting messages between these 2 plots.
+
+::: {.callout-note title="Answer"}
+
+PLACE YOUR ANSWER IN THIS CALLOUT BOX
+
+In part b, the age between 20-50 varies more; but in c, for individual runners, most large variations are among young runners, which might because there are more runners amoung 20-50 that are in differet but stable levels.
+
+:::
+
+\
+\
+\
+\
+
+# Reflection
+
+The exercises above represent *one* possible EDA of the relationship between running time and age. As we did here, any EDA has the following steps:
+
+-   import the data
+-   do some quick data checks
+-   **iterate** between the following:
+    -   clean the data
+    -   construct some summaries and plots
+    -   ask yourself what questions these summaries and plots *do* answer, what questions *don't* they answer, and what follow-up questions they provoke
+    -   repeat as necessary, letting your reflections on the previous questions inspire your next steps
+
+Further, this is the beginning, not the *end* of our analysis!
+
+\
+\
+\
+\
+
+# Finalize Work
+
+Congratulation 🎉.  You're done with the homework.  See the instruction at top of the Homework Assignments page for how to submit.
